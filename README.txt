@@ -1,0 +1,1 @@
+v1.5 corregida. Para PWA debe publicarse en HTTPS; no abrir index.html desde content://.
