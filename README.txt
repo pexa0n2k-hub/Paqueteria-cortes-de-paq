@@ -1,1 +1,1 @@
-v1.12: almacenamiento corregido y rápido, migración única de versiones anteriores, guardado de paquetes/tarifa, borrado/edición, y optimización del Liquid Glass para Android. Fondo comprimido al guardarlo y animación gelatinosa más ligera.
+v1.13: reparación completa del guardado de paquetes y tarifa con almacenamiento explícito; edición/eliminación corregidas; migración de datos anteriores; cache-busting para evitar que GitHub Pages sirva JS viejo; Liquid Glass optimizado para desplazamiento más fluido.
