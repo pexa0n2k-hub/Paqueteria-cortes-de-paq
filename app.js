@@ -320,7 +320,54 @@ function currentCutData(){
 }
 function rr(ctx,x,y,w,h,r){const q=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+q,y);ctx.arcTo(x+w,y,x+w,y+h,q);ctx.arcTo(x+w,y+h,x,y+h,q);ctx.arcTo(x,y+h,x,y,q);ctx.arcTo(x,y,x+w,y,q);ctx.closePath()}
 function dg(ctx,x,y,w,h,r=28){
-  ctx.save();rr(ctx,x,y,w,h,r);const g=ctx.createLinearGradient(x,y,x+w,y+h);g.addColorStop(0,"rgba(255,255,255,.19)");g.addColorStop(.45,"rgba(255,255,255,.07)");g.addColorStop(1,"rgba(100,210,255,.045)");ctx.fillStyle=g;ctx.fill();ctx.strokeStyle="rgba(255,255,255,.28)";ctx.lineWidth=2;ctx.stroke();ctx.beginPath();ctx.moveTo(x+28,y+1);ctx.lineTo(x+w-28,y+1);ctx.strokeStyle="rgba(255,255,255,.55)";ctx.stroke();ctx.restore()
+  ctx.save();
+
+  // 1) Blur ONLY the area inside the glass drawer.
+  // The background photo underneath remains sharp everywhere else.
+  const q=Math.min(r,w/2,h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+q,y);
+  ctx.arcTo(x+w,y,x+w,y+h,q);
+  ctx.arcTo(x+w,y+h,x,y+h,q);
+  ctx.arcTo(x,y+h,x,y,q);
+  ctx.arcTo(x,y,x+w,y,q);
+  ctx.closePath();
+  ctx.clip();
+
+  const srcCanvas=ctx.canvas;
+  ctx.filter="blur(18px)";
+  ctx.drawImage(srcCanvas,0,0);
+  ctx.filter="none";
+
+  // 2) 25% translucent material over the blurred background.
+  const g=ctx.createLinearGradient(x,y,x+w,y+h);
+  g.addColorStop(0,"rgba(255,255,255,.105)");
+  g.addColorStop(.45,"rgba(255,255,255,.062)");
+  g.addColorStop(1,"rgba(5,12,28,.25)");
+  ctx.fillStyle=g;
+  ctx.fillRect(x,y,w,h);
+  ctx.restore();
+
+  // 3) Glass edge + top reflection.
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(x+q,y);
+  ctx.arcTo(x+w,y,x+w,y+h,q);
+  ctx.arcTo(x+w,y+h,x,y+h,q);
+  ctx.arcTo(x,y+h,x,y,q);
+  ctx.arcTo(x,y,x+w,y,q);
+  ctx.closePath();
+  ctx.strokeStyle="rgba(255,255,255,.30)";
+  ctx.lineWidth=2;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(x+28,y+1);
+  ctx.lineTo(x+w-28,y+1);
+  ctx.strokeStyle="rgba(255,255,255,.62)";
+  ctx.lineWidth=2;
+  ctx.stroke();
+  ctx.restore();
 }
 function fit(ctx,text,max,size){let s=size;ctx.font=`900 ${s}px system-ui,sans-serif`;while(ctx.measureText(text).width>max&&s>14){s--;ctx.font=`900 ${s}px system-ui,sans-serif`}return s}
 async function renderShareImage(){

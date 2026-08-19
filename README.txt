@@ -1,1 +1,1 @@
-v1.17: el corte compartido utiliza el mismo fondo personalizado de la app, con el mismo oscurecimiento y paneles Liquid Glass. No modifica el sistema de guardado.
+v1.18: los cajones de la imagen compartida ahora tienen blur únicamente dentro de cada cajón y una capa Liquid Glass al 25% de transparencia. El fondo fuera de los cajones permanece nítido. No se modifica el guardado ni la interfaz principal.
