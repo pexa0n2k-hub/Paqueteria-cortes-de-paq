@@ -1,1 +1,1 @@
-v1.9: estadísticas semanales, promedio diario, mejor día, días registrados, promedio de ganancia y gráfica de ritmo; historial colapsado con flecha neon; Liquid Glass con brillo y animación gelatinosa suave.
+v1.10: corrige Invalid Date reparando claves antiguas, corrige edición/eliminación, restaura Liquid Glass y animación gelatinosa, y añade control de transparencia de los cajones.
