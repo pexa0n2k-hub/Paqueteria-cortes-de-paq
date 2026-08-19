@@ -308,6 +308,48 @@ $("shadeRange").oninput=e=>{state.settings.shade=Number(e.target.value);safeWrit
 $("blurRange").oninput=e=>{state.settings.blur=Number(e.target.value);safeWrite();applySettings();};
 $("transRange").oninput=e=>{state.settings.transparency=Number(e.target.value);safeWrite();applySettings();};
 
+
+function currentCutData(){
+  const today=dateKey(new Date()), start=monday(new Date()), end=sunday(new Date());
+  const entries=Object.entries(state.records).filter(([d])=>inCurrentWeek(d)).sort((a,b)=>a[0].localeCompare(b[0]));
+  const total=entries.reduce((s,[,v])=>s+Number(v||0),0), rate=rateFor(today);
+  let advances=[];
+  for(const [d,list] of Object.entries(state.advances)) if(inCurrentWeek(d)) for(const x of (Array.isArray(list)?list:[])) advances.push({date:d,...x});
+  const adv=advances.reduce((s,x)=>s+Number(x.amount||0),0);
+  return {start,end,total,rate,gross:total*rate,adv,net:total*rate-adv,entries,advances};
+}
+function rr(ctx,x,y,w,h,r){const q=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+q,y);ctx.arcTo(x+w,y,x+w,y+h,q);ctx.arcTo(x+w,y+h,x,y+h,q);ctx.arcTo(x,y+h,x,y,q);ctx.arcTo(x,y,x+w,y,q);ctx.closePath()}
+function dg(ctx,x,y,w,h,r=28){
+  ctx.save();rr(ctx,x,y,w,h,r);const g=ctx.createLinearGradient(x,y,x+w,y+h);g.addColorStop(0,"rgba(255,255,255,.19)");g.addColorStop(.45,"rgba(255,255,255,.07)");g.addColorStop(1,"rgba(100,210,255,.045)");ctx.fillStyle=g;ctx.fill();ctx.strokeStyle="rgba(255,255,255,.28)";ctx.lineWidth=2;ctx.stroke();ctx.beginPath();ctx.moveTo(x+28,y+1);ctx.lineTo(x+w-28,y+1);ctx.strokeStyle="rgba(255,255,255,.55)";ctx.stroke();ctx.restore()
+}
+function fit(ctx,text,max,size){let s=size;ctx.font=`900 ${s}px system-ui,sans-serif`;while(ctx.measureText(text).width>max&&s>14){s--;ctx.font=`900 ${s}px system-ui,sans-serif`}return s}
+async function renderShareImage(){
+  const d=currentCutData(),canvas=$("shareCanvas"),W=1080,H=1350,scale=Math.min(3,Math.max(2,devicePixelRatio||2));
+  canvas.width=W*scale;canvas.height=H*scale;const ctx=canvas.getContext("2d");ctx.scale(scale,scale);
+  const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  let gl=ctx.createRadialGradient(180,80,10,180,80,450);gl.addColorStop(0,"rgba(70,230,255,.22)");gl.addColorStop(1,"rgba(70,230,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+  gl=ctx.createRadialGradient(900,1150,10,900,1150,500);gl.addColorStop(0,"rgba(170,60,255,.18)");gl.addColorStop(1,"rgba(170,60,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="#91f7ff";ctx.font="900 24px system-ui,sans-serif";ctx.fillText("CORTE DE PAQUETES",70,78);
+  ctx.fillStyle="#fff";ctx.font="800 46px system-ui,sans-serif";ctx.fillText("Corte semanal",70,132);
+  ctx.fillStyle="#aab8ca";ctx.font="500 23px system-ui,sans-serif";ctx.fillText(`${d.start.getDate()} – ${d.end.getDate()} de ${d.end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`,70,170);
+  dg(ctx,55,205,970,250,34);ctx.fillStyle="#91f7ff";ctx.font="900 18px system-ui,sans-serif";ctx.fillText("PAQUETES ENTREGADOS",90,250);ctx.fillStyle="#fff";ctx.font="900 105px system-ui,sans-serif";ctx.fillText(String(d.total),90,355);ctx.fillStyle="#9cafc5";ctx.font="500 20px system-ui,sans-serif";ctx.fillText(`${d.entries.length} días registrados`,90,400);ctx.fillStyle="#fff";ctx.font="700 25px system-ui,sans-serif";ctx.fillText(`${money(d.rate)} por paquete`,690,300);
+  dg(ctx,55,485,465,185,30);dg(ctx,560,485,465,185,30);
+  ctx.fillStyle="#91f7ff";ctx.font="900 17px system-ui,sans-serif";ctx.fillText("GANANCIA BRUTA",85,530);ctx.fillStyle="#fff";ctx.font=`900 ${fit(ctx,money(d.gross),390,42)}px system-ui,sans-serif`;ctx.fillText(money(d.gross),85,592);ctx.fillStyle="#9cafc5";ctx.font="500 18px system-ui,sans-serif";ctx.fillText(`${d.total} × ${money(d.rate)}`,85,630);
+  ctx.fillStyle="#91f7ff";ctx.font="900 17px system-ui,sans-serif";ctx.fillText("ADELANTOS / PRÉSTAMOS",590,530);ctx.fillStyle="#fff";ctx.font=`900 ${fit(ctx,"-"+money(d.adv),390,42)}px system-ui,sans-serif`;ctx.fillText("-"+money(d.adv),590,592);ctx.fillStyle="#9cafc5";ctx.font="500 18px system-ui,sans-serif";ctx.fillText(`${d.advances.length} registros`,590,630);
+  dg(ctx,55,700,970,280,38);ctx.fillStyle="#a5fff0";ctx.font="900 18px system-ui,sans-serif";ctx.fillText("TOTAL A RECIBIR",90,755);ctx.fillStyle="#7dffdb";ctx.font=`900 ${fit(ctx,money(d.net),820,92)}px system-ui,sans-serif`;ctx.fillText(money(d.net),90,860);ctx.fillStyle="#b0bdce";ctx.font="500 21px system-ui,sans-serif";ctx.fillText(`${money(d.gross)} − ${money(d.adv)} de adelantos`,90,908);
+  dg(ctx,55,1015,970,235,32);ctx.fillStyle="#fff";ctx.font="800 22px system-ui,sans-serif";ctx.fillText("Registro de la semana",90,1058);
+  const shown=d.entries.slice(-6);let yy=1100;for(const [date,val] of shown){const dt=parseDate(date);ctx.fillStyle="#a9b7c9";ctx.font="600 17px system-ui,sans-serif";ctx.fillText(dt.toLocaleDateString("es-MX",{weekday:"short",day:"numeric",month:"short"}),90,yy);ctx.fillStyle="#fff";ctx.font="800 18px system-ui,sans-serif";ctx.fillText(`${val} paquetes`,390,yy);ctx.fillStyle="#8ff7ff";ctx.font="700 17px system-ui,sans-serif";ctx.fillText(money(Number(val)*rateFor(date)),730,yy);yy+=30}
+  ctx.fillStyle="rgba(255,255,255,.48)";ctx.font="500 15px system-ui,sans-serif";ctx.fillText("Generado desde Corte de Paquetes",70,1315);
+  return new Promise(resolve=>canvas.toBlob(resolve,"image/png",1));
+}
+async function shareCut(){
+  const blob=await renderShareImage();if(!blob)return;const file=new File([blob],"corte-de-paquetes.png",{type:"image/png"});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({title:"Corte de Paquetes",text:"Mi corte semanal de paquetes.",files:[file]});return}catch(e){if(e.name==="AbortError")return}}
+  $("sharePanel").classList.remove("hidden");
+}
+$("shareCut").onclick=shareCut;$("closeShare").onclick=()=>$("sharePanel").classList.add("hidden");$("nativeShare").onclick=shareCut;
+$("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("./sw.js?v=1.13").then(r=>r.update()).catch(()=>{});
 }

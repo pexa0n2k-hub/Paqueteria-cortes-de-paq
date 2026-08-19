@@ -4,7 +4,7 @@
 
 <section class="glass jelly hero"><small>PAQUETES ENTREGADOS</small><b id="total">0</b><span id="daysText">Sin registros</span></section>
 <section class="grid2"><div class="glass jelly card"><small>GANANCIA BRUTA</small><strong id="gross">$0.00</strong><span>POR PAQUETE <b id="rateText">$0.00</b></span></div><div class="glass jelly card"><small>ADELANTOS / PRÉSTAMOS</small><strong id="adv">-$0.00</strong><span>REGISTROS <b id="advCount">0</b></span></div></section>
-<section class="glass jelly net"><small>TOTAL A RECIBIR</small><strong id="net">$0.00</strong></section>
+<section class="glass jelly net"><small>TOTAL A RECIBIR</small><strong id="net">$0.00</strong></section><button id="shareCut" class="glass jelly shareCut">📤 Compartir corte</button>
 
 <section class="glass jelly form"><div class="formline"><label>📅 Fecha del registro</label><input id="date" class="field dateField" type="date"></div><div id="dateText" class="dateText"></div><label class="mt">📦 Paquetes entregados</label><div class="entry"><input id="qty" type="number" min="0" inputmode="numeric" placeholder="0"><button id="save" class="neonBtn">Guardar</button></div><small>Semana actual: lunes a domingo.</small></section>
 <button id="addAdv" class="glass jelly action">💸 Agregar adelanto / préstamo <b>＋</b></button>
@@ -22,4 +22,4 @@
 <div id="advPanel" class="overlay hidden"><div class="glass panel small"><h2>💸 Adelanto / préstamo</h2><label>Fecha</label><input id="advDate" class="field" type="date"><label>Concepto</label><input id="concept" class="field" placeholder="Préstamo"><label>Monto</label><input id="amount" class="field" type="number" min="0" step=".01" inputmode="decimal" placeholder="200"><div class="actions"><button id="cancelAdv" class="glass action">Cancelar</button><button id="saveAdv" class="neonBtn action">Guardar</button></div><div id="advList" class="list miniList"></div></div></div>
 
 <div id="editPanel" class="overlay hidden"><div class="glass panel small"><h2>Editar registro</h2><input id="editQty" class="field" type="number" min="0" inputmode="numeric"><div class="actions"><button id="cancelEdit" class="glass action">Cancelar</button><button id="saveEdit" class="neonBtn action">Guardar</button></div></div></div>
-<script src="./app.js?v=1.15"></script></body></html>
+<div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.16"></script></body></html>

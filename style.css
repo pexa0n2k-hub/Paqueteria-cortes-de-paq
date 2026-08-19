@@ -58,3 +58,6 @@ filter:blur(.35px);opacity:.8;pointer-events:none
 }
 .hero b,.net strong{filter:drop-shadow(0 0 12px rgba(110,235,255,.28))}
 @media (prefers-reduced-motion:reduce){.jelly{animation:none}.glass{transition:none}}
+
+.shareCut{width:100%;height:52px;margin-top:10px;text-align:center;color:#fff;font-weight:900;font-size:15px;background:linear-gradient(135deg,rgba(255,255,255,.17),rgba(100,220,255,.10));border-color:rgba(255,255,255,.30);box-shadow:inset 0 1px 1px rgba(255,255,255,.5),0 10px 28px rgba(0,0,0,.22)}
+.sharePanel{max-width:520px}#shareCanvas{display:block;width:100%;height:auto;border-radius:24px;margin:12px 0;background:#09111f;box-shadow:0 12px 35px rgba(0,0,0,.3)}

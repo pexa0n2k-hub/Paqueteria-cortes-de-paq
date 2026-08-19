@@ -1,1 +1,1 @@
-v1.15: rediseño visual Apple/iOS-inspired Liquid Glass. Material translúcido, refracción, highlights, sombras suaves y microanimación. No se modifica la lógica de guardado de v1.13/v1.14.
+v1.16: botón Compartir corte; genera PNG estilo Liquid Glass con datos del corte y usa Web Share API para compartir la imagen en Android.
