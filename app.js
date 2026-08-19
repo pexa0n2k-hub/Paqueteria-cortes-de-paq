@@ -182,7 +182,7 @@ function render(){
       const dd=new Date(start); dd.setDate(start.getDate()+i);
       const key=dateKey(dd), val=Number(state.records[key]||0);
       const has=Object.prototype.hasOwnProperty.call(state.records,key);
-      cells.push(`<div class="dayCell ${has?"":"empty"}"><div class="dow">${labels[i]}</div><div class="dateNum">${String(dd.getDate()).padStart(2,"0")}/${String(dd.getMonth()+1).padStart(2,"0")}</div><div class="dash"></div><div class="qty">${val}</div><div class="label">paquetes</div></div>`);
+      cells.push(`<button type="button" class="dayCell ${has?"":"empty"}" onclick="openDayActions('${key}')" aria-label="Gestionar ${labels[i]} ${String(dd.getDate()).padStart(2,"0")}/${String(dd.getMonth()+1).padStart(2,"0")}"><div class="dow">${labels[i]}</div><div class="dateNum">${String(dd.getDate()).padStart(2,"0")}/${String(dd.getMonth()+1).padStart(2,"0")}</div><div class="dash"></div><div class="qty">${val}</div><div class="label">paquetes</div></button>`);
     }
     daily.innerHTML=`<div class="dailyGrid">${cells.join("")}</div>`;
   }
@@ -257,6 +257,30 @@ window.delAdv=i=>{
   if(safeWrite())render();
 };
 
+let selectedDay="";
+window.openDayActions=d=>{
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(d)) return;
+  selectedDay=d;
+  const dt=parseDate(d);
+  $("dayActionDate").textContent=dt.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  $("dayActionQty").textContent=Number(state.records[d]||0);
+  $("dayActionPanel").classList.remove("hidden");
+};
+const closeDayActions=()=>{$("dayActionPanel").classList.add("hidden");selectedDay="";};
+$("closeDayAction").onclick=closeDayActions;
+$("modifyDay").onclick=()=>{
+  if(!selectedDay)return;
+  const d=selectedDay;
+  closeDayActions();
+  window.editDay(d);
+};
+$("deleteDay").onclick=()=>{
+  if(!selectedDay)return;
+  const d=selectedDay;
+  closeDayActions();
+  window.delDay(d);
+};
+
 window.editDay=d=>{
   $("editPanel").dataset.date=d;
   $("editQty").value=state.records[d]??0;
@@ -270,7 +294,7 @@ $("saveEdit").onclick=()=>{
   if(safeWrite()){ $("editPanel").classList.add("hidden"); render(); }
 };
 window.delDay=d=>{
-  if(!state.records[d])return;
+  if(!Object.prototype.hasOwnProperty.call(state.records,d))return;
   if(!confirm("¿Eliminar registro de este día?"))return;
   delete state.records[d];
   if(safeWrite())render();

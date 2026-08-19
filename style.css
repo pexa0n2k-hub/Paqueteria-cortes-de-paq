@@ -177,3 +177,35 @@ main{max-width:650px;padding-left:18px;padding-right:18px}
   .grid2{gap:8px}
   .metricCard{border-radius:19px}
 }
+
+/* ===== v1.24 — interactive daily calendar ===== */
+.dailyGrid .dayCell{
+  appearance:none;
+  -webkit-appearance:none;
+  font:inherit;
+  color:inherit;
+  width:100%;
+  cursor:pointer;
+  transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease;
+}
+.dailyGrid .dayCell:hover{
+  transform:translateY(-2px) scale(1.015);
+  border-color:rgba(115,244,255,.48);
+  background:rgba(255,255,255,.10);
+  box-shadow:0 10px 25px rgba(0,0,0,.22),inset 0 1px 1px rgba(255,255,255,.20),0 0 18px rgba(80,235,255,.08);
+}
+.dailyGrid .dayCell:active{transform:scale(.975)}
+.dailyGrid .dayCell:focus-visible{outline:2px solid #72f5ff;outline-offset:2px}
+.dayActionPanel{max-width:430px}
+.selectedDayCard{
+  margin:4px 0 18px;padding:18px 20px;border-radius:20px;
+  background:rgba(255,255,255,.075);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.16);
+}
+.selectedDayCard span{display:block;color:#a7b8cd;font-size:13px;text-transform:capitalize}
+.selectedDayCard strong{display:block;margin-top:6px;font-size:30px;color:#fff}
+.dayActionButtons{display:grid;gap:10px}
+.dayActionButtons .action{width:100%;min-height:54px;border-radius:17px;font-weight:850}
+.actionModify{color:#7df6ff}
+.actionDelete{color:#ff9fb7}
