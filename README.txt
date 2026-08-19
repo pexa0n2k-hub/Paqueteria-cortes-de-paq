@@ -1,1 +1,1 @@
-v1.22: se elimina de la interfaz el apartado visible 'Registro diario'. Los registros internos se conservan para que el resumen diario, cálculos y demás funciones sigan funcionando.
+v1.23: corrección del resumen diario tipo calendario. v1.22 eliminó el bloque Registro diario pero quedaron referencias JavaScript a sus elementos DOM, lo que detenía el renderizado antes del calendario. Se eliminaron únicamente esas referencias obsoletas; los registros y cálculos se mantienen.

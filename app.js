@@ -165,7 +165,6 @@ function render(){
   $("advCount").textContent=adv.length;
   $("net").textContent=money(total*currentRate-advTotal);
   $("daysText").textContent=entries.length ? entries.length+" días registrados" : "Sin registros";
-  $("count").textContent=entries.length+" días";
   $("curRate").textContent=money(currentRate);
   $("rate").value=currentRate || "";
 
@@ -187,17 +186,6 @@ function render(){
     }
     daily.innerHTML=`<div class="dailyGrid">${cells.join("")}</div>`;
   }
-
-  $("list").innerHTML=entries.length ? entries.map(([d,v])=>{
-    const dt=parseDate(d), n=Number(v), r=rateFor(d);
-    return `<div class="row">
-      <div class="dateLabel">${dt.toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"})}
-        <small>${dt.toLocaleDateString("es-MX",{weekday:"long"})}</small>
-      </div>
-      <div class="rowRight"><b>${n} paquetes</b><small>${money(n*r)}</small></div>
-      <div><button class="mini" onclick="editDay('${d}')">✏️</button><button class="mini" onclick="delDay('${d}')">🗑️</button></div>
-    </div>`;
-  }).join("") : "Aún no hay registros.";
 
   $("advList").innerHTML=adv.length ? adv.map((x,i)=>{
     const dt=parseDate(x.date);
