@@ -1,1 +1,1 @@
-v1.13: reparación completa del guardado de paquetes y tarifa con almacenamiento explícito; edición/eliminación corregidas; migración de datos anteriores; cache-busting para evitar que GitHub Pages sirva JS viejo; Liquid Glass optimizado para desplazamiento más fluido.
+v1.14: nueva apariencia Liquid Glass sobre la base estable v1.13. Mantiene intacto el modelo de guardado y añade cristal translúcido, reflejos, bordes suaves, profundidad y animación elástica ligera.
