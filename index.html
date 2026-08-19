@@ -9,16 +9,12 @@
 <section class="glass jelly form"><div class="formline"><label>📅 Fecha del registro</label><input id="date" class="field dateField" type="date"></div><div id="dateText" class="dateText"></div><label class="mt">📦 Paquetes entregados</label><div class="entry"><input id="qty" type="number" min="0" inputmode="numeric" placeholder="0"><button id="save" class="neonBtn">Guardar</button></div><small>Semana actual: lunes a domingo.</small></section>
 <button id="addAdv" class="glass jelly action">💸 Agregar adelanto / préstamo <b>＋</b></button>
 
-<section class="glass jelly stats" id="statsBox"><div class="sectionTitle"><h2>📊 Estadísticas</h2><span>Esta semana</span></div><div class="statsGrid"><div><b id="avg">0</b><small>promedio diario</small></div><div><b id="best">0</b><small>mejor día</small></div><div><b id="worked">0/7</b><small>días registrados</small></div><div><b id="pace">$0</b><small>ganancia promedio</small></div></div><div class="chart" id="chart"></div></section>
-
 <div class="sectionTitle"><h2>📅 Registro diario</h2><span id="count">0 días</span></div><section id="list" class="glass jelly list">Aún no hay registros.</section>
 
 <div class="sectionTitle"><h2>📚 Historial</h2><button id="historyToggle" class="neonCircle">⌄</button></div>
 <section id="historyWrap" class="glass jelly historyCollapsed"><div class="historyHint">Toca la flecha para ver tus cortes anteriores.</div><div id="history" class="historyList"></div></section>
 
-<button id="addAdv2" class="glass jelly action">💸 Ver / agregar adelantos</button>
 <button id="reset" class="glass action danger">Borrar semana actual</button>
-<div class="weekFooter glass"><span>📅 Semana actual: lunes a domingo</span><b id="footerRange"></b></div>
 </main>
 
 <div id="setPanel" class="overlay hidden"><div class="glass panel"><div class="panelHead"><h2>Ajustes</h2><button id="closeSet" class="glass icon">✕</button></div><label>Tarifa predeterminada <output id="curRate">$0.00</output></label><div class="entry"><input id="rate" type="number" min="0" step=".01" inputmode="decimal" placeholder="8.00"><button id="saveRate" class="neonBtn">Guardar</button></div><p>Se conserva hasta que tú la cambies.</p><label>Fondo personalizado</label><input id="bg" type="file" accept="image/*"><button id="removeBg" class="glass action">Quitar fondo</button><label>Oscurecimiento del fondo <output id="shadeOut">62%</output></label><input id="shadeRange" type="range" min="20" max="90" value="62"><label>Transparencia de los cajones <output id="transOut">78%</output></label><input id="transRange" type="range" min="35" max="95" value="78"><label>Desenfoque del fondo <output id="blurOut">8px</output></label><input id="blurRange" type="range" min="0" max="20" value="8"></div></div>

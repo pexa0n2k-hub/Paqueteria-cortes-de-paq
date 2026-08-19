@@ -1,1 +1,1 @@
-v1.10: corrige Invalid Date reparando claves antiguas, corrige edición/eliminación, restaura Liquid Glass y animación gelatinosa, y añade control de transparencia de los cajones.
+v1.11: elimina del panel principal las Estadísticas, el acceso secundario a Adelantos y la tarjeta inferior de Semana actual. Se conserva el registro de paquetes, tarifa, adelantos mediante el botón principal, historial, fondo y Liquid Glass.
