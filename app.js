@@ -326,9 +326,25 @@ function fit(ctx,text,max,size){let s=size;ctx.font=`900 ${s}px system-ui,sans-s
 async function renderShareImage(){
   const d=currentCutData(),canvas=$("shareCanvas"),W=1080,H=1350,scale=Math.min(3,Math.max(2,devicePixelRatio||2));
   canvas.width=W*scale;canvas.height=H*scale;const ctx=canvas.getContext("2d");ctx.scale(scale,scale);
-  const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-  let gl=ctx.createRadialGradient(180,80,10,180,80,450);gl.addColorStop(0,"rgba(70,230,255,.22)");gl.addColorStop(1,"rgba(70,230,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
-  gl=ctx.createRadialGradient(900,1150,10,900,1150,500);gl.addColorStop(0,"rgba(170,60,255,.18)");gl.addColorStop(1,"rgba(170,60,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+  // Usa el mismo fondo personalizado que tiene la aplicación.
+  if(state.settings.bg){
+    try{
+      const img=await new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=state.settings.bg;});
+      const sc=Math.max(W/img.width,H/img.height),iw=img.width*sc,ih=img.height*sc;
+      ctx.drawImage(img,(W-iw)/2,(H-ih)/2,iw,ih);
+      ctx.fillStyle=`rgba(2,5,16,${(state.settings.shade??62)/100})`;
+      ctx.fillRect(0,0,W,H);
+      const veil=ctx.createLinearGradient(0,0,W,H);
+      veil.addColorStop(0,"rgba(0,215,255,.045)");veil.addColorStop(1,"rgba(150,40,255,.06)");
+      ctx.fillStyle=veil;ctx.fillRect(0,0,W,H);
+    }catch(e){
+      const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    }
+  }else{
+    const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    let gl=ctx.createRadialGradient(180,80,10,180,80,450);gl.addColorStop(0,"rgba(70,230,255,.22)");gl.addColorStop(1,"rgba(70,230,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+    gl=ctx.createRadialGradient(900,1150,10,900,1150,500);gl.addColorStop(0,"rgba(170,60,255,.18)");gl.addColorStop(1,"rgba(170,60,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+  }
   ctx.fillStyle="#91f7ff";ctx.font="900 24px system-ui,sans-serif";ctx.fillText("CORTE DE PAQUETES",70,78);
   ctx.fillStyle="#fff";ctx.font="800 46px system-ui,sans-serif";ctx.fillText("Corte semanal",70,132);
   ctx.fillStyle="#aab8ca";ctx.font="500 23px system-ui,sans-serif";ctx.fillText(`${d.start.getDate()} – ${d.end.getDate()} de ${d.end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`,70,170);

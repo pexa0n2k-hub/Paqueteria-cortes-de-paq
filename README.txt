@@ -1,1 +1,1 @@
-v1.16: botón Compartir corte; genera PNG estilo Liquid Glass con datos del corte y usa Web Share API para compartir la imagen en Android.
+v1.17: el corte compartido utiliza el mismo fondo personalizado de la app, con el mismo oscurecimiento y paneles Liquid Glass. No modifica el sistema de guardado.
