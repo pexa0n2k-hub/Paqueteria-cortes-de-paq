@@ -1,1 +1,1 @@
-v1.5 corregida. Para PWA debe publicarse en HTTPS; no abrir index.html desde content://.
+v1.6: semana de lunes a domingo; selector de fecha para registrar cualquier día de la semana actual; adelantos con fecha; tarifa persistente; Liquid Glass y fondo personalizable.
