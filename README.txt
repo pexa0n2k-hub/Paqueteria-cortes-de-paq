@@ -1,1 +1,1 @@
-v1.18: los cajones de la imagen compartida ahora tienen blur únicamente dentro de cada cajón y una capa Liquid Glass al 25% de transparencia. El fondo fuera de los cajones permanece nítido. No se modifica el guardado ni la interfaz principal.
+v1.19: corrige el Liquid Glass de la imagen compartida. Cada cajón desenfoca únicamente el fondo que está debajo de él, sin desenfocar textos ni el resto de la imagen. Material con aproximadamente 25% de transparencia, borde especular y reflejo superior. Mantiene el fondo personalizado de la app y no modifica el sistema de guardado.

@@ -320,52 +320,70 @@ function currentCutData(){
 }
 function rr(ctx,x,y,w,h,r){const q=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+q,y);ctx.arcTo(x+w,y,x+w,y+h,q);ctx.arcTo(x+w,y+h,x,y+h,q);ctx.arcTo(x,y+h,x,y,q);ctx.arcTo(x,y,x+w,y,q);ctx.closePath()}
 function dg(ctx,x,y,w,h,r=28){
-  ctx.save();
-
-  // 1) Blur ONLY the area inside the glass drawer.
-  // The background photo underneath remains sharp everywhere else.
+  // IMPORTANTE: el blur se aplica únicamente al fondo capturado ANTES de
+  // dibujar los cajones. Nunca hacemos drawImage() del canvas sobre sí mismo.
   const q=Math.min(r,w/2,h/2);
-  ctx.beginPath();
-  ctx.moveTo(x+q,y);
-  ctx.arcTo(x+w,y,x+w,y+h,q);
-  ctx.arcTo(x+w,y+h,x,y+h,q);
-  ctx.arcTo(x,y+h,x,y,q);
-  ctx.arcTo(x,y,x+w,y,q);
-  ctx.closePath();
+  const path=()=>{
+    ctx.beginPath();
+    ctx.moveTo(x+q,y);
+    ctx.arcTo(x+w,y,x+w,y+h,q);
+    ctx.arcTo(x+w,y+h,x,y+h,q);
+    ctx.arcTo(x,y+h,x,y,q);
+    ctx.arcTo(x,y,x+w,y,q);
+    ctx.closePath();
+  };
+
+  ctx.save();
+  path();
   ctx.clip();
 
-  const srcCanvas=ctx.canvas;
-  ctx.filter="blur(18px)";
-  ctx.drawImage(srcCanvas,0,0);
-  ctx.filter="none";
+  if(window.__shareGlassSource){
+    ctx.save();
+    ctx.filter="blur(14px)";
+    ctx.drawImage(
+      window.__shareGlassSource,
+      0,0,window.__shareGlassW*window.__shareGlassScale,window.__shareGlassH*window.__shareGlassScale,
+      0,0,window.__shareGlassW,window.__shareGlassH
+    );
+    ctx.filter="none";
+    ctx.restore();
+  }
 
-  // 2) 25% translucent material over the blurred background.
+  // Material Liquid Glass: aproximadamente 25% de transparencia.
   const g=ctx.createLinearGradient(x,y,x+w,y+h);
-  g.addColorStop(0,"rgba(255,255,255,.105)");
-  g.addColorStop(.45,"rgba(255,255,255,.062)");
-  g.addColorStop(1,"rgba(5,12,28,.25)");
+  g.addColorStop(0,"rgba(255,255,255,.18)");
+  g.addColorStop(.45,"rgba(255,255,255,.10)");
+  g.addColorStop(1,"rgba(8,18,38,.58)");
   ctx.fillStyle=g;
+  ctx.fillRect(x,y,w,h);
+
+  // Sutil velo oscuro para que los textos sigan siendo legibles.
+  const shade=ctx.createLinearGradient(0,y,0,y+h);
+  shade.addColorStop(0,"rgba(5,12,26,.08)");
+  shade.addColorStop(1,"rgba(5,12,26,.20)");
+  ctx.fillStyle=shade;
   ctx.fillRect(x,y,w,h);
   ctx.restore();
 
-  // 3) Glass edge + top reflection.
+  // Borde, brillo superior y reflejo interno.
   ctx.save();
-  ctx.beginPath();
-  ctx.moveTo(x+q,y);
-  ctx.arcTo(x+w,y,x+w,y+h,q);
-  ctx.arcTo(x+w,y+h,x,y+h,q);
-  ctx.arcTo(x,y+h,x,y,q);
-  ctx.arcTo(x,y,x+w,y,q);
-  ctx.closePath();
-  ctx.strokeStyle="rgba(255,255,255,.30)";
+  path();
+  ctx.strokeStyle="rgba(255,255,255,.42)";
   ctx.lineWidth=2;
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(x+28,y+1);
-  ctx.lineTo(x+w-28,y+1);
-  ctx.strokeStyle="rgba(255,255,255,.62)";
+  ctx.moveTo(x+30,y+1);
+  ctx.lineTo(x+w-30,y+1);
+  ctx.strokeStyle="rgba(255,255,255,.72)";
   ctx.lineWidth=2;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(x+22,y+q);
+  ctx.lineTo(x+22,y+h-q);
+  ctx.strokeStyle="rgba(255,255,255,.10)";
+  ctx.lineWidth=1;
   ctx.stroke();
   ctx.restore();
 }
@@ -392,6 +410,17 @@ async function renderShareImage(){
     let gl=ctx.createRadialGradient(180,80,10,180,80,450);gl.addColorStop(0,"rgba(70,230,255,.22)");gl.addColorStop(1,"rgba(70,230,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
     gl=ctx.createRadialGradient(900,1150,10,900,1150,500);gl.addColorStop(0,"rgba(170,60,255,.18)");gl.addColorStop(1,"rgba(170,60,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
   }
+  // Captura limpia del fondo: esta es la única fuente que los cajones pueden desenfocar.
+  // Así el blur queda DENTRO de cada cajón y no afecta el resto de la tarjeta.
+  const glassSource=document.createElement("canvas");
+  glassSource.width=canvas.width;
+  glassSource.height=canvas.height;
+  glassSource.getContext("2d").drawImage(canvas,0,0);
+  window.__shareGlassSource=glassSource;
+  window.__shareGlassW=W;
+  window.__shareGlassH=H;
+  window.__shareGlassScale=scale;
+
   ctx.fillStyle="#91f7ff";ctx.font="900 24px system-ui,sans-serif";ctx.fillText("CORTE DE PAQUETES",70,78);
   ctx.fillStyle="#fff";ctx.font="800 46px system-ui,sans-serif";ctx.fillText("Corte semanal",70,132);
   ctx.fillStyle="#aab8ca";ctx.font="500 23px system-ui,sans-serif";ctx.fillText(`${d.start.getDate()} – ${d.end.getDate()} de ${d.end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`,70,170);
