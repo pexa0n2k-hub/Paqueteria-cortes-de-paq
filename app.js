@@ -158,6 +158,9 @@ function render(){
   $("total").textContent=total;
   $("gross").textContent=money(total*currentRate);
   $("rateText").textContent=money(currentRate);
+  $("grossDetail").textContent=`${total} × ${money(currentRate)}`;
+  $("netDetail").textContent=`${money(total*currentRate)} − ${money(advTotal)} de adelantos`;
+  $("footerRange").textContent=`${start.getDate()} – ${end.getDate()} de ${end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`;
   $("adv").textContent="-"+money(advTotal);
   $("advCount").textContent=adv.length;
   $("net").textContent=money(total*currentRate-advTotal);
@@ -171,6 +174,19 @@ function render(){
   $("advDate").min=dateKey(start); $("advDate").max=dateKey(end);
   if(!inCurrentWeek($("advDate").value)) $("advDate").value=today;
   updateDateText();
+
+  const daily=$("dailySummary");
+  if(daily){
+    const labels=["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
+    const cells=[];
+    for(let i=0;i<7;i++){
+      const dd=new Date(start); dd.setDate(start.getDate()+i);
+      const key=dateKey(dd), val=Number(state.records[key]||0);
+      const has=Object.prototype.hasOwnProperty.call(state.records,key);
+      cells.push(`<div class="dayCell ${has?"":"empty"}"><div class="dow">${labels[i]}</div><div class="dateNum">${String(dd.getDate()).padStart(2,"0")}/${String(dd.getMonth()+1).padStart(2,"0")}</div><div class="dash"></div><div class="qty">${val}</div><div class="label">paquetes</div></div>`);
+    }
+    daily.innerHTML=`<div class="dailyGrid">${cells.join("")}</div>`;
+  }
 
   $("list").innerHTML=entries.length ? entries.map(([d,v])=>{
     const dt=parseDate(d), n=Number(v), r=rateFor(d);
@@ -439,7 +455,8 @@ async function shareCut(){
   if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({title:"Corte de Paquetes",text:"Mi corte semanal de paquetes.",files:[file]});return}catch(e){if(e.name==="AbortError")return}}
   $("sharePanel").classList.remove("hidden");
 }
-$("shareCut").onclick=shareCut;$("closeShare").onclick=()=>$("sharePanel").classList.add("hidden");$("nativeShare").onclick=shareCut;
+$("shareCut").onclick=shareCut;
+$("shareTop").onclick=shareCut;$("closeShare").onclick=()=>$("sharePanel").classList.add("hidden");$("nativeShare").onclick=shareCut;
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
