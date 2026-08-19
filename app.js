@@ -59,6 +59,10 @@ function setDates(db){
   const d=pd($("date").value||today);
   $("dateText").textContent="Seleccionado: "+d.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 }
+function updateHistoryCount(db){
+  const ws=[...new Set(Object.keys(db.data||{}).map(k=>k.split("_")[0]))];
+  $("historyCount").textContent=ws.length+" "+(ws.length===1?"semana":"semanas");
+}
 function refresh(){
   const db=load(),w=wk(new Date()),es=Object.entries(db.data).filter(([k])=>k.startsWith(w+"_")).map(([k,v])=>({date:k.slice(3),v:Number(v)||0}));
   const today=dk(new Date()),r=rate(db,today),total=es.reduce((s,e)=>s+e.v,0),ad=db.advances?.[w]||[],at=ad.reduce((s,x)=>s+(Number(x.amount)||0),0),[m,s]=bounds();
@@ -69,7 +73,7 @@ function refresh(){
   setDates(db);
   $("list").innerHTML=es.length?es.sort((a,b)=>a.date.localeCompare(b.date)).map(e=>{let d=pd(e.date),rr=rate(db,e.date);return `<div class="row"><div class="dateLabel">${d.toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"})}<small>${d.toLocaleDateString("es-MX",{weekday:"long"})}</small></div><div class="rowRight"><b>${e.v} paquetes</b><small>${money(e.v*rr)}</small></div><div><button class="mini" onclick="editDay('${e.date}')">✏️</button><button class="mini" onclick="delDay('${e.date}')">🗑️</button></div></div>`}).join(""):"Aún no hay registros.";
   $("advList").innerHTML=ad.length?ad.map((x,i)=>`<div class="row"><div class="dateLabel">${esc(x.concept||"Préstamo")}<small>${pd(x.date).toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"})}</small></div><div class="rowRight"><b>-${money(x.amount)}</b></div><button class="mini" onclick="delAdv(${i})">🗑️</button></div>`).join(""):"No hay adelantos.";
-  const ws=[...new Set(Object.keys(db.data).map(k=>k.split("_")[0]))].sort().reverse();
+  const ws=[...new Set(Object.keys(db.data).map(k=>k.split("_")[0]))].sort().reverse();$("historyCount").textContent=ws.length+" "+(ws.length===1?"semana":"semanas");
   $("history").innerHTML=ws.length?ws.map(x=>{let en=Object.entries(db.data).filter(([k])=>k.startsWith(x+"_")),t=en.reduce((z,[,v])=>z+(Number(v)||0),0),last=en.map(([k])=>k.slice(3)).sort().pop(),rr=last?rate(db,last):0,a=(db.advances?.[x]||[]).reduce((z,q)=>z+(Number(q.amount)||0),0);return `<div class="row"><div class="dateLabel">Semana ${x.split("-")[1]}<small>${money(rr)} / paquete · adelantos ${money(a)}</small></div><div class="rowRight"><b>${t} paquetes</b><small>${money(t*rr-a)} a recibir</small></div></div>`}).join(""):"Todavía no hay semanas anteriores.";
   apply(db.settings);
 }
@@ -97,5 +101,12 @@ $("shadeRange").oninput=e=>{let db=load();db.settings.shade=Number(e.target.valu
 $("blurRange").oninput=e=>{let db=load();db.settings.blur=Number(e.target.value);save(db);apply(db.settings)};
 $("reloadApp").onclick=async()=>{if("serviceWorker"in navigator){const regs=await navigator.serviceWorker.getRegistrations();for(const r of regs)await r.update()}location.href=location.pathname+"?v=1.7&t="+Date.now()};
 function apply(s={}){$("shadeRange").value=s.shade??62;$("blurRange").value=s.blur??8;$("shadeOut").textContent=(s.shade??62)+"%";$("blurOut").textContent=(s.blur??8)+"px";$("shade").style.background=`rgba(3,7,18,${(s.shade??62)/100})`;$("backdrop").style.filter=`blur(${s.blur??8}px)`;$("backdrop").style.backgroundImage=s.bg?`url("${s.bg}")`:"linear-gradient(135deg,#162b50,#07111e)"}
+$("historyToggle").onclick=()=>{
+  const list=$("history"),btn=$("historyToggle"),open=!list.classList.contains("hiddenHistory");
+  list.classList.toggle("hiddenHistory",open);
+  btn.classList.toggle("open",!open);
+  btn.setAttribute("aria-expanded",String(!open));
+  btn.querySelector("span").textContent=open?"Ver historial":"Ocultar historial";
+};
 if("serviceWorker"in navigator){navigator.serviceWorker.register("./sw.js").then(r=>r.update()).catch(()=>{})}
 window.addEventListener("DOMContentLoaded",refresh);

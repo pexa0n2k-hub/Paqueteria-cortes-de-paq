@@ -1,1 +1,1 @@
-v1.7: corrige guardado y selector de fecha, permite fondo personalizable, fuerza actualización del service worker y migra datos compatibles de versiones anteriores sin borrar el almacenamiento anterior.
+v1.8: historial plegable con flecha neon; efecto Liquid Glass más profundo con reflejos, bordes y brillo; animaciones suaves y efecto gelatinoso al tocar botones; conserva la funcionalidad y datos de v1.7.

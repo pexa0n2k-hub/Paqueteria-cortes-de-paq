@@ -38,8 +38,13 @@
 <div class="head"><h2>Adelantos</h2></div>
 <section id="advList" class="glass list">No hay adelantos.</section>
 
-<div class="head"><h2>Historial</h2></div>
-<section id="history" class="glass list">Todavía no hay semanas anteriores.</section>
+<div class="historyHead">
+  <div class="head historyTitle"><h2>Historial</h2><span id="historyCount">0 semanas</span></div>
+  <button id="historyToggle" class="glass neonArrow" type="button" aria-expanded="false" aria-controls="history">
+    <span>Ver historial</span><b>⌄</b>
+  </button>
+</div>
+<section id="history" class="glass list historyList hiddenHistory">Todavía no hay semanas anteriores.</section>
 
 <button id="reset" class="glass action danger" type="button">Borrar semana actual</button>
 </main>
