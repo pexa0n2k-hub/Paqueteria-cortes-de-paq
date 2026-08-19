@@ -140,3 +140,40 @@ h1{font-size:28px;letter-spacing:-.8px}
 @media(max-width:390px){
   .heroRate{position:static;margin-top:16px}.heroMain{min-height:245px}.grid2{gap:8px}.metricCard{display:block}.metricIcon{margin-bottom:10px}.metricCopy strong{font-size:22px}.totalCard{display:block}.shareCut{margin-top:15px;width:100%}.dailyGrid{gap:4px}.dayCell{min-height:120px;padding:7px 2px}
 }
+
+/* ===== v1.21 — rectangular Liquid Glass geometry ===== */
+main{max-width:650px;padding-left:18px;padding-right:18px}
+.glass{border-radius:24px}
+.heroMain{min-height:225px;border-radius:27px;padding:26px 27px}
+.heroNumber{font-size:88px;letter-spacing:-3px}
+.heroRate{right:32px;top:86px}
+.grid2{grid-template-columns:1fr 1fr;gap:14px}
+.metricCard{min-height:165px;border-radius:23px;padding:22px 24px}
+.metricIcon{border-radius:15px}
+.totalCard{min-height:175px;border-radius:24px;padding:25px 27px}
+.shareCut{border-radius:15px}
+.form{border-radius:24px}
+.actionLarge{border-radius:20px}
+.dailySummary{border-radius:24px;padding:18px}
+.dayCell{border-radius:14px}
+.historyCollapsed{border-radius:23px}
+.weekFooter{border-radius:20px}
+
+/* Keep the glass material rectangular while retaining iOS-like optical highlights. */
+.heroMain,.metricCard,.totalCard,.form,.dailySummary,.historyCollapsed,.weekFooter{
+  background:
+    linear-gradient(115deg,rgba(255,255,255,.19),rgba(255,255,255,.07) 42%,rgba(255,255,255,.035));
+  box-shadow:
+    0 22px 55px rgba(0,0,0,.27),
+    inset 0 1px 1px rgba(255,255,255,.58),
+    inset 0 -1px 0 rgba(255,255,255,.08);
+}
+@media(max-width:500px){
+  .heroMain{min-height:220px;padding:23px 22px;border-radius:25px}
+  .metricCard{min-height:158px;padding:18px;border-radius:21px}
+  .totalCard{min-height:172px;padding:22px;border-radius:22px}
+}
+@media(max-width:390px){
+  .grid2{gap:8px}
+  .metricCard{border-radius:19px}
+}

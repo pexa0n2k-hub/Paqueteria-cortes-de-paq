@@ -1,1 +1,1 @@
-v1.20: rediseño completo de la interfaz inspirado en el mockup Liquid Glass compartido por el usuario. Añade iconografía SVG, tarjeta principal de paquetes, métricas con iconos, total con compartir, resumen diario lunes-domingo, historial colapsado y pie de corte. Mantiene la lógica y el almacenamiento de v1.19.
+v1.21: ajuste geométrico de UI. Cajones más rectangulares y anchos, con radios moderados inspirados en el mockup Liquid Glass. Se conservan iconos, fondo, compartir, almacenamiento y lógica de v1.20.
