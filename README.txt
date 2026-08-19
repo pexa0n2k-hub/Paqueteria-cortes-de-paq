@@ -1,1 +1,1 @@
-v1.14: nueva apariencia Liquid Glass sobre la base estable v1.13. Mantiene intacto el modelo de guardado y añade cristal translúcido, reflejos, bordes suaves, profundidad y animación elástica ligera.
+v1.15: rediseño visual Apple/iOS-inspired Liquid Glass. Material translúcido, refracción, highlights, sombras suaves y microanimación. No se modifica la lógica de guardado de v1.13/v1.14.
