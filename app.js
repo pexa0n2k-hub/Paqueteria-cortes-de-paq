@@ -416,7 +416,7 @@ function dg(ctx,x,y,w,h,r=28){
   ctx.restore();
 }
 function fit(ctx,text,max,size){let s=size;ctx.font=`900 ${s}px system-ui,sans-serif`;while(ctx.measureText(text).width>max&&s>14){s--;ctx.font=`900 ${s}px system-ui,sans-serif`}return s}
-async async function renderShareImage(){
+async function renderShareImage(){
   const d=currentCutData(), canvas=$("shareCanvas"), W=1080, H=1350;
   const scale=Math.min(3,Math.max(2,devicePixelRatio||2));
   canvas.width=W*scale; canvas.height=H*scale;
