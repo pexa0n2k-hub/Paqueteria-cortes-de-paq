@@ -1,1 +1,1 @@
-v1.11: elimina del panel principal las Estadísticas, el acceso secundario a Adelantos y la tarjeta inferior de Semana actual. Se conserva el registro de paquetes, tarifa, adelantos mediante el botón principal, historial, fondo y Liquid Glass.
+v1.12: almacenamiento corregido y rápido, migración única de versiones anteriores, guardado de paquetes/tarifa, borrado/edición, y optimización del Liquid Glass para Android. Fondo comprimido al guardarlo y animación gelatinosa más ligera.
