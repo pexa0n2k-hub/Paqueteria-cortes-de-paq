@@ -1,1 +1,1 @@
-v1.6: semana de lunes a domingo; selector de fecha para registrar cualquier día de la semana actual; adelantos con fecha; tarifa persistente; Liquid Glass y fondo personalizable.
+v1.7: corrige guardado y selector de fecha, permite fondo personalizable, fuerza actualización del service worker y migra datos compatibles de versiones anteriores sin borrar el almacenamiento anterior.
