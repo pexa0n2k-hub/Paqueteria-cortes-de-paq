@@ -1,1 +1,1 @@
-v1.21: ajuste geométrico de UI. Cajones más rectangulares y anchos, con radios moderados inspirados en el mockup Liquid Glass. Se conservan iconos, fondo, compartir, almacenamiento y lógica de v1.20.
+v1.22: se elimina de la interfaz el apartado visible 'Registro diario'. Los registros internos se conservan para que el resumen diario, cálculos y demás funciones sigan funcionando.
