@@ -1,1 +1,1 @@
-v1.8: historial plegable con flecha neon; efecto Liquid Glass más profundo con reflejos, bordes y brillo; animaciones suaves y efecto gelatinoso al tocar botones; conserva la funcionalidad y datos de v1.7.
+v1.9: estadísticas semanales, promedio diario, mejor día, días registrados, promedio de ganancia y gráfica de ritmo; historial colapsado con flecha neon; Liquid Glass con brillo y animación gelatinosa suave.
