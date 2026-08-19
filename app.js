@@ -416,50 +416,134 @@ function dg(ctx,x,y,w,h,r=28){
   ctx.restore();
 }
 function fit(ctx,text,max,size){let s=size;ctx.font=`900 ${s}px system-ui,sans-serif`;while(ctx.measureText(text).width>max&&s>14){s--;ctx.font=`900 ${s}px system-ui,sans-serif`}return s}
-async function renderShareImage(){
-  const d=currentCutData(),canvas=$("shareCanvas"),W=1080,H=1350,scale=Math.min(3,Math.max(2,devicePixelRatio||2));
-  canvas.width=W*scale;canvas.height=H*scale;const ctx=canvas.getContext("2d");ctx.scale(scale,scale);
-  // Usa el mismo fondo personalizado que tiene la aplicación.
+async async function renderShareImage(){
+  const d=currentCutData(), canvas=$("shareCanvas"), W=1080, H=1350;
+  const scale=Math.min(3,Math.max(2,devicePixelRatio||2));
+  canvas.width=W*scale; canvas.height=H*scale;
+  const ctx=canvas.getContext("2d"); ctx.scale(scale,scale);
+
+  // 1) Fondo personalizado de la app, exactamente como se muestra dentro de ella.
   if(state.settings.bg){
     try{
-      const img=await new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=state.settings.bg;});
-      const sc=Math.max(W/img.width,H/img.height),iw=img.width*sc,ih=img.height*sc;
+      const img=await new Promise((resolve,reject)=>{
+        const im=new Image();
+        im.onload=()=>resolve(im); im.onerror=reject; im.src=state.settings.bg;
+      });
+      const sc=Math.max(W/img.width,H/img.height), iw=img.width*sc, ih=img.height*sc;
       ctx.drawImage(img,(W-iw)/2,(H-ih)/2,iw,ih);
-      ctx.fillStyle=`rgba(2,5,16,${(state.settings.shade??62)/100})`;
-      ctx.fillRect(0,0,W,H);
+      ctx.fillStyle=`rgba(2,5,16,${(state.settings.shade??62)/100})`; ctx.fillRect(0,0,W,H);
       const veil=ctx.createLinearGradient(0,0,W,H);
-      veil.addColorStop(0,"rgba(0,215,255,.045)");veil.addColorStop(1,"rgba(150,40,255,.06)");
-      ctx.fillStyle=veil;ctx.fillRect(0,0,W,H);
+      veil.addColorStop(0,"rgba(0,215,255,.045)"); veil.addColorStop(1,"rgba(150,40,255,.06)");
+      ctx.fillStyle=veil; ctx.fillRect(0,0,W,H);
     }catch(e){
-      const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+      const bg=ctx.createLinearGradient(0,0,W,H);
+      bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");
+      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
     }
   }else{
-    const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-    let gl=ctx.createRadialGradient(180,80,10,180,80,450);gl.addColorStop(0,"rgba(70,230,255,.22)");gl.addColorStop(1,"rgba(70,230,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
-    gl=ctx.createRadialGradient(900,1150,10,900,1150,500);gl.addColorStop(0,"rgba(170,60,255,.18)");gl.addColorStop(1,"rgba(170,60,255,0)");ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+    const bg=ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
   }
-  // Captura limpia del fondo: esta es la única fuente que los cajones pueden desenfocar.
-  // Así el blur queda DENTRO de cada cajón y no afecta el resto de la tarjeta.
+
+  // Captura del fondo antes de los cristales: cada cajón tendrá blur SOLO de lo que hay debajo.
   const glassSource=document.createElement("canvas");
-  glassSource.width=canvas.width;
-  glassSource.height=canvas.height;
+  glassSource.width=canvas.width;glassSource.height=canvas.height;
   glassSource.getContext("2d").drawImage(canvas,0,0);
   window.__shareGlassSource=glassSource;
-  window.__shareGlassW=W;
-  window.__shareGlassH=H;
-  window.__shareGlassScale=scale;
+  window.__shareGlassW=W;window.__shareGlassH=H;window.__shareGlassScale=scale;
 
-  ctx.fillStyle="#91f7ff";ctx.font="900 24px system-ui,sans-serif";ctx.fillText("CORTE DE PAQUETES",70,78);
-  ctx.fillStyle="#fff";ctx.font="800 46px system-ui,sans-serif";ctx.fillText("Corte semanal",70,132);
-  ctx.fillStyle="#aab8ca";ctx.font="500 23px system-ui,sans-serif";ctx.fillText(`${d.start.getDate()} – ${d.end.getDate()} de ${d.end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`,70,170);
-  dg(ctx,55,205,970,250,34);ctx.fillStyle="#91f7ff";ctx.font="900 18px system-ui,sans-serif";ctx.fillText("PAQUETES ENTREGADOS",90,250);ctx.fillStyle="#fff";ctx.font="900 105px system-ui,sans-serif";ctx.fillText(String(d.total),90,355);ctx.fillStyle="#9cafc5";ctx.font="500 20px system-ui,sans-serif";ctx.fillText(`${d.entries.length} días registrados`,90,400);ctx.fillStyle="#fff";ctx.font="700 25px system-ui,sans-serif";ctx.fillText(`${money(d.rate)} por paquete`,690,300);
-  dg(ctx,55,485,465,185,30);dg(ctx,560,485,465,185,30);
-  ctx.fillStyle="#91f7ff";ctx.font="900 17px system-ui,sans-serif";ctx.fillText("GANANCIA BRUTA",85,530);ctx.fillStyle="#fff";ctx.font=`900 ${fit(ctx,money(d.gross),390,42)}px system-ui,sans-serif`;ctx.fillText(money(d.gross),85,592);ctx.fillStyle="#9cafc5";ctx.font="500 18px system-ui,sans-serif";ctx.fillText(`${d.total} × ${money(d.rate)}`,85,630);
-  ctx.fillStyle="#91f7ff";ctx.font="900 17px system-ui,sans-serif";ctx.fillText("ADELANTOS / PRÉSTAMOS",590,530);ctx.fillStyle="#fff";ctx.font=`900 ${fit(ctx,"-"+money(d.adv),390,42)}px system-ui,sans-serif`;ctx.fillText("-"+money(d.adv),590,592);ctx.fillStyle="#9cafc5";ctx.font="500 18px system-ui,sans-serif";ctx.fillText(`${d.advances.length} registros`,590,630);
-  dg(ctx,55,700,970,280,38);ctx.fillStyle="#a5fff0";ctx.font="900 18px system-ui,sans-serif";ctx.fillText("TOTAL A RECIBIR",90,755);ctx.fillStyle="#7dffdb";ctx.font=`900 ${fit(ctx,money(d.net),820,92)}px system-ui,sans-serif`;ctx.fillText(money(d.net),90,860);ctx.fillStyle="#b0bdce";ctx.font="500 21px system-ui,sans-serif";ctx.fillText(`${money(d.gross)} − ${money(d.adv)} de adelantos`,90,908);
-  dg(ctx,55,1015,970,235,32);ctx.fillStyle="#fff";ctx.font="800 22px system-ui,sans-serif";ctx.fillText("Registro de la semana",90,1058);
-  const shown=d.entries.slice(-6);let yy=1100;for(const [date,val] of shown){const dt=parseDate(date);ctx.fillStyle="#a9b7c9";ctx.font="600 17px system-ui,sans-serif";ctx.fillText(dt.toLocaleDateString("es-MX",{weekday:"short",day:"numeric",month:"short"}),90,yy);ctx.fillStyle="#fff";ctx.font="800 18px system-ui,sans-serif";ctx.fillText(`${val} paquetes`,390,yy);ctx.fillStyle="#8ff7ff";ctx.font="700 17px system-ui,sans-serif";ctx.fillText(money(Number(val)*rateFor(date)),730,yy);yy+=30}
-  ctx.fillStyle="rgba(255,255,255,.48)";ctx.font="500 15px system-ui,sans-serif";ctx.fillText("Generado desde Corte de Paquetes",70,1315);
+  const white="#f8fbff", cyan="#78f4ff", mint="#72ffd7", muted="#a9b8ca";
+  const text=(s,x,y,size,weight="700",color=white)=>{
+    ctx.fillStyle=color;ctx.font=`${weight} ${size}px system-ui,-apple-system,sans-serif`;ctx.fillText(s,x,y);
+  };
+  const moneyFit=(value,max,size)=>fit(ctx,value,max,size);
+
+  // Header — igual a la composición premium del mockup.
+  text("CORTE DE PAQUETES",55,63,20,"900",cyan);
+  text("Corte semanal",55,112,42,"850",white);
+  text(`${d.start.getDate()} – ${d.end.getDate()} de ${d.end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`,55,148,19,"500",muted);
+
+  // Botón compartir visual en la tarjeta exportada.
+  dg(ctx,930,28,100,90,25);
+  ctx.save();ctx.strokeStyle=cyan;ctx.lineWidth=4;ctx.lineCap="round";ctx.lineJoin="round";
+  ctx.beginPath();ctx.moveTo(980,91);ctx.lineTo(980,48);ctx.moveTo(980,48);ctx.lineTo(966,62);ctx.moveTo(980,48);ctx.lineTo(994,62);ctx.moveTo(958,71);ctx.lineTo(958,97);ctx.quadraticCurveTo(958,103,964,103);ctx.lineTo(996,103);ctx.quadraticCurveTo(1002,103,1002,97);ctx.lineTo(1002,71);ctx.stroke();ctx.restore();
+
+  // Paquetes — tarjeta ancha rectangular.
+  dg(ctx,42,176,996,245,27);
+  text("PAQUETES ENTREGADOS",76,226,17,"900",cyan);
+  text(String(d.total),76,316,92,"900",white);
+  text(`${d.entries.length} días registrados`,76,359,19,"500",muted);
+
+  // Divisor y tarjeta de tarifa.
+  ctx.strokeStyle="rgba(255,255,255,.18)";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(600,224);ctx.lineTo(600,385);ctx.stroke();
+  dg(ctx,650,260,78,78,20);
+  // package icon
+  ctx.save();ctx.strokeStyle="#dce8f5";ctx.lineWidth=2.2;ctx.lineJoin="round";
+  ctx.beginPath();ctx.moveTo(669,282);ctx.lineTo(689,272);ctx.lineTo(709,282);ctx.lineTo(689,292);ctx.closePath();
+  ctx.moveTo(669,282);ctx.lineTo(669,305);ctx.lineTo(689,316);ctx.lineTo(709,305);ctx.lineTo(709,282);
+  ctx.moveTo(689,292);ctx.lineTo(689,316);ctx.stroke();ctx.restore();
+  text(money(d.rate),755,301,30,"800",white);
+  text("por paquete",755,331,18,"500",muted);
+
+  // Dos tarjetas métricas.
+  dg(ctx,42,455,478,190,25); dg(ctx,560,455,478,190,25);
+  dg(ctx,80,520,65,65,18); dg(ctx,596,520,65,65,18);
+
+  // Ganancia icon.
+  ctx.save();ctx.strokeStyle="#73fff0";ctx.lineWidth=2.8;ctx.lineCap="round";ctx.lineJoin="round";
+  ctx.beginPath();ctx.moveTo(98,568);ctx.lineTo(108,558);ctx.lineTo(116,563);ctx.lineTo(130,545);ctx.moveTo(99,574);ctx.lineTo(99,548);ctx.moveTo(99,574);ctx.lineTo(132,574);ctx.stroke();ctx.restore();
+  text("GANANCIA BRUTA",170,505,17,"900",cyan);
+  text(money(d.gross),170,564,moneyFit(money(d.gross),300,42),"900",white);
+  text(`${d.total} × ${money(d.rate)}`,170,603,18,"500",muted);
+
+  // Wallet icon.
+  ctx.save();ctx.strokeStyle="#ff8faa";ctx.lineWidth=2.5;ctx.lineJoin="round";
+  ctx.beginPath();ctx.roundRect(613,539,35,27,5);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(613,546);ctx.lineTo(646,546);ctx.quadraticCurveTo(655,546,655,554);ctx.lineTo(646,554);ctx.stroke();
+  ctx.beginPath();ctx.arc(645,554,2,0,Math.PI*2);ctx.fillStyle="#ff8faa";ctx.fill();ctx.restore();
+  text("ADELANTOS / PRÉSTAMOS",685,505,17,"900",cyan);
+  text("-"+money(d.adv),685,564,moneyFit("-"+money(d.adv),300,42),"900",white);
+  text(`${d.advances.length} registro${d.advances.length===1?"":"s"}`,685,603,18,"500",muted);
+
+  // Total.
+  dg(ctx,42,678,996,220,27);
+  text("TOTAL A RECIBIR",76,727,18,"900",cyan);
+  text(money(d.net),76,814,moneyFit(money(d.net),600,66),"900",mint);
+  text(`${money(d.gross)} − ${money(d.adv)} de adelantos`,76,852,18,"500",muted);
+
+  // Share button inside the total card.
+  dg(ctx,716,770,280,72,18);
+  ctx.save();ctx.strokeStyle=cyan;ctx.lineWidth=2.5;ctx.lineCap="round";ctx.lineJoin="round";
+  ctx.beginPath();ctx.moveTo(752,817);ctx.lineTo(752,786);ctx.moveTo(752,786);ctx.lineTo(741,797);ctx.moveTo(752,786);ctx.lineTo(763,797);ctx.moveTo(737,801);ctx.lineTo(737,824);ctx.quadraticCurveTo(737,830,743,830);ctx.lineTo(775,830);ctx.quadraticCurveTo(781,830,781,824);ctx.lineTo(781,801);ctx.stroke();ctx.restore();
+  text("Compartir corte",798,815,17,"800",cyan);
+
+  // Resumen diario — siempre 7 días lunes a domingo.
+  dg(ctx,42,932,996,278,25);
+  text("RESUMEN DIARIO",76,977,17,"900",cyan);
+  const labels=["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
+  const gap=13, cellW=116, cellH=185, x0=72, y0=1002;
+  for(let i=0;i<7;i++){
+    const dt=new Date(d.start);dt.setDate(d.start.getDate()+i);
+    const key=dateKey(dt), val=Number(state.records[key]||0);
+    dg(ctx,x0+i*(cellW+gap),y0,cellW,cellH,18);
+    text(labels[i],x0+i*(cellW+gap)+31,y0+37,14,"800",white);
+    text(`${String(dt.getDate()).padStart(2,"0")}/${String(dt.getMonth()+1).padStart(2,"0")}`,x0+i*(cellW+gap)+30,y0+61,12,"500",muted);
+    ctx.fillStyle=cyan;ctx.shadowColor="rgba(114,255,240,.7)";ctx.shadowBlur=8;ctx.fillRect(x0+i*(cellW+gap)+40,y0+78,36,3);ctx.shadowBlur=0;
+    text(String(val),x0+i*(cellW+gap)+36,y0+126,26,"900",white);
+    text("paquetes",x0+i*(cellW+gap)+25,y0+151,11,"500",muted);
+  }
+
+  // Footer.
+  dg(ctx,42,1230,996,75,18);
+  text("▣",76,1276,23,"500","#dce8f5");
+  text("Corte semanal: lunes a domingo",112,1273,16,"600",white);
+  text("◷",645,1276,22,"500","#dce8f5");
+  const now=new Date();
+  text(`Generado: ${now.toLocaleDateString("es-MX",{day:"numeric",month:"long"})}, ${now.toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit"})}`,680,1273,14,"500",white);
+  text("Generado desde Corte de Paquetes",55,1330,13,"500","rgba(255,255,255,.50)");
+
   return new Promise(resolve=>canvas.toBlob(resolve,"image/png",1));
 }
 async function shareCut(){
