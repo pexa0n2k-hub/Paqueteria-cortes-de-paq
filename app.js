@@ -584,34 +584,50 @@ render();
     const modal=$v27("dashboardModalV27");
     if(!modal)return;
 
-    const records=(typeof state!=="undefined" && state.records)?state.records:{};
-    const weekStart=typeof monday==="function"?monday(new Date()):new Date();
-    const weekEnd=typeof sunday==="function"?sunday(new Date()):new Date();
-    const todayKey=typeof dateKey==="function"?dateKey(new Date()):new Date().toISOString().slice(0,10);
-    const rate=(typeof rateFor==="function")?Number(rateFor(todayKey)||0):Number(state.rate||0);
+    // Read the same persistent database used by the app, independently of
+    // the in-memory scope. This makes the Dashboard immune to state-scope issues.
+    let db=null;
+    try{ db=JSON.parse(localStorage.getItem("corte_paquetes_data")||"null"); }catch(e){}
+    if(!db || typeof db!=="object") db={records:{},rate:0,rateHistory:[],advances:{}};
+    const records=(db.records && typeof db.records==="object")?db.records:{};
 
-    const total=Object.entries(records)
-      .filter(([d,v])=>typeof inCurrentWeek==="function"?inCurrentWeek(d):true)
-      .reduce((s,[,v])=>s+Number(v||0),0);
+    const now=new Date();
+    const weekStart=new Date(now); weekStart.setHours(0,0,0,0);
+    weekStart.setDate(weekStart.getDate()-((weekStart.getDay()+6)%7));
+    const weekEnd=new Date(weekStart); weekEnd.setDate(weekStart.getDate()+6); weekEnd.setHours(23,59,59,999);
+    const keyOf=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    const parseKey=s=>{
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(String(s||"")))return null;
+      const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d);
+    };
+    const inWeek=s=>{
+      const d=parseKey(s); return d && d>=weekStart && d<=weekEnd;
+    };
+
+    const rateHistory=Array.isArray(db.rateHistory)?db.rateHistory:[];
+    let rate=Number(db.rate)||0;
+    const todayKey=keyOf(now);
+    for(const r of rateHistory){
+      if(r && String(r.date)<=todayKey) rate=Number(r.rate)||rate;
+    }
+
+    const vals=[];
+    const labels=["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
+    for(let i=0;i<7;i++){
+      const d=new Date(weekStart); d.setDate(weekStart.getDate()+i);
+      const key=keyOf(d);
+      vals.push({key,label:labels[i],date:d,val:Number(records[key]||0),has:Object.prototype.hasOwnProperty.call(records,key)});
+    }
+
+    const total=vals.reduce((s,x)=>s+x.val,0);
     const gross=total*rate;
 
-    $v27("dashboardV27Packages").textContent=total;
-    $v27("dashboardV27Gross").textContent=typeof money==="function"?money(gross):"$"+gross.toFixed(2);
+    $v27("dashboardV27Packages").textContent=String(total);
+    $v27("dashboardV27Gross").textContent=typeof money==="function"
+      ?money(gross)
+      :new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(gross);
     $v27("dashboardV27Range").textContent=
       `Lunes ${weekStart.getDate()} → Domingo ${weekEnd.getDate()} de ${weekEnd.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`;
-
-    const labels=["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
-    const vals=[];
-    for(let i=0;i<7;i++){
-      const d=new Date(weekStart);
-      d.setDate(weekStart.getDate()+i);
-      const key=typeof dateKey==="function"?dateKey(d):d.toISOString().slice(0,10);
-      vals.push({
-        key,label:labels[i],date:d,
-        val:Number(records[key]||0),
-        has:Object.prototype.hasOwnProperty.call(records,key)
-      });
-    }
 
     const max=Math.max(1,...vals.map(x=>x.val));
     $v27("dashboardV27Chart").innerHTML=vals.map(x=>`
@@ -631,14 +647,13 @@ render();
     const worked=vals.filter(x=>x.has);
     const avg=worked.length?Math.round(total/worked.length):0;
     const best=vals.reduce((p,x)=>x.val>p.val?x:p,vals[0]);
-
-    $v27("dashboardV27Average").textContent=avg;
-    $v27("dashboardV27Best").textContent=best.val?best.val:"—";
+    $v27("dashboardV27Average").textContent=String(avg);
+    $v27("dashboardV27Best").textContent=best.val?String(best.val):"—";
     $v27("dashboardV27BestSub").textContent=best.val
       ?best.date.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long"})
       :"Sin registros";
 
-    const goal=getGoal();
+    const goal=Math.max(1,Number(localStorage.getItem(GOAL_KEY)||400));
     const pct=Math.min(100,total/goal*100);
     const remaining=Math.max(0,goal-total);
     $v27("dashboardV27GoalLabel").textContent=`${goal} paquetes`;

@@ -1,1 +1,1 @@
-v1.27.1: corrección de datos del Dashboard. El Dashboard ahora lee state.records, calcula únicamente la semana lunes-domingo actual, usa rateFor() para la tarifa real vigente y genera correctamente totales, gráfica, promedio, mejor día y meta. No cambia la lógica de registro.
+v1.27.2: Dashboard conectado directamente a localStorage.corte_paquetes_data, que es la base persistente real de la app. Ya no depende del alcance de state ni de rateFor(). Lee records, rate y rateHistory desde el almacenamiento y calcula la semana lunes-domingo actual.
