@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="topActions">
-    <button id="dashboardBtn" class="glass icon topIcon" aria-label="Ver rendimiento">📊</button><button id="shareTop" class="glass icon topIcon" aria-label="Compartir corte">
+    <button id="dashboardBtn" type="button" class="glass icon topIcon" aria-label="Ver rendimiento" onclick="window.openDashboard && window.openDashboard()">📊</button><button id="shareTop" class="glass icon topIcon" aria-label="Compartir corte">
       <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0-4 4m4-4 4 4M5 13v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <button id="settingsBtn" class="glass icon topIcon" aria-label="Ajustes">
@@ -97,4 +97,12 @@
     </div>
   </div>
 </div>
-<div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.26"></script></body></html>
+<div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.26"></script><script>
+window.openDashboard=function(){
+  var p=document.getElementById("dashboardPanel");
+  if(!p)return;
+  p.classList.remove("hidden");
+  if(typeof window.renderDashboard==="function"){try{window.renderDashboard()}catch(e){}}
+};
+</script>
+</body></html>

@@ -1,1 +1,1 @@
-v1.26.1: corrección del Dashboard Pro. El HTML estaba cargando app.js v1.25.1, por lo que el botón mostraba el icono pero no ejecutaba el código del Dashboard. Ahora index.html carga v1.26 y el binding del botón se hace de forma segura al cargar el DOM. Se conserva todo lo de v1.26.
+v1.26.2: hard fix del botón Dashboard. Usa onclick inline y una función global openDashboard como respaldo, además de exponer renderDashboard globalmente. El panel se abre aunque el listener de app.js falle.
