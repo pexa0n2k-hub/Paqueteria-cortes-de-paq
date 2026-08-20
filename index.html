@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="topActions">
-    <button id="shareTop" class="glass icon topIcon" aria-label="Compartir corte">
+    <button id="dashboardBtn" class="glass icon topIcon" aria-label="Ver rendimiento">📊</button><button id="shareTop" class="glass icon topIcon" aria-label="Compartir corte">
       <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0-4 4m4-4 4 4M5 13v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <button id="settingsBtn" class="glass icon topIcon" aria-label="Ajustes">
@@ -77,7 +77,7 @@
   <div>📅 Corte semanal: lunes a domingo</div>
   <b id="footerRange"></b>
 </div>
-</main>
+<div id="dashboardPanel" class="overlay hidden dashboardOverlay"><div class="glass dashboardModal"><div class="dashboardHeader"><div><div class="dashboardKicker">📊 RENDIMIENTO</div><h2>Mi rendimiento</h2><span id="dashboardRange">Esta semana</span></div><button id="closeDashboard" class="glass icon">✕</button></div><div class="dashboardStats"><div class="glass dashStat"><small>PAQUETES</small><strong id="dashTotal">0</strong><span>Esta semana</span></div><div class="glass dashStat"><small>GANANCIA BRUTA</small><strong id="dashGross">$0.00</strong><span id="dashMoneySub">$0.00 por paquete</span></div></div><div class="glass dashChartCard"><div class="dashSectionHead"><div><small>PAQUETES POR DÍA</small><span>Toca un día para gestionarlo</span></div><b id="dashBest">—</b></div><div id="dashboardChart" class="dashChart"></div></div><div class="glass dashGoalCard"><div class="dashSectionHead"><div><small>🎯 META SEMANAL</small><span id="goalText">400 paquetes esta semana</span></div><button id="goalEdit" class="glass goalEdit">Editar</button></div><div class="goalNumbers"><strong id="goalCurrent">0 / 400</strong><b id="goalPercent">0%</b></div><div class="goalTrack"><i id="goalFill"></i></div><div id="goalMessage" class="goalMessage"></div></div><div class="dashboardBottom"><div class="glass dashMini"><small>📅 PROMEDIO DIARIO</small><strong id="dashAverage">0</strong><span>paquetes / día trabajado</span></div><div class="glass dashMini"><small>🏆 MEJOR DÍA</small><strong id="dashBestDay">—</strong><span id="dashBestDaySub">Sin registros</span></div></div></div></div></main>
 
 <div id="setPanel" class="overlay hidden"><div class="glass panel"><div class="panelHead"><h2>Ajustes</h2><button id="closeSet" class="glass icon">✕</button></div><label>Tarifa predeterminada <output id="curRate">$0.00</output></label><div class="entry"><input id="rate" type="number" min="0" step=".01" inputmode="decimal" placeholder="8.00"><button id="saveRate" class="neonBtn">Guardar</button></div><p>Se conserva hasta que tú la cambies.</p><label>Fondo personalizado</label><input id="bg" type="file" accept="image/*"><button id="removeBg" class="glass action">Quitar fondo</button><label>Oscurecimiento del fondo <output id="shadeOut">62%</output></label><input id="shadeRange" type="range" min="20" max="90" value="62"><label>Transparencia de los cajones <output id="transOut">78%</output></label><input id="transRange" type="range" min="35" max="95" value="78"><label>Desenfoque del fondo <output id="blurOut">8px</output></label><input id="blurRange" type="range" min="0" max="20" value="8"></div></div>
 
