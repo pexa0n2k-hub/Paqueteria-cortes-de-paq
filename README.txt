@@ -1,1 +1,1 @@
-v1.26.2: hard fix del botón Dashboard. Usa onclick inline y una función global openDashboard como respaldo, además de exponer renderDashboard globalmente. El panel se abre aunque el listener de app.js falle.
+v1.27.1: corrección de datos del Dashboard. El Dashboard ahora lee state.records, calcula únicamente la semana lunes-domingo actual, usa rateFor() para la tarifa real vigente y genera correctamente totales, gráfica, promedio, mejor día y meta. No cambia la lógica de registro.

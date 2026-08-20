@@ -584,27 +584,35 @@ render();
     const modal=$v27("dashboardModalV27");
     if(!modal)return;
 
-    const rate=Number(window.currentRate ?? (typeof currentRate!=="undefined"?currentRate:0)) || 0;
     const records=(typeof state!=="undefined" && state.records)?state.records:{};
-    const total=Object.values(records).reduce((s,v)=>s+Number(v||0),0);
+    const weekStart=typeof monday==="function"?monday(new Date()):new Date();
+    const weekEnd=typeof sunday==="function"?sunday(new Date()):new Date();
+    const todayKey=typeof dateKey==="function"?dateKey(new Date()):new Date().toISOString().slice(0,10);
+    const rate=(typeof rateFor==="function")?Number(rateFor(todayKey)||0):Number(state.rate||0);
+
+    const total=Object.entries(records)
+      .filter(([d,v])=>typeof inCurrentWeek==="function"?inCurrentWeek(d):true)
+      .reduce((s,[,v])=>s+Number(v||0),0);
     const gross=total*rate;
 
     $v27("dashboardV27Packages").textContent=total;
     $v27("dashboardV27Gross").textContent=typeof money==="function"?money(gross):"$"+gross.toFixed(2);
+    $v27("dashboardV27Range").textContent=
+      `Lunes ${weekStart.getDate()} → Domingo ${weekEnd.getDate()} de ${weekEnd.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`;
 
     const labels=["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
     const vals=[];
-    const base=(typeof start!=="undefined"?new Date(start):new Date());
-    if(typeof start==="undefined"){
-      const day=base.getDay()||7;
-      base.setDate(base.getDate()-(day-1));
-      base.setHours(0,0,0,0);
-    }
     for(let i=0;i<7;i++){
-      const d=new Date(base); d.setDate(base.getDate()+i);
+      const d=new Date(weekStart);
+      d.setDate(weekStart.getDate()+i);
       const key=typeof dateKey==="function"?dateKey(d):d.toISOString().slice(0,10);
-      vals.push({key,label:labels[i],date:d,val:Number(records[key]||0),has:Object.prototype.hasOwnProperty.call(records,key)});
+      vals.push({
+        key,label:labels[i],date:d,
+        val:Number(records[key]||0),
+        has:Object.prototype.hasOwnProperty.call(records,key)
+      });
     }
+
     const max=Math.max(1,...vals.map(x=>x.val));
     $v27("dashboardV27Chart").innerHTML=vals.map(x=>`
       <button type="button" class="dashboardV27Day ${x.has?"":"empty"}" data-day="${x.key}">
@@ -623,16 +631,22 @@ render();
     const worked=vals.filter(x=>x.has);
     const avg=worked.length?Math.round(total/worked.length):0;
     const best=vals.reduce((p,x)=>x.val>p.val?x:p,vals[0]);
+
     $v27("dashboardV27Average").textContent=avg;
     $v27("dashboardV27Best").textContent=best.val?best.val:"—";
-    $v27("dashboardV27BestSub").textContent=best.val?best.date.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long"}):"Sin registros";
+    $v27("dashboardV27BestSub").textContent=best.val
+      ?best.date.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long"})
+      :"Sin registros";
 
-    const goal=getGoal(),pct=Math.min(100,total/goal*100),remaining=Math.max(0,goal-total);
+    const goal=getGoal();
+    const pct=Math.min(100,total/goal*100);
+    const remaining=Math.max(0,goal-total);
     $v27("dashboardV27GoalLabel").textContent=`${goal} paquetes`;
     $v27("dashboardV27GoalCurrent").textContent=`${total} / ${goal}`;
     $v27("dashboardV27GoalPct").textContent=`${pct.toFixed(1).replace(".0","")}%`;
     $v27("dashboardV27GoalFill").style.width=pct+"%";
-    $v27("dashboardV27GoalMsg").textContent=remaining?`Te faltan ${remaining} paquetes para alcanzar tu meta.`:"🔥 ¡Meta semanal alcanzada!";
+    $v27("dashboardV27GoalMsg").textContent=
+      remaining?`Te faltan ${remaining} paquetes para alcanzar tu meta.`:"🔥 ¡Meta semanal alcanzada!";
   }
 
   window.openDashboard=()=>open();
