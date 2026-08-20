@@ -281,8 +281,6 @@ $("deleteDay").onclick=()=>{
   window.delDay(d);
 };
 
-const DASH_GOAL_KEY="weeklyGoal";function getWeekGoal(){const n=Number(localStorage.getItem(DASH_GOAL_KEY)||400);return n>0?n:400}window.renderDashboard=function(){const total=Object.values(state.records||{}).reduce((s,v)=>s+Number(v||0),0),gross=total*currentRate;$("dashTotal").textContent=total;$("dashGross").textContent=money(gross);$("dashMoneySub").textContent=`${money(currentRate)} por paquete`;const labels=["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"],vals=[];for(let i=0;i<7;i++){const d=new Date(start);d.setDate(start.getDate()+i);const key=dateKey(d);vals.push({key,label:labels[i],date:d,val:Number(state.records[key]||0),has:Object.prototype.hasOwnProperty.call(state.records,key)})}const max=Math.max(1,...vals.map(x=>x.val));$("dashboardChart").innerHTML=vals.map(x=>`<button type="button" class="chartDay ${x.has?"":"empty"}" onclick="openDayActions('${x.key}')"><div class="barWrap"><i class="bar" style="height:${Math.max(4,x.val/max*100)}%"></i></div><b class="qty">${x.val}</b><span class="dow">${x.label}</span></button>`).join("");const worked=vals.filter(x=>x.has),avg=worked.length?Math.round(total/worked.length):0,best=vals.reduce((a,b)=>b.val>a.val?b:a,vals[0]);$("dashAverage").textContent=avg;$("dashBest").textContent=best.val?`${best.label} · ${best.val}`:"—";$("dashBestDay").textContent=best.val||"—";$("dashBestDaySub").textContent=best.val?best.date.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long"}):"Sin registros";const goal=getWeekGoal(),pct=Math.min(100,total/goal*100),rem=Math.max(0,goal-total);$("goalCurrent").textContent=`${total} / ${goal}`;$("goalPercent").textContent=`${pct.toFixed(1).replace(".0","")}%`;$("goalFill").style.width=pct+"%";$("goalText").textContent=`${goal} paquetes esta semana`;$("goalMessage").textContent=rem?`Te faltan ${rem} paquetes para alcanzar tu meta.`:"🔥 ¡Meta semanal alcanzada!";}
-window.openDashboard=function(){window.renderDashboard();$("dashboardPanel").classList.remove("hidden")};function closeDashboard(){$("dashboardPanel").classList.add("hidden")}
 window.editDay=d=>{
   $("editPanel").dataset.date=d;
   $("editQty").value=state.records[d]??0;
@@ -562,3 +560,95 @@ if("serviceWorker" in navigator){
 }
 render();
 })();
+
+/* ===== v1.27 Dashboard rebuilt: isolated controller ===== */
+(function(){
+  const GOAL_KEY="weeklyGoal";
+  const $v27=id=>document.getElementById(id);
+  const getGoal=()=>Math.max(1,Number(localStorage.getItem(GOAL_KEY)||400));
+
+  function open(){
+    const modal=$v27("dashboardModalV27");
+    if(!modal)return;
+    modal.hidden=false;
+    modal.classList.add("show");
+    render();
+  }
+  function close(){
+    const modal=$v27("dashboardModalV27");
+    if(!modal)return;
+    modal.classList.remove("show");
+    modal.hidden=true;
+  }
+  function render(){
+    const modal=$v27("dashboardModalV27");
+    if(!modal)return;
+
+    const rate=Number(window.currentRate ?? (typeof currentRate!=="undefined"?currentRate:0)) || 0;
+    const records=(typeof state!=="undefined" && state.records)?state.records:{};
+    const total=Object.values(records).reduce((s,v)=>s+Number(v||0),0);
+    const gross=total*rate;
+
+    $v27("dashboardV27Packages").textContent=total;
+    $v27("dashboardV27Gross").textContent=typeof money==="function"?money(gross):"$"+gross.toFixed(2);
+
+    const labels=["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
+    const vals=[];
+    const base=(typeof start!=="undefined"?new Date(start):new Date());
+    if(typeof start==="undefined"){
+      const day=base.getDay()||7;
+      base.setDate(base.getDate()-(day-1));
+      base.setHours(0,0,0,0);
+    }
+    for(let i=0;i<7;i++){
+      const d=new Date(base); d.setDate(base.getDate()+i);
+      const key=typeof dateKey==="function"?dateKey(d):d.toISOString().slice(0,10);
+      vals.push({key,label:labels[i],date:d,val:Number(records[key]||0),has:Object.prototype.hasOwnProperty.call(records,key)});
+    }
+    const max=Math.max(1,...vals.map(x=>x.val));
+    $v27("dashboardV27Chart").innerHTML=vals.map(x=>`
+      <button type="button" class="dashboardV27Day ${x.has?"":"empty"}" data-day="${x.key}">
+        <div class="dashboardV27BarWrap"><i style="height:${Math.max(5,(x.val/max)*100)}%"></i></div>
+        <b>${x.val}</b><span>${x.label}</span>
+      </button>`).join("");
+
+    $v27("dashboardV27Chart").querySelectorAll("[data-day]").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const d=btn.dataset.day;
+        close();
+        if(typeof window.openDayActions==="function") window.openDayActions(d);
+      });
+    });
+
+    const worked=vals.filter(x=>x.has);
+    const avg=worked.length?Math.round(total/worked.length):0;
+    const best=vals.reduce((p,x)=>x.val>p.val?x:p,vals[0]);
+    $v27("dashboardV27Average").textContent=avg;
+    $v27("dashboardV27Best").textContent=best.val?best.val:"—";
+    $v27("dashboardV27BestSub").textContent=best.val?best.date.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long"}):"Sin registros";
+
+    const goal=getGoal(),pct=Math.min(100,total/goal*100),remaining=Math.max(0,goal-total);
+    $v27("dashboardV27GoalLabel").textContent=`${goal} paquetes`;
+    $v27("dashboardV27GoalCurrent").textContent=`${total} / ${goal}`;
+    $v27("dashboardV27GoalPct").textContent=`${pct.toFixed(1).replace(".0","")}%`;
+    $v27("dashboardV27GoalFill").style.width=pct+"%";
+    $v27("dashboardV27GoalMsg").textContent=remaining?`Te faltan ${remaining} paquetes para alcanzar tu meta.`:"🔥 ¡Meta semanal alcanzada!";
+  }
+
+  window.openDashboard=()=>open();
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    const btn=$v27("dashboardBtn"), closeBtn=$v27("dashboardV27Close"), modal=$v27("dashboardModalV27"), goal=$v27("dashboardV27GoalEdit");
+    if(btn)btn.addEventListener("click",open);
+    if(closeBtn)closeBtn.addEventListener("click",close);
+    if(modal)modal.addEventListener("click",e=>{if(e.target===modal)close()});
+    if(goal)goal.addEventListener("click",()=>{
+      const val=prompt("¿Cuántos paquetes quieres como meta semanal?",getGoal());
+      if(val===null)return;
+      const n=Math.floor(Number(val));
+      if(!Number.isFinite(n)||n<1){alert("Escribe una meta válida.");return}
+      localStorage.setItem(GOAL_KEY,String(n)); render();
+    });
+  });
+})();
+
