@@ -1,1 +1,1 @@
-v1.28.3: Dynamic Accent runtime fix. applyAccentDerived now injects a dedicated runtime style tag with literal selected RGB/hex values, overriding legacy hard-coded neon/cyan rules. This makes manual presets and custom colors visibly affect the real UI immediately and on startup.
+v1.28.4: Custom Accent + Persistence fix. The custom mode exposes a native color picker and hex value. Accent mode/color are persisted independently in localStorage keys corte_accent_mode and corte_accent_color, then restored on startup, preventing refresh from reverting to Auto.

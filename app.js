@@ -125,6 +125,28 @@ function rateFor(date){
 }
 
 
+
+/* ===== v1.28.4 accent persistence/custom picker ===== */
+const ACCENT_MODE_KEY="corte_accent_mode";
+const ACCENT_COLOR_KEY="corte_accent_color";
+
+function readAccentPrefs(){
+  let mode=null,color=null;
+  try{
+    mode=localStorage.getItem(ACCENT_MODE_KEY);
+    color=localStorage.getItem(ACCENT_COLOR_KEY);
+  }catch(e){}
+  if(mode!=="auto"&&mode!=="preset"&&mode!=="custom")mode=null;
+  if(!/^#[0-9a-f]{6}$/i.test(color||""))color=null;
+  if(mode)state.settings.accentMode=mode;
+  if(color)state.settings.accent=color;
+}
+function saveAccentPrefs(){
+  try{
+    localStorage.setItem(ACCENT_MODE_KEY,state.settings.accentMode||"auto");
+    localStorage.setItem(ACCENT_COLOR_KEY,state.settings.accent||"#72F4FF");
+  }catch(e){}
+}
 function hexRgb(hex){
   const m=String(hex||"").replace("#","").match(/^([0-9a-f]{6})$/i);
   if(!m)return null;
@@ -186,11 +208,15 @@ function detectAccentFromImage(dataUrl){
   });
 }
 async function applyAccentSettings(){
+  readAccentPrefs();
   const s=state.settings||{};
   const mode=s.accentMode||"auto";
   const modeEl=$("accentMode"), colorEl=$("accentColor"), presets=$("accentPresets"), custom=$("customAccentRow");
   if(modeEl)modeEl.value=mode;
-  if(colorEl && /^#[0-9a-f]{6}$/i.test(s.accent||""))colorEl.value=s.accent;
+  if(colorEl && /^#[0-9a-f]{6}$/i.test(s.accent||"")){
+    colorEl.value=s.accent;
+    const out=$("accentColorValue"); if(out)out.textContent=s.accent.toUpperCase();
+  }
   if(presets)presets.style.display=mode==="preset"?"flex":"none";
   if(custom)custom.style.display=mode==="custom"?"flex":"none";
   if(mode==="auto"){
@@ -793,3 +819,11 @@ window.refreshDynamicAccent=function(){
 };
 
 window.addEventListener("load",()=>{try{applyAccentSettings()}catch(e){}});
+
+(function(){
+  const restore=()=>{
+    try{readAccentPrefs(); applyAccentSettings();}catch(e){}
+  };
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",restore);
+  window.addEventListener("load",restore);
+})();
