@@ -1,1 +1,1 @@
-v1.28.1: Dynamic Accent visual fix; accent variables now drive the main neon buttons, borders, glows, charts and highlights, with startup repaint.
+v1.28.2: corrección visual definitiva de Dynamic Accent. El token legacy --cyan ahora apunta al acento dinámico y los colores neon principales, botones, gráficas, brillos y textos destacados se alimentan de --accent/--accent-rgb. También se expone refreshDynamicAccent para sincronizar tras cambiar wallpaper.

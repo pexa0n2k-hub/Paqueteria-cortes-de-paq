@@ -767,3 +767,8 @@ render();
 })();
 
 (function(){const f=()=>{try{applyAccentSettings()}catch(e){}};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();
+
+/* v1.28.2 — wallpaper/accent synchronization */
+window.refreshDynamicAccent=function(){
+  try{ return applyAccentSettings(); }catch(e){ return null; }
+};
