@@ -284,3 +284,6 @@ main{max-width:650px;padding-left:18px;padding-right:18px}
   background:linear-gradient(180deg,var(--accent),rgba(var(--accent-rgb),.58))!important;
   box-shadow:0 0 16px var(--accent-glow)!important;
 }
+
+/* v1.28.3 runtime accent is injected by JS so it wins over legacy styles */
+.accentDot{position:relative}

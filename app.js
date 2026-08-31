@@ -137,8 +137,27 @@ function applyAccentDerived(hex){
   const safeHex="#"+[r,g,b].map(x=>Math.round(x).toString(16).padStart(2,"0")).join("");
   document.documentElement.style.setProperty("--accent",safeHex);
   document.documentElement.style.setProperty("--accent-rgb",`${r},${g},${b}`);
-  document.documentElement.style.setProperty("--accent-glow",`rgba(${r},${g},${b},.30)`);
-  document.documentElement.style.setProperty("--accent-soft",`rgba(${r},${g},${b},.12)`);
+  document.documentElement.style.setProperty("--accent-glow",`rgba(${r},${g},${b},.34)`);
+  document.documentElement.style.setProperty("--accent-soft",`rgba(${r},${g},${b},.14)`);
+  let tag=document.getElementById("runtimeAccentStyle");
+  if(!tag){tag=document.createElement("style");tag.id="runtimeAccentStyle";document.head.appendChild(tag)}
+  tag.textContent=`
+    :root{--accent:${safeHex};--accent-rgb:${r},${g},${b};--cyan:${safeHex}}
+    .brandMark,.cube,.hero b,.heroMain .eyebrow,.statsGrid b,.neonCircle,.neonBtn,.shareCut,
+    .topIcon,.sectionTitle span,.historyHint strong,.dashboardV27Header small,.dashboardV27CardHead small,
+    .dashboardV27Stat strong,.accentSettings label{color:${safeHex}!important}
+    .neonBtn,.shareCut,.neonCircle,.topIcon{
+      border-color:rgba(${r},${g},${b},.72)!important;
+      box-shadow:0 0 24px rgba(${r},${g},${b},.34),inset 0 1px 1px rgba(255,255,255,.52)!important
+    }
+    .neonBtn{background:linear-gradient(135deg,rgba(${r},${g},${b},.34),rgba(${r},${g},${b},.10))!important}
+    .hero b{text-shadow:0 0 28px rgba(${r},${g},${b},.34)!important}
+    .bar,.chartBar,.progress i,.progressBar>i,.dashboardV27Day i{
+      background:linear-gradient(180deg,${safeHex},rgba(${r},${g},${b},.58))!important;
+      box-shadow:0 0 18px rgba(${r},${g},${b},.30)!important
+    }
+    .accentDot[data-accent="${safeHex}"]{outline:3px solid rgba(255,255,255,.9);outline-offset:3px}
+  `;
 }
 function detectAccentFromImage(dataUrl){
   return new Promise(resolve=>{
@@ -772,3 +791,5 @@ render();
 window.refreshDynamicAccent=function(){
   try{ return applyAccentSettings(); }catch(e){ return null; }
 };
+
+window.addEventListener("load",()=>{try{applyAccentSettings()}catch(e){}});
