@@ -250,3 +250,10 @@ main{max-width:650px;padding-left:18px;padding-right:18px}
 .dashboardV27Day i{background:linear-gradient(180deg,var(--accent),rgba(var(--accent-rgb),.62));box-shadow:0 0 18px var(--accent-glow),inset 1px 0 1px #fff7}
 .goalTrack i{background:linear-gradient(90deg,var(--accent),#6fffd6);box-shadow:0 0 18px var(--accent-glow)}
 .shareCut{color:var(--accent)}
+
+/* v1.28.1 Dynamic Accent visual bridge */
+:root{--accent:#72F4FF;--accent-rgb:114,244,255;--accent-glow:rgba(114,244,255,.30);--accent-soft:rgba(114,244,255,.12)}
+.neon,.neonBtn,.primary,.active,.selected,.tab.active,.topIcon{border-color:rgba(var(--accent-rgb),.55)!important;color:var(--accent)!important;box-shadow:0 0 20px var(--accent-glow),inset 0 1px 1px rgba(255,255,255,.45)!important}
+.neonBtn,.primary{background:linear-gradient(135deg,rgba(var(--accent-rgb),.22),rgba(255,255,255,.08))!important}
+.progress i,.goalTrack i,.bar,.chartBar,.dashboardV27Day i{background:linear-gradient(180deg,var(--accent),rgba(var(--accent-rgb),.62))!important;box-shadow:0 0 18px var(--accent-glow),inset 1px 0 1px rgba(255,255,255,.45)!important}
+.eyebrow,.heroNumber,.dashboardV27Header small,.dashboardV27CardHead small,.highlight{color:var(--accent)!important}

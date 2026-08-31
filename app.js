@@ -134,7 +134,8 @@ function hexRgb(hex){
 function applyAccentDerived(hex){
   const rgb=hexRgb(hex)||{r:114,g:244,b:255};
   const {r,g,b}=rgb;
-  document.documentElement.style.setProperty("--accent",hex);
+  const safeHex="#"+[r,g,b].map(x=>Math.round(x).toString(16).padStart(2,"0")).join("");
+  document.documentElement.style.setProperty("--accent",safeHex);
   document.documentElement.style.setProperty("--accent-rgb",`${r},${g},${b}`);
   document.documentElement.style.setProperty("--accent-glow",`rgba(${r},${g},${b},.30)`);
   document.documentElement.style.setProperty("--accent-soft",`rgba(${r},${g},${b},.12)`);
@@ -746,21 +747,23 @@ render();
     if(mode)mode.addEventListener("change",()=>{
       state.settings.accentMode=mode.value;
       if(mode.value==="preset" && !state.settings.accent)state.settings.accent="#72F4FF";
-      safeWrite(); applyAccentSettings();
+      if(typeof safeWrite==="function")safeWrite(); applyAccentSettings();
     });
     document.querySelectorAll(".accentDot").forEach(btn=>{
       btn.addEventListener("click",()=>{
         state.settings.accent=btn.dataset.accent;
         state.settings.accentMode="preset";
-        safeWrite(); applyAccentSettings();
+        if(typeof safeWrite==="function")safeWrite(); applyAccentSettings();
       });
     });
     if(color)color.addEventListener("input",()=>{
       state.settings.accent=color.value;
       state.settings.accentMode="custom";
-      safeWrite(); applyAccentSettings();
+      if(typeof safeWrite==="function")safeWrite(); applyAccentSettings();
     });
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bindAccent);
   else bindAccent();
 })();
+
+(function(){const f=()=>{try{applyAccentSettings()}catch(e){}};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();

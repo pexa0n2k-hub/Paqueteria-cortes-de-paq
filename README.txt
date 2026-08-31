@@ -1,1 +1,1 @@
-v1.28 Dynamic Accent: añade en Ajustes un selector de color de acento con modo Automático según fondo, Predefinido y Personalizado. El modo automático analiza el wallpaper guardado y adapta los brillos/accentos; la preferencia se guarda en settings. Se conserva toda la lógica de v1.27.2.
+v1.28.1: Dynamic Accent visual fix; accent variables now drive the main neon buttons, borders, glows, charts and highlights, with startup repaint.
