@@ -9,7 +9,7 @@ const DEFAULTS = {
   rate: 0,                     // current default rate
   rateHistory: [],             // [{date, rate}]
   advances: {},                // { "YYYY-MM-DD": [{amount, concept}] }
-  settings: {shade:62, blur:7, transparency:78, bg:null}
+  settings: {shade:62, blur:7, transparency:78, bg:null, accentMode:"auto", accent:"#72F4FF"}
 };
 
 function cloneDefaults(){ return JSON.parse(JSON.stringify(DEFAULTS)); }
@@ -124,6 +124,62 @@ function rateFor(date){
   return result;
 }
 
+
+function hexRgb(hex){
+  const m=String(hex||"").replace("#","").match(/^([0-9a-f]{6})$/i);
+  if(!m)return null;
+  const n=parseInt(m[1],16);
+  return {r:n>>16,g:(n>>8)&255,b:n&255};
+}
+function applyAccentDerived(hex){
+  const rgb=hexRgb(hex)||{r:114,g:244,b:255};
+  const {r,g,b}=rgb;
+  document.documentElement.style.setProperty("--accent",hex);
+  document.documentElement.style.setProperty("--accent-rgb",`${r},${g},${b}`);
+  document.documentElement.style.setProperty("--accent-glow",`rgba(${r},${g},${b},.30)`);
+  document.documentElement.style.setProperty("--accent-soft",`rgba(${r},${g},${b},.12)`);
+}
+function detectAccentFromImage(dataUrl){
+  return new Promise(resolve=>{
+    if(!dataUrl || !String(dataUrl).startsWith("data:image")) return resolve("#72F4FF");
+    const img=new Image();
+    img.onload=()=>{
+      try{
+        const cv=document.createElement("canvas"),ctx=cv.getContext("2d",{willReadFrequently:true});
+        cv.width=32;cv.height=32;ctx.drawImage(img,0,0,32,32);
+        const d=ctx.getImageData(0,0,32,32).data;
+        let r=0,g=0,b=0,n=0;
+        for(let i=0;i<d.length;i+=16){r+=d[i];g+=d[i+1];b+=d[i+2];n++}
+        r/=n;g/=n;b/=n;
+        const max=Math.max(r,g,b),min=Math.min(r,g,b),spread=max-min;
+        if(spread<20){r=70;g=215;b=240}
+        else if(max===r){g*=.72;b*=.72}
+        else if(max===g){r*=.62;b*=.86}
+        else {r*=.82;g*=.65}
+        const top=Math.max(r,g,b)||1,scale=235/top;
+        r=Math.min(255,r*scale);g=Math.min(255,g*scale);b=Math.min(255,b*scale);
+        resolve("#"+[r,g,b].map(x=>Math.round(x).toString(16).padStart(2,"0")).join(""));
+      }catch(e){resolve("#72F4FF")}
+    };
+    img.onerror=()=>resolve("#72F4FF");
+    img.src=dataUrl;
+  });
+}
+async function applyAccentSettings(){
+  const s=state.settings||{};
+  const mode=s.accentMode||"auto";
+  const modeEl=$("accentMode"), colorEl=$("accentColor"), presets=$("accentPresets"), custom=$("customAccentRow");
+  if(modeEl)modeEl.value=mode;
+  if(colorEl && /^#[0-9a-f]{6}$/i.test(s.accent||""))colorEl.value=s.accent;
+  if(presets)presets.style.display=mode==="preset"?"flex":"none";
+  if(custom)custom.style.display=mode==="custom"?"flex":"none";
+  if(mode==="auto"){
+    const detected=await detectAccentFromImage(s.bg);
+    applyAccentDerived(detected);
+  }else{
+    applyAccentDerived(s.accent||"#72F4FF");
+  }
+}
 function applySettings(){
   const s=state.settings;
   $("shadeRange").value=s.shade;
@@ -136,6 +192,7 @@ function applySettings(){
   $("backdrop").style.filter=`blur(${s.blur}px)`;
   $("backdrop").style.backgroundImage=s.bg ? `url("${s.bg}")` : "radial-gradient(circle at 20% 10%,#17285c,#050814 55%,#12051f)";
   document.documentElement.style.setProperty("--drawer-alpha",String(Math.min(.92,Math.max(.25,s.transparency/100))));
+  applyAccentSettings();
 }
 
 function render(){
@@ -681,3 +738,29 @@ render();
   });
 })();
 
+
+/* ===== v1.28 Dynamic Accent ===== */
+(function(){
+  function bindAccent(){
+    const mode=$("accentMode"), color=$("accentColor");
+    if(mode)mode.addEventListener("change",()=>{
+      state.settings.accentMode=mode.value;
+      if(mode.value==="preset" && !state.settings.accent)state.settings.accent="#72F4FF";
+      safeWrite(); applyAccentSettings();
+    });
+    document.querySelectorAll(".accentDot").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        state.settings.accent=btn.dataset.accent;
+        state.settings.accentMode="preset";
+        safeWrite(); applyAccentSettings();
+      });
+    });
+    if(color)color.addEventListener("input",()=>{
+      state.settings.accent=color.value;
+      state.settings.accentMode="custom";
+      safeWrite(); applyAccentSettings();
+    });
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bindAccent);
+  else bindAccent();
+})();

@@ -1,1 +1,1 @@
-v1.27.2: Dashboard conectado directamente a localStorage.corte_paquetes_data, que es la base persistente real de la app. Ya no depende del alcance de state ni de rateFor(). Lee records, rate y rateHistory desde el almacenamiento y calcula la semana lunes-domingo actual.
+v1.28 Dynamic Accent: añade en Ajustes un selector de color de acento con modo Automático según fondo, Predefinido y Personalizado. El modo automático analiza el wallpaper guardado y adapta los brillos/accentos; la preferencia se guarda en settings. Se conserva toda la lógica de v1.27.2.
