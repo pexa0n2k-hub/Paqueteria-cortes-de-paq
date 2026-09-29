@@ -73,6 +73,7 @@
 
 <div class="sectionTitle"><h2>📚 Historial</h2><button id="historyToggle" class="neonCircle" aria-label="Abrir historial">⌄</button></div>
 <section id="historyWrap" class="glass jelly historyCollapsed"><div class="historyHint">Toca la flecha para ver tus cortes anteriores.</div><div id="history" class="historyList"></div></section>
+<button id="savedCutsBtn" class="glass jelly action actionLarge savedCutsBtn">🗂️ <span>Cortes semanales guardados</span><b>›</b></button>
 
 <button id="reset" class="glass action danger">Borrar semana actual</button>
 <div class="weekFooter glass">
@@ -121,7 +122,7 @@
     </div>
   </div>
 </div>
-<div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.28.4"></script><script>
+<div id="cutHistoryModal" class="overlay hidden"><div class="glass panel cutHistoryPanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.29"></script><script>
 window.openDashboard=function(){
   var p=document.getElementById("dashboardPanel");
   if(!p)return;

@@ -116,6 +116,7 @@ function makeState(){
 
 let state=makeState();
 
+
 function rateFor(date){
   let result=Number(state.rate)||0;
   for(const r of state.rateHistory){
@@ -123,6 +124,120 @@ function rateFor(date){
   }
   return result;
 }
+
+/* ===== v1.29 Historial de Cortes Semanales ===== */
+const WEEKLY_CUTS_KEY="corte_paquetes_weekly_cuts";
+function readWeeklyCuts(){
+  try{
+    const raw=localStorage.getItem(WEEKLY_CUTS_KEY);
+    const arr=raw?JSON.parse(raw):[];
+    return Array.isArray(arr)?arr:[];
+  }catch(e){return []}
+}
+function writeWeeklyCuts(arr){
+  try{localStorage.setItem(WEEKLY_CUTS_KEY,JSON.stringify(arr));return true}
+  catch(e){console.warn("No se pudo guardar historial de cortes",e);return false}
+}
+function cutDataForRange(start,end,forcedRate=null){
+  const startDate=start instanceof Date?new Date(start):parseDate(start);
+  const endDate=end instanceof Date?new Date(end):parseDate(end);
+  startDate.setHours(0,0,0,0); endDate.setHours(23,59,59,999);
+  const startKey=dateKey(startDate), endKey=dateKey(endDate);
+  const entries=Object.entries(state.records)
+    .filter(([d])=>d>=startKey&&d<=endKey)
+    .sort((a,b)=>a[0].localeCompare(b[0]));
+  const total=entries.reduce((sum,[,v])=>sum+Number(v||0),0);
+  const rate=forcedRate===null?rateFor(dateKey(new Date())):Number(forcedRate)||0;
+  const advances=[];
+  for(const [d,list] of Object.entries(state.advances)){
+    if(d>=startKey&&d<=endKey&&Array.isArray(list)){
+      for(const x of list) advances.push({date:d,amount:Number(x.amount)||0,concept:String(x.concept||"Préstamo")});
+    }
+  }
+  const adv=advances.reduce((sum,x)=>sum+Number(x.amount||0),0);
+  const days=[];
+  for(let i=0;i<7;i++){
+    const dt=new Date(startDate);dt.setDate(startDate.getDate()+i);
+    const key=dateKey(dt);
+    days.push({date:key,value:Number(state.records[key]||0),has:Object.prototype.hasOwnProperty.call(state.records,key)});
+  }
+  return {
+    start:startDate,end:endDate,startKey,endKey,total,rate,gross:total*rate,adv,net:total*rate-adv,
+    entries,advances,days,
+    bg:state.settings.bg||null,shade:Number(state.settings.shade??62),
+    accentMode:state.settings.accentMode||"auto",accent:state.settings.accent||"#72F4FF"
+  };
+}
+function snapshotFromCut(cut){
+  return {
+    id:cut.startKey,
+    weekStart:cut.startKey,
+    weekEnd:cut.endKey,
+    total:Number(cut.total)||0,
+    rate:Number(cut.rate)||0,
+    gross:Number(cut.gross)||0,
+    adv:Number(cut.adv)||0,
+    net:Number(cut.net)||0,
+    days:(cut.days||[]).map(x=>({date:x.date,value:Number(x.value)||0,has:!!x.has})),
+    advances:(cut.advances||[]).map(x=>({date:x.date,amount:Number(x.amount)||0,concept:String(x.concept||"Préstamo")})),
+    bg:cut.bg||null,shade:Number(cut.shade??62),
+    accentMode:cut.accentMode||"auto",accent:cut.accent||"#72F4FF",
+    savedAt:Date.now(),version:"1.29"
+  };
+}
+function saveWeeklyCut(cut){
+  const snap=snapshotFromCut(cut), all=readWeeklyCuts();
+  const idx=all.findIndex(x=>x.weekStart===snap.weekStart);
+  if(idx>=0) all[idx]={...all[idx],...snap}; else all.push(snap);
+  all.sort((a,b)=>String(b.weekStart).localeCompare(String(a.weekStart)));
+  writeWeeklyCuts(all);
+  return snap;
+}
+function archiveCompletedWeeks(){
+  const currentStart=dateKey(monday(new Date()));
+  const keys=new Set([...Object.keys(state.records),...Object.keys(state.advances)]);
+  const weeks=[...keys].filter(Boolean).map(weekKey).filter(w=>w&&w<currentStart);
+  for(const w of new Set(weeks)){
+    const st=parseDate(w), en=new Date(st);en.setDate(st.getDate()+6);
+    saveWeeklyCut(cutDataForRange(st,en,rateFor(dateKey(en))));
+  }
+}
+function snapshotToCut(s){
+  const st=parseDate(s.weekStart),en=parseDate(s.weekEnd);
+  const entries=(s.days||[]).filter(x=>x.has||Number(x.value)>0).map(x=>[x.date,Number(x.value)||0]);
+  return {start:st,end:en,startKey:s.weekStart,endKey:s.weekEnd,total:Number(s.total)||0,rate:Number(s.rate)||0,gross:Number(s.gross)||0,adv:Number(s.adv)||0,net:Number(s.net)||0,entries,advances:s.advances||[],days:s.days||[],bg:s.bg||null,shade:Number(s.shade??62),accentMode:s.accentMode||"auto",accent:s.accent||"#72F4FF",historical:true,id:s.id};
+}
+function formatCutRange(c){
+  const a=parseDate(c.weekStart),b=parseDate(c.weekEnd);
+  return `${a.getDate()} – ${b.getDate()} de ${b.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`;
+}
+function openCutHistory(){
+  const modal=$("cutHistoryModal");if(!modal)return;
+  modal.classList.remove("hidden");renderCutHistoryList();
+}
+function closeCutHistory(){const m=$("cutHistoryModal");if(m)m.classList.add("hidden")}
+function renderCutHistoryList(){
+  const box=$("cutHistoryBody");if(!box)return;
+  const cuts=readWeeklyCuts();
+  box.innerHTML=cuts.length?cuts.map(c=>`<article class="cutHistoryItem glass">
+    <div class="cutHistoryMain"><div class="eyebrow">CORTE SEMANAL</div><h3>${formatCutRange(c)}</h3><div class="cutHistoryStats"><span>📦 <b>${Number(c.total)||0}</b> paquetes</span><span>💰 <b>${money(c.net)}</b> a recibir</span><span>💵 ${money(c.rate)}/paq</span></div></div>
+    <div class="cutHistoryActions"><button class="glass action" onclick="viewSavedCut('${esc(c.id)}')">👁️ Ver</button><button class="neonBtn action" onclick="shareSavedCut('${esc(c.id)}')">📲 Compartir</button><button class="glass action danger" onclick="deleteSavedCut('${esc(c.id)}')">🗑️</button></div>
+  </article>`).join(""):`<div class="historyHint">Aún no tienes cortes guardados. Al compartir un corte se guardará automáticamente.</div>`;
+}
+window.viewSavedCut=id=>{
+  const c=readWeeklyCuts().find(x=>x.id===id);if(!c)return;
+  const days=(c.days||[]).map(x=>`<div class="savedDay"><span>${parseDate(x.date).toLocaleDateString("es-MX",{weekday:"short",day:"2-digit",month:"2-digit"})}</span><b>${Number(x.value)||0}</b></div>`).join("");
+  $("cutHistoryBody").innerHTML=`<div class="cutDetail glass"><button class="glass backCut" onclick="renderCutHistoryList()">← Volver a cortes</button><div class="eyebrow">CORTE GUARDADO</div><h2>${formatCutRange(c)}</h2><div class="cutDetailHero"><strong>${Number(c.total)||0}</strong><span>paquetes</span><b>${money(c.net)}</b><span>a recibir</span></div><div class="cutDetailGrid"><div><small>Tarifa</small><b>${money(c.rate)}</b></div><div><small>Bruto</small><b>${money(c.gross)}</b></div><div><small>Adelantos</small><b>-${money(c.adv)}</b></div></div><h3>Resumen diario</h3><div class="savedDays">${days}</div><div class="actions"><button class="glass action danger" onclick="deleteSavedCut('${esc(c.id)}')">🗑️ Eliminar</button><button class="neonBtn action" onclick="shareSavedCut('${esc(c.id)}')">📲 Compartir nuevamente</button></div></div>`;
+};
+window.deleteSavedCut=id=>{
+  const c=readWeeklyCuts().find(x=>x.id===id);if(!c)return;
+  if(!confirm(`¿Eliminar el corte del ${formatCutRange(c)}? Esto no borrará tus registros diarios.`))return;
+  writeWeeklyCuts(readWeeklyCuts().filter(x=>x.id!==id));renderCutHistoryList();
+};
+window.shareSavedCut=async id=>{
+  const c=readWeeklyCuts().find(x=>x.id===id);if(!c)return;
+  const cut=snapshotToCut(c);closeCutHistory();await shareCut(cut);
+};
 
 
 
@@ -414,6 +529,9 @@ $("historyToggle").onclick=()=>{
   const x=$("historyWrap"); x.classList.toggle("open");
   $("historyToggle").textContent=x.classList.contains("open")?"⌃":"⌄";
 };
+$("savedCutsBtn").onclick=openCutHistory;
+$("closeCutHistory").onclick=closeCutHistory;
+
 $("settingsBtn").onclick=()=>$("setPanel").classList.remove("hidden");
 $("closeSet").onclick=()=>$("setPanel").classList.add("hidden");
 
@@ -441,13 +559,7 @@ $("transRange").oninput=e=>{state.settings.transparency=Number(e.target.value);s
 
 
 function currentCutData(){
-  const today=dateKey(new Date()), start=monday(new Date()), end=sunday(new Date());
-  const entries=Object.entries(state.records).filter(([d])=>inCurrentWeek(d)).sort((a,b)=>a[0].localeCompare(b[0]));
-  const total=entries.reduce((s,[,v])=>s+Number(v||0),0), rate=rateFor(today);
-  let advances=[];
-  for(const [d,list] of Object.entries(state.advances)) if(inCurrentWeek(d)) for(const x of (Array.isArray(list)?list:[])) advances.push({date:d,...x});
-  const adv=advances.reduce((s,x)=>s+Number(x.amount||0),0);
-  return {start,end,total,rate,gross:total*rate,adv,net:total*rate-adv,entries,advances};
+  return cutDataForRange(monday(new Date()),sunday(new Date()),rateFor(dateKey(new Date())));
 }
 function rr(ctx,x,y,w,h,r){const q=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+q,y);ctx.arcTo(x+w,y,x+w,y+h,q);ctx.arcTo(x+w,y+h,x,y+h,q);ctx.arcTo(x,y+h,x,y,q);ctx.arcTo(x,y,x+w,y,q);ctx.closePath()}
 function dg(ctx,x,y,w,h,r=28){
@@ -519,22 +631,24 @@ function dg(ctx,x,y,w,h,r=28){
   ctx.restore();
 }
 function fit(ctx,text,max,size){let s=size;ctx.font=`900 ${s}px system-ui,sans-serif`;while(ctx.measureText(text).width>max&&s>14){s--;ctx.font=`900 ${s}px system-ui,sans-serif`}return s}
-async function renderShareImage(){
-  const d=currentCutData(), canvas=$("shareCanvas"), W=1080, H=1350;
+async function renderShareImage(cut=null){
+  const d=cut||currentCutData(), canvas=$("shareCanvas"), W=1080, H=1350;
   const scale=Math.min(3,Math.max(2,devicePixelRatio||2));
   canvas.width=W*scale; canvas.height=H*scale;
   const ctx=canvas.getContext("2d"); ctx.scale(scale,scale);
 
   // 1) Fondo personalizado de la app, exactamente como se muestra dentro de ella.
-  if(state.settings.bg){
+  const shareBg=d.bg||state.settings.bg;
+  const shareShade=d.shade??state.settings.shade??62;
+  if(shareBg){
     try{
       const img=await new Promise((resolve,reject)=>{
         const im=new Image();
-        im.onload=()=>resolve(im); im.onerror=reject; im.src=state.settings.bg;
+        im.onload=()=>resolve(im); im.onerror=reject; im.src=shareBg;
       });
       const sc=Math.max(W/img.width,H/img.height), iw=img.width*sc, ih=img.height*sc;
       ctx.drawImage(img,(W-iw)/2,(H-ih)/2,iw,ih);
-      ctx.fillStyle=`rgba(2,5,16,${(state.settings.shade??62)/100})`; ctx.fillRect(0,0,W,H);
+      ctx.fillStyle=`rgba(2,5,16,${shareShade/100})`; ctx.fillRect(0,0,W,H);
       const veil=ctx.createLinearGradient(0,0,W,H);
       veil.addColorStop(0,"rgba(0,215,255,.045)"); veil.addColorStop(1,"rgba(150,40,255,.06)");
       ctx.fillStyle=veil; ctx.fillRect(0,0,W,H);
@@ -629,7 +743,8 @@ async function renderShareImage(){
   const gap=13, cellW=116, cellH=185, x0=72, y0=1002;
   for(let i=0;i<7;i++){
     const dt=new Date(d.start);dt.setDate(d.start.getDate()+i);
-    const key=dateKey(dt), val=Number(state.records[key]||0);
+    const dayData=d.days?.[i];
+    const val=Number(dayData?.value ?? state.records[dateKey(dt)] ?? 0);
     dg(ctx,x0+i*(cellW+gap),y0,cellW,cellH,18);
     text(labels[i],x0+i*(cellW+gap)+31,y0+37,14,"800",white);
     text(`${String(dt.getDate()).padStart(2,"0")}/${String(dt.getMonth()+1).padStart(2,"0")}`,x0+i*(cellW+gap)+30,y0+61,12,"500",muted);
@@ -649,9 +764,13 @@ async function renderShareImage(){
 
   return new Promise(resolve=>canvas.toBlob(resolve,"image/png",1));
 }
-async function shareCut(){
-  const blob=await renderShareImage();if(!blob)return;const file=new File([blob],"corte-de-paquetes.png",{type:"image/png"});
-  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({title:"Corte de Paquetes",text:"Mi corte semanal de paquetes.",files:[file]});return}catch(e){if(e.name==="AbortError")return}}
+async function shareCut(cut=null){
+  if(!cut){
+    cut=currentCutData();
+    saveWeeklyCut(cut);
+  }
+  const blob=await renderShareImage(cut);if(!blob)return;const file=new File([blob],"corte-de-paquetes.png",{type:"image/png"});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({title:"Corte de Paquetes",text:`Corte semanal ${dateKey(cut.start)} – ${dateKey(cut.end)}.`,files:[file]});return}catch(e){if(e.name==="AbortError")return}}
   $("sharePanel").classList.remove("hidden");
 }
 $("shareCut").onclick=shareCut;
@@ -659,8 +778,9 @@ $("shareTop").onclick=shareCut;$("closeShare").onclick=()=>$("sharePanel").class
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./sw.js?v=1.13").then(r=>r.update()).catch(()=>{});
+  navigator.serviceWorker.register("./sw.js?v=1.29").then(r=>r.update()).catch(()=>{});
 }
+archiveCompletedWeeks();
 render();
 })();
 
