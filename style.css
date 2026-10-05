@@ -776,7 +776,7 @@ body.theme-cyberpunk .dailySummary .dayCell .qty{filter:saturate(1.08)}
 body.theme-luxury .dailySummary .dayCell .dash{height:2px}
 
 
-/* ===== v1.34.6 — Cortes semanales en panel lateral ===== */
+/* ===== v1.34.7 — Weekly cuts slide panel ===== */
 .historySlideOverlay{justify-content:flex-start!important;align-items:stretch!important;padding:0!important;background:rgba(2,5,16,.34)!important;backdrop-filter:blur(5px)!important;-webkit-backdrop-filter:blur(5px)!important}
 .historySlidePanel{width:min(620px,94vw)!important;max-width:620px!important;height:100dvh!important;max-height:none!important;margin:0!important;align-self:stretch!important;border-radius:0 32px 32px 0!important;overflow:auto!important;transform:translateX(-105%);transition:transform .38s cubic-bezier(.22,.8,.2,1)!important;box-shadow:22px 0 80px rgba(0,0,0,.34)!important}
 .historySlideOverlay:not(.hidden) .historySlidePanel{transform:translateX(0)}

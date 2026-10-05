@@ -256,12 +256,6 @@ function openCutHistory(){
   modal.classList.remove("hidden");renderCutHistoryList();
 }
 function closeCutHistory(){const m=$("cutHistoryModal");if(m)m.classList.add("hidden")}
-(function bindWeeklyCutsTop(){
-  const btn=$("dashboardBtn");
-  if(btn)btn.addEventListener("click",()=>openCutHistory());
-  const dash=$("openDashboardFromHistory");
-  if(dash)dash.addEventListener("click",()=>{closeCutHistory();window.openDashboard?.();});
-})();
 function renderCutHistoryList(){
   const box=$("cutHistoryBody");if(!box)return;
   const cuts=readWeeklyCuts();
@@ -577,7 +571,7 @@ $("historyToggle").onclick=()=>{
   const x=$("historyWrap"); x.classList.toggle("open");
   $("historyToggle").textContent=x.classList.contains("open")?"⌃":"⌄";
 };
-$("savedCutsBtn").onclick=openCutHistory;
+$("savedCutsBtn") && $("savedCutsBtn").addEventListener("click",openCutHistory);
 $("closeCutHistory").onclick=closeCutHistory;
 
 bindThemes();
@@ -877,7 +871,7 @@ $("shareTop").onclick=()=>shareCut();$("closeShare").onclick=()=>$("sharePanel")
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./sw.js?v=1.34.6").then(r=>r.update()).catch(()=>{});
+  navigator.serviceWorker.register("./sw.js?v=1.34.7").then(r=>r.update()).catch(()=>{});
 }
 archiveCompletedWeeks();
 render();
@@ -1104,8 +1098,9 @@ render();
 
   document.addEventListener("DOMContentLoaded",()=>{
     const btn=$v27("dashboardBtn"), closeBtn=$v27("dashboardV27Close"), modal=$v27("dashboardModalV27"), goal=$v27("dashboardV27GoalEdit");
-    /* v1.34.6: top-left button is now bound to weekly cuts below. */
+    if(btn)btn.addEventListener("click",openCutHistory);
     if(closeBtn)closeBtn.addEventListener("click",close);
+    const weeklyDashboardBtn=$v27("openDashboardFromHistory"); if(weeklyDashboardBtn)weeklyDashboardBtn.addEventListener("click",()=>{closeCutHistory();open();});
     if(modal)modal.addEventListener("click",e=>{if(e.target===modal)close()});
     if(goal)goal.addEventListener("click",()=>{
       const val=prompt("¿Cuántos paquetes quieres como meta semanal?",getGoal());
