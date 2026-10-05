@@ -884,7 +884,7 @@ $("shareTop").onclick=()=>shareCut();$("closeShare").onclick=()=>$("sharePanel")
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./sw.js?v=1.36.1").then(r=>r.update()).catch(()=>{});
+  navigator.serviceWorker.register("./sw.js?v=1.36.2").then(r=>r.update()).catch(()=>{});
 }
 archiveCompletedWeeks();
 render();

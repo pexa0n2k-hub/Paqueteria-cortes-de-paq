@@ -1,4 +1,1 @@
-Corte de Paquetes PWA
-v1.36.0 — Rediseño visual completo sobre v1.34.8
-Base estable: v1.34.8
-Rediseño radical de interfaz: Command Center móvil, tarjetas flotantes, jerarquía financiera, panel de actividad, Quick Add visual y adaptación completa a Glass iOS / Cyberpunk Pro / Dark Luxury.
+v1.33 MultiTheme para CortePaquetes. Añade selector de tema visual persistente con Glass iOS, Cyberpunk Pro y Dark Luxury. El cambio es instantáneo y conserva registros, historial de cortes, compartir, fondo personalizado, Dynamic Accent, Dashboard Premium, proyección, racha, objetivo inteligente y logros de v1.32.
