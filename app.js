@@ -116,9 +116,13 @@ function makeState(){
 
 let state=makeState();
 
-/* ===== v1.33 MultiTheme ===== */
+/* ===== v1.33 MultiTheme — robust runtime theme engine ===== */
 const THEME_KEY="corte_paquetes_theme";
-const THEMES={glass:{label:"Glass iOS"},cyberpunk:{label:"Cyberpunk Pro"},luxury:{label:"Dark Luxury"}};
+const THEMES={
+  glass:{label:"Glass iOS Premium"},
+  cyberpunk:{label:"Cyberpunk Pro"},
+  luxury:{label:"Dark Luxury"}
+};
 function normalizeTheme(value){return THEMES[value]?value:"glass";}
 function getTheme(){
   let theme=state?.settings?.theme||"glass";
@@ -127,13 +131,14 @@ function getTheme(){
 }
 function applyTheme(theme=getTheme(),persist=true){
   theme=normalizeTheme(theme);
-  if(state?.settings)state.settings.theme=theme;
+  if(state?.settings) state.settings.theme=theme;
+  document.body.dataset.theme=theme;
+  document.documentElement.dataset.theme=theme;
   document.body.classList.remove("theme-glass","theme-cyberpunk","theme-luxury");
   document.body.classList.add("theme-"+theme);
-  document.documentElement.dataset.theme=theme;
   if(persist){try{localStorage.setItem(THEME_KEY,theme)}catch(e){}}
   const label=$("themeCurrentLabel");
-  if(label)label.textContent=THEMES[theme].label;
+  if(label) label.textContent=THEMES[theme].label;
   document.querySelectorAll(".themeOption").forEach(btn=>{
     const active=btn.dataset.theme===theme;
     btn.classList.toggle("active",active);
