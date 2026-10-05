@@ -607,6 +607,9 @@ function currentCutData(){
 }
 function rr(ctx,x,y,w,h,r){const q=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+q,y);ctx.arcTo(x+w,y,x+w,y+h,q);ctx.arcTo(x+w,y+h,x,y+h,q);ctx.arcTo(x,y+h,x,y,q);ctx.arcTo(x,y,x+w,y,q);ctx.closePath()}
 function dg(ctx,x,y,w,h,r=28){
+  const shareTheme=getTheme();
+  const shareAccent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#72f4ff";
+  const shareBorder=shareTheme==="cyberpunk"?"rgba(255,59,212,.52)":shareTheme==="luxury"?"rgba(215,166,58,.52)":"rgba(255,255,255,.42)";
   // IMPORTANTE: el blur se aplica únicamente al fondo capturado ANTES de
   // dibujar los cajones. Nunca hacemos drawImage() del canvas sobre sí mismo.
   const q=Math.min(r,w/2,h/2);
@@ -638,9 +641,19 @@ function dg(ctx,x,y,w,h,r=28){
 
   // Material Liquid Glass: aproximadamente 25% de transparencia.
   const g=ctx.createLinearGradient(x,y,x+w,y+h);
-  g.addColorStop(0,"rgba(255,255,255,.18)");
-  g.addColorStop(.45,"rgba(255,255,255,.10)");
-  g.addColorStop(1,"rgba(8,18,38,.58)");
+  if(shareTheme==="cyberpunk"){
+    g.addColorStop(0,"rgba(255,59,212,.16)");
+    g.addColorStop(.45,"rgba(90,30,150,.10)");
+    g.addColorStop(1,"rgba(5,3,18,.72)");
+  }else if(shareTheme==="luxury"){
+    g.addColorStop(0,"rgba(215,166,58,.13)");
+    g.addColorStop(.45,"rgba(255,255,255,.06)");
+    g.addColorStop(1,"rgba(18,10,3,.72)");
+  }else{
+    g.addColorStop(0,"rgba(255,255,255,.18)");
+    g.addColorStop(.45,"rgba(255,255,255,.10)");
+    g.addColorStop(1,"rgba(8,18,38,.58)");
+  }
   ctx.fillStyle=g;
   ctx.fillRect(x,y,w,h);
 
@@ -648,14 +661,14 @@ function dg(ctx,x,y,w,h,r=28){
   const shade=ctx.createLinearGradient(0,y,0,y+h);
   shade.addColorStop(0,"rgba(5,12,26,.08)");
   shade.addColorStop(1,"rgba(5,12,26,.20)");
-  ctx.fillStyle=shade;
+  ctx.fillStyle=shareTheme==="cyberpunk"?"rgba(8,4,20,.72)":shareTheme==="luxury"?"rgba(18,12,5,.76)":shade;
   ctx.fillRect(x,y,w,h);
   ctx.restore();
 
   // Borde, brillo superior y reflejo interno.
   ctx.save();
   path();
-  ctx.strokeStyle="rgba(255,255,255,.42)";
+  ctx.strokeStyle=shareBorder;
   ctx.lineWidth=2;
   ctx.stroke();
 
@@ -694,7 +707,9 @@ async function renderShareImage(cut=null){
       ctx.drawImage(img,(W-iw)/2,(H-ih)/2,iw,ih);
       ctx.fillStyle=`rgba(2,5,16,${shareShade/100})`; ctx.fillRect(0,0,W,H);
       const veil=ctx.createLinearGradient(0,0,W,H);
-      veil.addColorStop(0,"rgba(0,215,255,.045)"); veil.addColorStop(1,"rgba(150,40,255,.06)");
+      if(isCyber){ veil.addColorStop(0,"rgba(255,0,180,.08)"); veil.addColorStop(1,"rgba(0,220,255,.08)"); }
+      else if(isLuxury){ veil.addColorStop(0,"rgba(215,166,58,.07)"); veil.addColorStop(1,"rgba(80,45,8,.08)"); }
+      else { veil.addColorStop(0,`rgba(${accentRgb},.045)`); veil.addColorStop(1,`rgba(${accentRgb},.06)`); }
       ctx.fillStyle=veil; ctx.fillRect(0,0,W,H);
     }catch(e){
       const bg=ctx.createLinearGradient(0,0,W,H);
@@ -714,7 +729,18 @@ async function renderShareImage(cut=null){
   window.__shareGlassSource=glassSource;
   window.__shareGlassW=W;window.__shareGlassH=H;window.__shareGlassScale=scale;
 
-  const white="#f8fbff", cyan="#78f4ff", mint="#72ffd7", muted="#a9b8ca";
+  const theme=getTheme();
+  const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#72f4ff";
+  const accentRgb=getComputedStyle(document.documentElement).getPropertyValue("--accent-rgb").trim()||"114,244,255";
+  const isCyber=theme==="cyberpunk", isLuxury=theme==="luxury";
+  const white=isLuxury?"#fffaf0":"#f8fbff";
+  const cyan=accent;
+  const mint=isLuxury?"#f2c76b":accent;
+  const muted=isLuxury?"#c7bda8":"#a9b8ca";
+  const secondary=isCyber?"#ff3bd4":isLuxury?"#d7a63a":accent;
+  const cardFill=isCyber?"rgba(10,5,24,.68)":isLuxury?"rgba(16,12,7,.72)":"rgba(255,255,255,.10)";
+  const cardBorder=isCyber?`rgba(255,59,212,.42)`:isLuxury?"rgba(215,166,58,.42)":"rgba(255,255,255,.42)";
+  const glow=`rgba(${accentRgb},.42)`;
   const text=(s,x,y,size,weight="700",color=white)=>{
     ctx.fillStyle=color;ctx.font=`${weight} ${size}px system-ui,-apple-system,sans-serif`;ctx.fillText(s,x,y);
   };
@@ -724,6 +750,8 @@ async function renderShareImage(cut=null){
   text("CORTE DE PAQUETES",55,63,20,"900",cyan);
   text("Corte semanal",55,112,42,"850",white);
   text(`${d.start.getDate()} – ${d.end.getDate()} de ${d.end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`,55,148,19,"500",muted);
+  const themeLabel=isCyber?"CYBERPUNK PRO":isLuxury?"DARK LUXURY":"GLASS iOS PREMIUM";
+  text(themeLabel,55,174,13,"800",secondary);
 
   // Botón compartir visual en la tarjeta exportada.
   dg(ctx,930,28,100,90,25);
@@ -731,39 +759,39 @@ async function renderShareImage(cut=null){
   ctx.beginPath();ctx.moveTo(980,91);ctx.lineTo(980,48);ctx.moveTo(980,48);ctx.lineTo(966,62);ctx.moveTo(980,48);ctx.lineTo(994,62);ctx.moveTo(958,71);ctx.lineTo(958,97);ctx.quadraticCurveTo(958,103,964,103);ctx.lineTo(996,103);ctx.quadraticCurveTo(1002,103,1002,97);ctx.lineTo(1002,71);ctx.stroke();ctx.restore();
 
   // Paquetes — tarjeta ancha rectangular.
-  dg(ctx,42,176,996,245,27);
-  text("PAQUETES ENTREGADOS",76,226,17,"900",cyan);
-  text(String(d.total),76,316,92,"900",white);
-  text(`${d.entries.length} días registrados`,76,359,19,"500",muted);
+  dg(ctx,42,188,996,245,27);
+  text("PAQUETES ENTREGADOS",76,238,17,"900",cyan);
+  text(String(d.total),76,328,92,"900",white);
+  text(`${d.entries.length} días registrados`,76,371,19,"500",muted);
 
   // Divisor y tarjeta de tarifa.
   ctx.strokeStyle="rgba(255,255,255,.18)";ctx.lineWidth=1;
-  ctx.beginPath();ctx.moveTo(600,224);ctx.lineTo(600,385);ctx.stroke();
-  dg(ctx,650,260,78,78,20);
+  ctx.beginPath();ctx.moveTo(600,236);ctx.lineTo(600,397);ctx.stroke();
+  dg(ctx,650,272,78,78,20);
   // package icon
   ctx.save();ctx.strokeStyle="#dce8f5";ctx.lineWidth=2.2;ctx.lineJoin="round";
-  ctx.beginPath();ctx.moveTo(669,282);ctx.lineTo(689,272);ctx.lineTo(709,282);ctx.lineTo(689,292);ctx.closePath();
-  ctx.moveTo(669,282);ctx.lineTo(669,305);ctx.lineTo(689,316);ctx.lineTo(709,305);ctx.lineTo(709,282);
-  ctx.moveTo(689,292);ctx.lineTo(689,316);ctx.stroke();ctx.restore();
-  text(money(d.rate),755,301,30,"800",white);
-  text("por paquete",755,331,18,"500",muted);
+  ctx.beginPath();ctx.moveTo(669,294);ctx.lineTo(689,284);ctx.lineTo(709,294);ctx.lineTo(689,304);ctx.closePath();
+  ctx.moveTo(669,294);ctx.lineTo(669,317);ctx.lineTo(689,328);ctx.lineTo(709,317);ctx.lineTo(709,294);
+  ctx.moveTo(689,304);ctx.lineTo(689,328);ctx.stroke();ctx.restore();
+  text(money(d.rate),755,313,30,"800",white);
+  text("por paquete",755,343,18,"500",muted);
 
   // Dos tarjetas métricas.
   dg(ctx,42,455,478,190,25); dg(ctx,560,455,478,190,25);
   dg(ctx,80,520,65,65,18); dg(ctx,596,520,65,65,18);
 
   // Ganancia icon.
-  ctx.save();ctx.strokeStyle="#73fff0";ctx.lineWidth=2.8;ctx.lineCap="round";ctx.lineJoin="round";
+  ctx.save();ctx.strokeStyle=accent;ctx.lineWidth=2.8;ctx.lineCap="round";ctx.lineJoin="round";
   ctx.beginPath();ctx.moveTo(98,568);ctx.lineTo(108,558);ctx.lineTo(116,563);ctx.lineTo(130,545);ctx.moveTo(99,574);ctx.lineTo(99,548);ctx.moveTo(99,574);ctx.lineTo(132,574);ctx.stroke();ctx.restore();
   text("GANANCIA BRUTA",170,505,17,"900",cyan);
   text(money(d.gross),170,564,moneyFit(money(d.gross),300,42),"900",white);
   text(`${d.total} × ${money(d.rate)}`,170,603,18,"500",muted);
 
   // Wallet icon.
-  ctx.save();ctx.strokeStyle="#ff8faa";ctx.lineWidth=2.5;ctx.lineJoin="round";
+  ctx.save();ctx.strokeStyle=secondary;ctx.lineWidth=2.5;ctx.lineJoin="round";
   ctx.beginPath();ctx.roundRect(613,539,35,27,5);ctx.stroke();
   ctx.beginPath();ctx.moveTo(613,546);ctx.lineTo(646,546);ctx.quadraticCurveTo(655,546,655,554);ctx.lineTo(646,554);ctx.stroke();
-  ctx.beginPath();ctx.arc(645,554,2,0,Math.PI*2);ctx.fillStyle="#ff8faa";ctx.fill();ctx.restore();
+  ctx.beginPath();ctx.arc(645,554,2,0,Math.PI*2);ctx.fillStyle=secondary;ctx.fill();ctx.restore();
   text("ADELANTOS / PRÉSTAMOS",685,505,17,"900",cyan);
   text("-"+money(d.adv),685,564,moneyFit("-"+money(d.adv),300,42),"900",white);
   text(`${d.advances.length} registro${d.advances.length===1?"":"s"}`,685,603,18,"500",muted);
@@ -792,7 +820,7 @@ async function renderShareImage(cut=null){
     dg(ctx,x0+i*(cellW+gap),y0,cellW,cellH,18);
     text(labels[i],x0+i*(cellW+gap)+31,y0+37,14,"800",white);
     text(`${String(dt.getDate()).padStart(2,"0")}/${String(dt.getMonth()+1).padStart(2,"0")}`,x0+i*(cellW+gap)+30,y0+61,12,"500",muted);
-    ctx.fillStyle=cyan;ctx.shadowColor="rgba(114,255,240,.7)";ctx.shadowBlur=8;ctx.fillRect(x0+i*(cellW+gap)+40,y0+78,36,3);ctx.shadowBlur=0;
+    ctx.fillStyle=accent;ctx.shadowColor=glow;ctx.shadowBlur=8;ctx.fillRect(x0+i*(cellW+gap)+40,y0+78,36,3);ctx.shadowBlur=0;
     text(String(val),x0+i*(cellW+gap)+36,y0+126,26,"900",white);
     text("paquetes",x0+i*(cellW+gap)+25,y0+151,11,"500",muted);
   }
@@ -804,7 +832,7 @@ async function renderShareImage(cut=null){
   text("◷",645,1276,22,"500","#dce8f5");
   const now=new Date();
   text(`Generado: ${now.toLocaleDateString("es-MX",{day:"numeric",month:"long"})}, ${now.toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit"})}`,680,1273,14,"500",white);
-  text("Generado desde Corte de Paquetes",55,1330,13,"500","rgba(255,255,255,.50)");
+  text(`Corte de Paquetes • ${themeLabel}`,55,1330,13,"500","rgba(255,255,255,.50)");
 
   return new Promise(resolve=>canvas.toBlob(resolve,"image/png",1));
 }
