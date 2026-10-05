@@ -688,35 +688,54 @@ function dg(ctx,x,y,w,h,r=28){
   ctx.restore();
 }
 function fit(ctx,text,max,size){let s=size;ctx.font=`900 ${s}px system-ui,sans-serif`;while(ctx.measureText(text).width>max&&s>14){s--;ctx.font=`900 ${s}px system-ui,sans-serif`}return s}
+async function loadShareWallpaper(preferred){
+  const candidates=[];
+  if(preferred && String(preferred).startsWith("data:image")) candidates.push(preferred);
+  if(state?.settings?.bg && String(state.settings.bg).startsWith("data:image") && !candidates.includes(state.settings.bg)) candidates.push(state.settings.bg);
+  try{
+    const backdrop=$("backdrop");
+    const css=getComputedStyle(backdrop);
+    const match=String(css.backgroundImage||"").match(/url\(["']?(.*?)["']?\)/);
+    if(match && match[1] && !/^data:,?$/.test(match[1]) && !/^radial-gradient|^linear-gradient/.test(match[1])){
+      const url=match[1].replace(/\\"/g,'"').replace(/\\'/g,"'");
+      if(url.startsWith("data:image")) candidates.push(url);
+    }
+  }catch(e){}
+  for(const src of candidates){
+    try{
+      const img=await new Promise((resolve,reject)=>{
+        const im=new Image();
+        im.onload=()=>resolve(im); im.onerror=reject; im.src=src;
+      });
+      return img;
+    }catch(e){}
+  }
+  return null;
+}
+
 async function renderShareImage(cut=null){
   const d=cut||currentCutData(), canvas=$("shareCanvas"), W=1080, H=1350;
   const scale=Math.min(3,Math.max(2,devicePixelRatio||2));
   canvas.width=W*scale; canvas.height=H*scale;
   const ctx=canvas.getContext("2d"); ctx.scale(scale,scale);
 
-  // 1) Fondo personalizado de la app, exactamente como se muestra dentro de ella.
-  const shareBg=d.bg||state.settings.bg;
-  const shareShade=d.shade??state.settings.shade??62;
-  if(shareBg){
-    try{
-      const img=await new Promise((resolve,reject)=>{
-        const im=new Image();
-        im.onload=()=>resolve(im); im.onerror=reject; im.src=shareBg;
-      });
-      const sc=Math.max(W/img.width,H/img.height), iw=img.width*sc, ih=img.height*sc;
-      ctx.drawImage(img,(W-iw)/2,(H-ih)/2,iw,ih);
-      ctx.fillStyle=`rgba(2,5,16,${shareShade/100})`; ctx.fillRect(0,0,W,H);
-      const veil=ctx.createLinearGradient(0,0,W,H);
-      if(isCyber){ veil.addColorStop(0,"rgba(255,0,180,.08)"); veil.addColorStop(1,"rgba(0,220,255,.08)"); }
-      else if(isLuxury){ veil.addColorStop(0,"rgba(215,166,58,.07)"); veil.addColorStop(1,"rgba(80,45,8,.08)"); }
-      else { veil.addColorStop(0,`rgba(${accentRgb},.045)`); veil.addColorStop(1,`rgba(${accentRgb},.06)`); }
-      ctx.fillStyle=veil; ctx.fillRect(0,0,W,H);
-    }catch(e){
-      const bg=ctx.createLinearGradient(0,0,W,H);
-      bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");
-      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-    }
+  // 1) Wallpaper real de la app. Primero usa el guardado; si no está disponible,
+  // recupera el mismo dataURL que está renderizado actualmente en #backdrop.
+  const shareShade=Number(d.shade??state.settings.shade??62);
+  const img=await loadShareWallpaper(d.bg||state.settings.bg);
+  if(img){
+    const sc=Math.max(W/img.width,H/img.height), iw=img.width*sc, ih=img.height*sc;
+    ctx.drawImage(img,(W-iw)/2,(H-ih)/2,iw,ih);
+    // Mantener el wallpaper visible: el velo es configurable y nunca reemplaza la imagen.
+    const shadeAlpha=Math.min(.72,Math.max(.08,shareShade/100));
+    ctx.fillStyle=`rgba(2,5,16,${shadeAlpha})`; ctx.fillRect(0,0,W,H);
+    const veil=ctx.createLinearGradient(0,0,W,H);
+    if(isCyber){ veil.addColorStop(0,"rgba(255,0,180,.08)"); veil.addColorStop(1,"rgba(0,220,255,.08)"); }
+    else if(isLuxury){ veil.addColorStop(0,"rgba(215,166,58,.07)"); veil.addColorStop(1,"rgba(80,45,8,.08)"); }
+    else { veil.addColorStop(0,`rgba(${accentRgb},.045)`); veil.addColorStop(1,`rgba(${accentRgb},.06)`); }
+    ctx.fillStyle=veil; ctx.fillRect(0,0,W,H);
   }else{
+    // Solo usamos un fondo sólido si realmente no existe ningún wallpaper disponible.
     const bg=ctx.createLinearGradient(0,0,W,H);
     bg.addColorStop(0,"#0b1730");bg.addColorStop(.5,"#07101f");bg.addColorStop(1,"#160a2a");
     ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
@@ -850,7 +869,7 @@ $("shareTop").onclick=()=>shareCut();$("closeShare").onclick=()=>$("sharePanel")
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./sw.js?v=1.29").then(r=>r.update()).catch(()=>{});
+  navigator.serviceWorker.register("./sw.js?v=1.34.4").then(r=>r.update()).catch(()=>{});
 }
 archiveCompletedWeeks();
 render();
