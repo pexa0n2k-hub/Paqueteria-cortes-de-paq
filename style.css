@@ -1074,3 +1074,110 @@ body.theme-luxury .redesignHero .heroRate{border-color:rgba(218,181,100,.20);bac
   .redesignMetrics .metricCopy strong{font-size:18px!important}
   .redesignTotal>div>strong{font-size:37px!important}
 }
+
+/* =========================================================
+   v1.36.0 — COMMAND CENTER / RADICAL VISUAL REDESIGN
+   Visual-only layer: preserves existing IDs, controls and logic.
+   ========================================================= */
+:root{--v3-radius:28px;--v3-border:rgba(255,255,255,.12);--v3-glow:rgba(var(--accent-rgb),.22)}
+body{background:#02030a!important}
+main{max-width:620px!important;padding:12px 12px 54px!important}
+.topbar{position:sticky!important;top:0!important;z-index:30!important;padding:9px 2px 13px!important;background:linear-gradient(180deg,rgba(2,3,10,.88),rgba(2,3,10,.42),transparent)!important;backdrop-filter:blur(18px)!important}
+.brand{gap:9px!important}
+.brand .title,.brandTitle{letter-spacing:.16em!important;font-weight:900!important}
+.topActions button,.brandMark{border:1px solid rgba(255,255,255,.13)!important;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.035))!important;box-shadow:0 8px 22px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.12)!important;backdrop-filter:blur(18px)!important}
+
+/* The page becomes a dashboard rather than a stack of forms. */
+.redesignHero{margin-top:7px!important;min-height:285px!important;padding:24px 22px 20px!important;border-radius:34px!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.15)!important;background:
+ radial-gradient(circle at 82% 18%,rgba(var(--accent-rgb),.30),transparent 31%),
+ radial-gradient(circle at 10% 100%,rgba(var(--accent-rgb),.14),transparent 38%),
+ linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.035))!important;
+ box-shadow:0 30px 80px rgba(0,0,0,.48),0 0 55px rgba(var(--accent-rgb),.12),inset 0 1px rgba(255,255,255,.34)!important}
+.redesignHero:after{content:"";position:absolute;right:-70px;bottom:-90px;width:230px;height:230px;border-radius:50%;border:1px solid rgba(var(--accent-rgb),.23);box-shadow:0 0 0 22px rgba(var(--accent-rgb),.035),0 0 0 44px rgba(var(--accent-rgb),.025);pointer-events:none}
+.redesignHero .eyebrow{font-size:10px!important;letter-spacing:.22em!important;opacity:.72!important}
+.redesignHero .heroNumber{font-size:112px!important;line-height:.88!important;letter-spacing:-.08em!important;font-weight:950!important;text-shadow:0 0 38px rgba(var(--accent-rgb),.30)!important}
+.redesignHero .heroSub{font-size:12px!important;letter-spacing:.08em!important;opacity:.72!important;text-transform:uppercase}
+.redesignHero .heroRate{position:absolute!important;left:22px!important;bottom:19px!important;margin:0!important;min-width:150px!important;border-radius:18px!important;padding:10px 14px!important;background:rgba(0,0,0,.22)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:inset 0 1px rgba(255,255,255,.12)!important}
+.redesignHero .heroRate strong{font-size:23px!important;font-weight:900!important}
+.redesignHero .packageIcon{position:absolute!important;right:23px!important;bottom:22px!important;width:62px!important;height:62px!important;border-radius:20px!important;display:grid!important;place-items:center!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:0 0 30px rgba(var(--accent-rgb),.13)!important}
+
+/* Register = control deck */
+.redesignForm{margin-top:12px!important;border-radius:26px!important;padding:17px!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.10)!important;box-shadow:0 18px 45px rgba(0,0,0,.28)!important}
+.redesignForm .formTitle{font-size:14px!important;font-weight:900!important;letter-spacing:.04em!important}
+.redesignForm .formline{margin-top:13px!important;padding:0!important;background:transparent!important;border:0!important}
+.redesignForm .dateText{min-height:47px!important;border-radius:16px!important;background:rgba(255,255,255,.065)!important;border:1px solid rgba(255,255,255,.10)!important;display:flex!important;align-items:center!important;padding:0 14px!important}
+.quickQty{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:7px!important;margin-top:10px!important}
+.quickQtyBtn{min-height:50px!important;border-radius:17px!important;font-size:12px!important;font-weight:900!important;border:1px solid rgba(var(--accent-rgb),.18)!important;background:linear-gradient(145deg,rgba(var(--accent-rgb),.13),rgba(255,255,255,.045))!important;box-shadow:0 8px 18px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.12)!important;transition:transform .15s,filter .15s!important}
+.quickQtyBtn:active{transform:scale(.94)!important;filter:brightness(1.25)!important}
+.redesignForm .entry{margin-top:9px!important}
+.redesignForm .entry button{min-height:50px!important;border-radius:17px!important;font-weight:950!important;letter-spacing:.04em!important}
+
+/* Financial hierarchy: total is a giant luminous card. */
+.redesignTotal{margin-top:12px!important;min-height:190px!important;padding:20px 21px!important;border-radius:31px!important;border:1px solid rgba(var(--accent-rgb),.20)!important;background:
+ radial-gradient(circle at 90% 5%,rgba(var(--accent-rgb),.28),transparent 34%),
+ linear-gradient(145deg,rgba(255,255,255,.115),rgba(255,255,255,.035))!important;
+box-shadow:0 28px 65px rgba(0,0,0,.42),0 0 45px rgba(var(--accent-rgb),.10),inset 0 1px rgba(255,255,255,.24)!important}
+.redesignTotal>div>strong{font-size:55px!important;letter-spacing:-.055em!important;font-weight:950!important;text-shadow:0 0 32px rgba(var(--accent-rgb),.28)!important}
+.redesignTotal .netMeta{opacity:.75!important}
+.redesignTotal .shareBtn{border-radius:15px!important;min-height:43px!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.12)!important}
+
+/* Two financial satellites */
+.redesignMetrics{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin-top:10px!important}
+.redesignMetrics .metricCard{min-height:145px!important;border-radius:25px!important;padding:16px!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important;align-items:flex-start!important;background:linear-gradient(145deg,rgba(255,255,255,.095),rgba(255,255,255,.028))!important;border:1px solid rgba(255,255,255,.10)!important;box-shadow:0 18px 38px rgba(0,0,0,.30)!important}
+.redesignMetrics .metricIcon{width:43px!important;height:43px!important;border-radius:15px!important;margin:0!important;display:grid!important;place-items:center!important;background:rgba(var(--accent-rgb),.12)!important;border:1px solid rgba(var(--accent-rgb),.20)!important}
+.redesignMetrics .metricCopy{width:100%!important}
+.redesignMetrics .metricCopy strong{font-size:25px!important;line-height:1!important;font-weight:950!important;letter-spacing:-.04em!important}
+.redesignMetrics .metricCopy span{font-size:9px!important;letter-spacing:.13em!important;text-transform:uppercase!important;opacity:.60!important}
+
+/* Daily = activity timeline, not a generic table. */
+.redesignDaily{border-radius:27px!important;padding:14px!important;margin-top:11px!important;background:rgba(255,255,255,.038)!important;border:1px solid rgba(255,255,255,.09)!important;box-shadow:0 18px 45px rgba(0,0,0,.25)!important}
+.redesignDaily .dailyGrid{gap:7px!important}
+.redesignDaily .dayCell{min-height:118px!important;border-radius:19px!important;background:linear-gradient(160deg,rgba(var(--accent-rgb),.10),rgba(255,255,255,.035))!important;border:1px solid rgba(var(--accent-rgb),.12)!important;box-shadow:inset 0 1px rgba(255,255,255,.08)!important}
+.redesignDaily .dayCell .qty{font-size:23px!important;font-weight:950!important}
+
+/* History gets a pill/capsule treatment. */
+.historySectionTitle{display:flex!important;align-items:center!important;justify-content:space-between!important;margin:20px 3px 8px!important}
+.historyWrap{border-radius:24px!important;border:1px solid rgba(255,255,255,.09)!important;background:rgba(255,255,255,.035)!important;box-shadow:0 14px 35px rgba(0,0,0,.22)!important}
+.redesignFooter{margin-top:11px!important;border-radius:20px!important;border:1px solid rgba(var(--accent-rgb),.16)!important;background:linear-gradient(90deg,rgba(var(--accent-rgb),.09),rgba(255,255,255,.035))!important}
+
+/* Section titles become HUD labels. */
+.sectionTitle,.sectionTitle h2,.historySectionTitle h2{letter-spacing:.13em!important;text-transform:uppercase!important;font-weight:900!important;font-size:11px!important;opacity:.70!important}
+
+/* Make overlays/panels feel like the same product family. */
+.overlay .panel,.historySlidePanel,.sharePanel{border-radius:30px!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:0 35px 100px rgba(0,0,0,.65),0 0 45px rgba(var(--accent-rgb),.10)!important;background:linear-gradient(145deg,rgba(20,23,38,.94),rgba(5,7,16,.92))!important;backdrop-filter:blur(28px)!important}
+.dashboardV27{border-radius:34px!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:0 40px 110px rgba(0,0,0,.72),0 0 55px rgba(var(--accent-rgb),.10)!important}
+
+/* Glass iOS: soft depth */
+body.theme-glass .redesignHero{background:radial-gradient(circle at 80% 12%,rgba(var(--accent-rgb),.20),transparent 35%),linear-gradient(145deg,rgba(255,255,255,.19),rgba(255,255,255,.055))!important;box-shadow:0 35px 90px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.62),0 0 45px rgba(var(--accent-rgb),.10)!important}
+body.theme-glass .redesignTotal{background:radial-gradient(circle at 92% 0,rgba(var(--accent-rgb),.20),transparent 35%),linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.045))!important}
+
+/* Cyberpunk: angular HUD energy */
+body.theme-cyberpunk .redesignHero{border-radius:20px!important;clip-path:polygon(0 0,96% 0,100% 9%,100% 92%,96% 100%,0 100%,0 8%)!important;background:linear-gradient(135deg,rgba(255,20,95,.10),rgba(32,239,255,.08) 52%,rgba(255,255,255,.025))!important;box-shadow:0 35px 80px rgba(0,0,0,.72),0 0 35px rgba(32,239,255,.13)!important}
+body.theme-cyberpunk .redesignTotal{border-radius:20px!important;background:linear-gradient(135deg,rgba(32,239,255,.08),rgba(255,20,95,.07),rgba(255,255,255,.025))!important}
+body.theme-cyberpunk .quickQtyBtn{border-radius:10px!important;text-transform:uppercase!important;letter-spacing:.05em!important}
+
+/* Dark Luxury: editorial finance look */
+body.theme-luxury .redesignHero{border-radius:31px!important;background:radial-gradient(circle at 85% 12%,rgba(218,181,100,.16),transparent 33%),linear-gradient(145deg,rgba(255,255,255,.09),rgba(218,181,100,.025))!important;border-color:rgba(218,181,100,.20)!important;box-shadow:0 38px 90px rgba(0,0,0,.78),inset 0 1px rgba(255,244,205,.22)!important}
+body.theme-luxury .redesignTotal{border-color:rgba(218,181,100,.22)!important;background:radial-gradient(circle at 90% 0,rgba(218,181,100,.16),transparent 35%),linear-gradient(145deg,rgba(255,255,255,.08),rgba(218,181,100,.025))!important}
+body.theme-luxury .quickQtyBtn{border-radius:13px!important;border-color:rgba(218,181,100,.20)!important}
+
+@media(max-width:500px){
+ main{padding-left:9px!important;padding-right:9px!important}
+ .redesignHero{min-height:260px!important;border-radius:29px!important}
+ .redesignHero .heroNumber{font-size:92px!important}
+ .redesignTotal{min-height:175px!important;border-radius:27px!important}
+ .redesignTotal>div>strong{font-size:47px!important}
+ .redesignMetrics .metricCard{min-height:136px!important;border-radius:21px!important}
+ .redesignDaily .dayCell{min-height:108px!important}
+}
+@media(max-width:390px){
+ .quickQty{grid-template-columns:repeat(5,1fr)!important;gap:5px!important}
+ .quickQtyBtn{min-height:44px!important;font-size:10px!important;border-radius:13px!important}
+ .redesignHero{min-height:245px!important;padding:20px 17px!important}
+ .redesignHero .heroNumber{font-size:76px!important}
+ .redesignHero .heroRate{left:17px!important;bottom:16px!important}
+ .redesignHero .packageIcon{right:17px!important;bottom:17px!important;width:52px!important;height:52px!important}
+ .redesignTotal>div>strong{font-size:40px!important}
+ .redesignMetrics .metricCard{min-height:124px!important;padding:13px!important}
+ .redesignMetrics .metricCopy strong{font-size:21px!important}
+}
