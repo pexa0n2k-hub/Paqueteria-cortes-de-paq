@@ -9,7 +9,7 @@ const DEFAULTS = {
   rate: 0,                     // current default rate
   rateHistory: [],             // [{date, rate}]
   advances: {},                // { "YYYY-MM-DD": [{amount, concept}] }
-  settings: {shade:62, blur:7, transparency:78, bg:null, accentMode:"auto", accent:"#72F4FF"}
+  settings: {shade:62, blur:7, transparency:78, bg:null, accentMode:"auto", accent:"#72F4FF", theme:"glass"}
 };
 
 function cloneDefaults(){ return JSON.parse(JSON.stringify(DEFAULTS)); }
@@ -116,6 +116,41 @@ function makeState(){
 
 let state=makeState();
 
+/* ===== v1.33 MultiTheme ===== */
+const THEME_KEY="corte_paquetes_theme";
+const THEMES={glass:{label:"Glass iOS"},cyberpunk:{label:"Cyberpunk Pro"},luxury:{label:"Dark Luxury"}};
+function normalizeTheme(value){return THEMES[value]?value:"glass";}
+function getTheme(){
+  let theme=state?.settings?.theme||"glass";
+  try{const saved=localStorage.getItem(THEME_KEY);if(saved)theme=saved;}catch(e){}
+  return normalizeTheme(theme);
+}
+function applyTheme(theme=getTheme(),persist=true){
+  theme=normalizeTheme(theme);
+  if(state?.settings)state.settings.theme=theme;
+  document.body.classList.remove("theme-glass","theme-cyberpunk","theme-luxury");
+  document.body.classList.add("theme-"+theme);
+  document.documentElement.dataset.theme=theme;
+  if(persist){try{localStorage.setItem(THEME_KEY,theme)}catch(e){}}
+  const label=$("themeCurrentLabel");
+  if(label)label.textContent=THEMES[theme].label;
+  document.querySelectorAll(".themeOption").forEach(btn=>{
+    const active=btn.dataset.theme===theme;
+    btn.classList.toggle("active",active);
+    btn.setAttribute("aria-checked",active?"true":"false");
+  });
+  return theme;
+}
+function bindThemes(){
+  applyTheme(getTheme(),false);
+  document.querySelectorAll(".themeOption").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const theme=applyTheme(btn.dataset.theme,true);
+      if(state?.settings){state.settings.theme=theme;safeWrite();}
+      btn.blur();
+    });
+  });
+}
 
 function rateFor(date){
   let result=Number(state.rate)||0;
@@ -531,6 +566,8 @@ $("historyToggle").onclick=()=>{
 };
 $("savedCutsBtn").onclick=openCutHistory;
 $("closeCutHistory").onclick=closeCutHistory;
+
+bindThemes();
 
 $("settingsBtn").onclick=()=>$("setPanel").classList.remove("hidden");
 $("closeSet").onclick=()=>$("setPanel").classList.add("hidden");

@@ -1,1 +1,1 @@
-v1.32: Modo Pro para CortePaquetes. Añade proyección semanal, racha de días activos, objetivo inteligente con paquetes necesarios por día y logros acumulativos. Conserva el Dashboard Premium v1.31.1, historial de cortes, compartir, almacenamiento y Dynamic Accent.
+v1.33 MultiTheme para CortePaquetes. Añade selector de tema visual persistente con Glass iOS, Cyberpunk Pro y Dark Luxury. El cambio es instantáneo y conserva registros, historial de cortes, compartir, fondo personalizado, Dynamic Accent, Dashboard Premium, proyección, racha, objetivo inteligente y logros de v1.32.

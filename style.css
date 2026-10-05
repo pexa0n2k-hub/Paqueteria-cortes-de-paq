@@ -399,3 +399,86 @@ main{max-width:650px;padding-left:18px;padding-right:18px}
 .dashboardV32Badge i{font-style:normal;font-size:10px;color:#65768a;text-align:center}.dashboardV32Badge.unlocked{border-color:rgba(var(--accent-rgb),.18);background:rgba(var(--accent-rgb),.055)}.dashboardV32Badge.unlocked i{color:#73ffd7}.dashboardV32Badge.locked{opacity:.52}
 @media(max-width:430px){.dashboardV32ProGrid{gap:8px}.dashboardV32ProCard{padding:13px;border-radius:18px}.dashboardV32ProCard strong{font-size:22px}.dashboardV32Badge{padding:8px;grid-template-columns:25px minmax(0,1fr) 14px}.dashboardV32Badge>b{font-size:17px}.dashboardV32Badge strong{font-size:9.5px}.dashboardV32Badge span{font-size:7.4px}}
 @media(max-width:350px){.dashboardV32Badges{grid-template-columns:1fr}}
+
+/* ===== v1.33 MultiTheme System ===== */
+.themeSettings{margin:18px 0 4px;padding:14px;border-radius:22px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 1px rgba(255,255,255,.10)}
+.themeSettingHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px!important}
+.themeSettingHead label{margin:0!important;color:#eaf2fb;font-size:12px!important}
+.themeSettingHead>span{font-size:10px;color:var(--accent);font-weight:850}
+.themePicker{display:grid;gap:8px}
+.themeOption{appearance:none;-webkit-appearance:none;width:100%;display:grid;grid-template-columns:54px minmax(0,1fr) 22px;align-items:center;gap:10px;padding:9px;border-radius:17px;color:#fff;text-align:left;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.10);cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease}
+.themeOption:hover{transform:translateY(-1px);background:rgba(255,255,255,.075)}
+.themeOption:active{transform:scale(.985)}
+.themeOption.active{background:rgba(var(--accent-rgb),.095);border-color:rgba(var(--accent-rgb),.48);box-shadow:0 8px 22px rgba(0,0,0,.16),inset 0 1px 1px rgba(255,255,255,.18)}
+.themeOption>span:nth-child(2){min-width:0}
+.themeOption strong{display:block;font-size:12px;line-height:1.15}
+.themeOption small{display:block;margin-top:3px;color:#8194aa;font-size:9px;letter-spacing:.2px}
+.themeCheck{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;color:transparent;border:1px solid rgba(255,255,255,.16);font-size:11px;font-weight:950;transition:.2s}
+.themeOption.active .themeCheck{color:#061018;background:var(--accent);border-color:var(--accent);box-shadow:0 0 14px var(--accent-glow)}
+.themePreview{height:38px;width:54px;border-radius:12px;display:block;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.24);box-shadow:inset 0 1px 1px rgba(255,255,255,.32),0 6px 15px rgba(0,0,0,.22)}
+.themePreview i,.themePreview b,.themePreview em{position:absolute;display:block;font-style:normal}
+.themePreview i{left:6px;right:6px;top:6px;height:8px;border-radius:6px}
+.themePreview b{left:6px;bottom:7px;width:23px;height:12px;border-radius:5px}
+.themePreview em{right:6px;bottom:7px;width:13px;height:18px;border-radius:6px}
+.themePreviewGlass{background:linear-gradient(135deg,#86a9d5,#35295b 55%,#0b1122)}
+.themePreviewGlass i{background:rgba(255,255,255,.55)}.themePreviewGlass b{background:rgba(255,255,255,.30)}.themePreviewGlass em{background:#79efff;box-shadow:0 0 10px #79efff}
+.themePreviewCyber{background:linear-gradient(135deg,#080914,#260b28 55%,#04131b)}
+.themePreviewCyber i{background:#ff286e;box-shadow:0 0 8px #ff286e}.themePreviewCyber b{background:#8a35ff}.themePreviewCyber em{background:#20efff;box-shadow:0 0 10px #20efff}
+.themePreviewLuxury{background:linear-gradient(135deg,#0b0b0b,#1d1912 55%,#050505)}
+.themePreviewLuxury i{background:#d6a84f}.themePreviewLuxury b{background:#8c6829}.themePreviewLuxury em{background:#f0c45e;box-shadow:0 0 10px #d6a84f}
+
+/* Cyberpunk Pro */
+body.theme-cyberpunk{background:#02030a;color:#f7f8ff}
+.theme-cyberpunk #backdrop{background:radial-gradient(circle at 18% 10%,#25104a 0%,#080916 43%,#02050a 78%);filter:blur(6px) saturate(1.25);transform:scale(1.08)}
+.theme-cyberpunk #shade{background:linear-gradient(135deg,rgba(1,3,12,.56),rgba(20,0,26,.68))}
+.theme-cyberpunk .glass{background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(16,17,39,.66) 48%,rgba(3,9,19,.55));border-color:rgba(74,221,255,.20);border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.13),0 0 25px rgba(34,220,255,.045)}
+.theme-cyberpunk .glass:before{background:linear-gradient(115deg,rgba(255,255,255,.10),transparent 22%),linear-gradient(90deg,transparent 0%,rgba(255,35,111,.045) 50%,transparent 100%)}
+.theme-cyberpunk .glass:after{background:linear-gradient(90deg,transparent,rgba(32,239,255,.55),rgba(255,40,110,.32),transparent);opacity:.9}
+.theme-cyberpunk .hero{border-radius:21px;padding:22px 15px}
+.theme-cyberpunk .hero b{font-family:"SF Mono",ui-monospace,monospace;font-size:64px;letter-spacing:-2px;text-shadow:0 0 12px rgba(32,239,255,.7),0 0 30px rgba(255,40,110,.25)}
+.theme-cyberpunk h1,.theme-cyberpunk h2,.theme-cyberpunk .metricCopy strong{letter-spacing:.2px}
+.theme-cyberpunk .brandMark{border-radius:10px;background:linear-gradient(135deg,rgba(255,40,110,.16),rgba(32,239,255,.12));border-color:rgba(32,239,255,.35);box-shadow:0 0 20px rgba(32,239,255,.15),inset 0 1px rgba(255,255,255,.25)}
+.theme-cyberpunk .neonBtn{border-radius:12px;background:linear-gradient(90deg,rgba(var(--accent-rgb),.45),rgba(255,40,110,.22));box-shadow:0 0 18px rgba(var(--accent-rgb),.35),0 0 28px rgba(255,40,110,.12),inset 0 1px rgba(255,255,255,.35)}
+.theme-cyberpunk .icon,.theme-cyberpunk .neonCircle{border-radius:12px;background:rgba(4,10,24,.55);border-color:rgba(32,239,255,.28);box-shadow:inset 0 1px rgba(255,255,255,.15),0 0 15px rgba(32,239,255,.08)}
+.theme-cyberpunk .neonCircle{color:#20efff}
+.theme-cyberpunk .field,.theme-cyberpunk .entry input{border-radius:11px;background:rgba(0,4,13,.55);border-color:rgba(32,239,255,.20)}
+.theme-cyberpunk .net strong{color:#20efff;text-shadow:0 0 12px rgba(32,239,255,.55),0 0 28px rgba(255,40,110,.22)}
+.theme-cyberpunk .sectionTitle{margin-top:25px}.theme-cyberpunk .sectionTitle h2{font-size:16px;text-transform:uppercase;letter-spacing:1px}
+.theme-cyberpunk .dailySummary,.theme-cyberpunk .historyCollapsed{border-radius:18px}
+.theme-cyberpunk .overlay{background:rgba(0,2,9,.78);backdrop-filter:blur(12px) saturate(140%)}
+.theme-cyberpunk .panel{border-radius:21px;background:linear-gradient(145deg,rgba(15,17,40,.92),rgba(2,8,17,.94));border-color:rgba(32,239,255,.24)}
+.theme-cyberpunk .themeSettings{background:rgba(0,0,0,.24);border-color:rgba(32,239,255,.15)}
+.theme-cyberpunk .themeOption.active{background:rgba(255,35,111,.09);border-color:rgba(255,40,110,.55);box-shadow:0 0 22px rgba(255,40,110,.11)}
+.theme-cyberpunk .dashboardV27,.theme-cyberpunk .cutHistoryPanel{background:linear-gradient(145deg,rgba(13,15,35,.94),rgba(2,7,16,.96));border:1px solid rgba(32,239,255,.20)}
+.theme-cyberpunk .dashboardV31Pulse{background:linear-gradient(135deg,rgba(255,40,110,.11),rgba(32,239,255,.055))}
+.theme-cyberpunk .dashboardV32Badge{border-radius:11px}
+
+/* Dark Luxury */
+body.theme-luxury{background:#050505;color:#f7f4ed}
+.theme-luxury #backdrop{background:radial-gradient(circle at 20% 8%,#3a2a12 0%,#0d0c09 36%,#030303 76%);filter:blur(7px) saturate(.8);transform:scale(1.06)}
+.theme-luxury #shade{background:rgba(0,0,0,.67)}
+.theme-luxury .glass{background:linear-gradient(145deg,rgba(255,255,255,.095),rgba(255,255,255,.032) 46%,rgba(0,0,0,.30));border-color:rgba(218,181,100,.20);border-radius:22px;box-shadow:0 20px 55px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,244,205,.16),inset 0 -1px rgba(255,255,255,.035)}
+.theme-luxury .glass:before{background:linear-gradient(120deg,rgba(255,240,190,.10),transparent 25%),radial-gradient(circle at 95% 100%,rgba(218,181,100,.08),transparent 34%)}
+.theme-luxury .glass:after{background:linear-gradient(90deg,transparent,rgba(231,197,119,.50),transparent);opacity:.7}
+.theme-luxury .brandMark{border-radius:13px;background:linear-gradient(145deg,rgba(220,180,90,.16),rgba(255,255,255,.035));border-color:rgba(218,181,100,.32);box-shadow:inset 0 1px rgba(255,255,255,.20),0 8px 25px rgba(0,0,0,.35)}
+.theme-luxury .hero{border-radius:25px}.theme-luxury .hero b{font-family:Georgia,"Times New Roman",serif;font-size:68px;letter-spacing:-1px;text-shadow:0 0 20px rgba(224,188,105,.22)}
+.theme-luxury h1,.theme-luxury h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.2px}
+.theme-luxury .metricCopy strong{font-family:Georgia,"Times New Roman",serif;font-weight:600}
+.theme-luxury .neonBtn{border-radius:13px;background:linear-gradient(135deg,rgba(218,181,100,.36),rgba(100,72,27,.30));border-color:rgba(237,208,135,.52);color:#fff8e8;box-shadow:0 12px 28px rgba(0,0,0,.30),0 0 20px rgba(218,181,100,.10),inset 0 1px rgba(255,255,255,.40)}
+.theme-luxury .icon,.theme-luxury .neonCircle{border-radius:13px;background:rgba(20,17,11,.52);border-color:rgba(218,181,100,.22)}
+.theme-luxury .neonCircle{color:#e4bd69;box-shadow:inset 0 1px rgba(255,255,255,.15),0 8px 25px rgba(0,0,0,.32)}
+.theme-luxury .field,.theme-luxury .entry input{background:rgba(0,0,0,.30);border-color:rgba(218,181,100,.17);border-radius:13px}
+.theme-luxury .net strong{color:#e7c46e;text-shadow:0 0 18px rgba(218,181,100,.28)}
+.theme-luxury .action{background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(218,181,100,.035));border-color:rgba(218,181,100,.15)}
+.theme-luxury .overlay{background:rgba(0,0,0,.78);backdrop-filter:blur(13px)}
+.theme-luxury .panel{background:linear-gradient(145deg,rgba(28,25,20,.94),rgba(5,5,4,.96));border-color:rgba(218,181,100,.22)}
+.theme-luxury .themeSettings{background:rgba(0,0,0,.22);border-color:rgba(218,181,100,.15)}
+.theme-luxury .themeOption.active{background:rgba(218,181,100,.075);border-color:rgba(218,181,100,.48);box-shadow:0 8px 25px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.12)}
+.theme-luxury .dashboardV27,.theme-luxury .cutHistoryPanel{background:linear-gradient(145deg,rgba(27,24,19,.96),rgba(5,5,4,.97));border:1px solid rgba(218,181,100,.20)}
+.theme-luxury .dashboardV31Pulse{background:linear-gradient(135deg,rgba(218,181,100,.09),rgba(255,255,255,.035))}
+.theme-luxury .dashboardV32Badge{border-radius:13px}
+
+/* Keep the user's selected accent visible in every theme. */
+.theme-cyberpunk .themeSettingHead>span,.theme-luxury .themeSettingHead>span{color:var(--accent)}
+@media(max-width:430px){.themeSettings{padding:12px}.themeOption{grid-template-columns:50px minmax(0,1fr) 20px;padding:8px}.themePreview{width:50px}}
+@media(prefers-reduced-motion:reduce){.themeOption{transition:none}}
