@@ -1,1 +1,1 @@
-v1.31.1: Refinamiento visual del Dashboard Premium. Reduce saturación tipográfica, mejora espaciado y jerarquía, compacta el gráfico y reorganiza las estadísticas históricas para pantallas móviles. No cambia cálculos, almacenamiento ni funciones existentes.
+v1.32: Modo Pro para CortePaquetes. Añade proyección semanal, racha de días activos, objetivo inteligente con paquetes necesarios por día y logros acumulativos. Conserva el Dashboard Premium v1.31.1, historial de cortes, compartir, almacenamiento y Dynamic Accent.

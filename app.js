@@ -944,6 +944,61 @@ render();
       else if(delta<=-15){pulseTitle.textContent="⚠️ Bajó el ritmo";pulseText.textContent=`Vas ${Math.abs(Math.round(delta))}% abajo de la semana pasada.`;}
       else{pulseTitle.textContent="⚡ Ritmo estable";pulseText.textContent=`Tu ritmo está muy cerca del de la semana pasada.`;}
     }
+
+    // v1.32 Modo Pro: projection, streak, intelligent target and achievements.
+    const todayIndex=(now.getDay()+6)%7;
+    const todayHas=Object.prototype.hasOwnProperty.call(records,todayKey);
+    const futureSlots=Math.max(0,7-todayIndex-(todayHas?1:0));
+    const projected=Math.round(total + avg*futureSlots);
+    const projectionEl=$v27("dashboardV32Projection"), projectionText=$v27("dashboardV32ProjectionText");
+    if(projectionEl&&projectionText){
+      projectionEl.textContent=total?`${projected} paquetes`:"—";
+      if(!total) projectionText.textContent="Registra paquetes para calcular tu ritmo.";
+      else if(projected>=goal) projectionText.textContent=`A este ritmo superarías tu meta de ${goal}.`;
+      else projectionText.textContent=`A este ritmo cerrarías cerca de ${projected}.`;
+    }
+
+    // Consecutive active-day streak. If today has no record, count back from yesterday.
+    let streak=0;
+    let cursor=new Date(now); cursor.setHours(0,0,0,0);
+    if(!todayHas) cursor.setDate(cursor.getDate()-1);
+    while(true){
+      const k=keyOf(cursor);
+      if(Number(records[k]||0)>0){streak++;cursor.setDate(cursor.getDate()-1);}else break;
+    }
+    const streakEl=$v27("dashboardV32Streak"), streakText=$v27("dashboardV32StreakText");
+    if(streakEl&&streakText){
+      streakEl.textContent=`${streak} ${streak===1?"día":"días"}`;
+      streakText.textContent=streak>=7?"🔥 Una semana completa de actividad.":streak?"Sigue mañana para aumentar tu racha.":"Registra hoy y empieza tu racha.";
+    }
+
+    const remainingGoal=Math.max(0,goal-total);
+    const neededDays=Math.max(1,futureSlots);
+    const neededPerDay=remainingGoal?Math.ceil(remainingGoal/neededDays):0;
+    const needEl=$v27("dashboardV32Need"), needLabel=$v27("dashboardV32NeedLabel"), needFill=$v27("dashboardV32NeedFill"), advice=$v27("dashboardV32Advice");
+    if(needEl&&needLabel&&needFill&&advice){
+      needEl.textContent=remainingGoal?`${neededPerDay}/día`:"META LISTA";
+      needLabel.textContent=remainingGoal?`${remainingGoal} paquetes restantes`:`${total} paquetes · ${goal} objetivo`;
+      needFill.style.width=Math.min(100,total/goal*100)+"%";
+      if(!total) advice.textContent=`Tu meta es ${goal} paquetes. Registra el primer día para activar el análisis.`;
+      else if(!remainingGoal) advice.textContent="🔥 Ya alcanzaste tu meta. Todo lo que sumes ahora es récord.";
+      else if(neededPerDay<=avg) advice.textContent=`Vas a buen ritmo: necesitas ${neededPerDay} al día y promedias ${avg}.`;
+      else advice.textContent=`Necesitas ${neededPerDay} al día. Tu promedio actual es ${avg}; puedes ajustar tu meta si hace falta.`;
+    }
+
+    const bestDayAll=allEntries.reduce((p,[k,v])=>Number(v)>p.val?{key:k,val:Number(v)}:p,{key:"",val:0});
+    const badges=[];
+    const addBadge=(icon,title,desc,ok)=>{badges.push({icon,title,desc,ok});};
+    addBadge("🥉","Primeros 100","Supera 100 paquetes históricos",allPackages>=100);
+    addBadge("🥈","500 paquetes","Llega a 500 paquetes acumulados",allPackages>=500);
+    addBadge("🥇","1,000 paquetes","Llega a 1,000 paquetes acumulados",allPackages>=1000);
+    addBadge("⚡","Día de 100+","Registra 100 o más en un día",bestDayAll.val>=100);
+    addBadge("🔥","Semana 300+","Supera 300 paquetes en una semana",bestWeekTotal>=300);
+    addBadge("👑","Récord semanal","Supera 600 paquetes en una semana",bestWeekTotal>=600);
+    const unlocked=badges.filter(b=>b.ok).length;
+    const badgeCount=$v27("dashboardV32AchievementCount"), badgeBox=$v27("dashboardV32Badges");
+    if(badgeCount) badgeCount.textContent=`${unlocked}/${badges.length}`;
+    if(badgeBox) badgeBox.innerHTML=badges.map(b=>`<div class="dashboardV32Badge ${b.ok?"unlocked":"locked"}"><b>${b.icon}</b><div><strong>${b.title}</strong><span>${b.desc}</span></div><i>${b.ok?"✓":"🔒"}</i></div>`).join("");
   }
 
   window.openDashboard=()=>open();
