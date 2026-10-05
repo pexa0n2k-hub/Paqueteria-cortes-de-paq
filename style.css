@@ -1179,3 +1179,174 @@ body::before{
 @media (prefers-reduced-motion:reduce){
   .topbar,.redesignHero,.redesignForm,.redesignTotal,.redesignMetrics,.redesignAdvance,.redesignDaily{animation:none!important}
 }
+
+/* =========================================================
+   v1.38.1 — COMMAND CENTER NEO / CLEAN MOBILE HIERARCHY
+   Visual-only refinement. Keeps all app logic intact.
+   ========================================================= */
+
+/* Remove decorative labels that compete with real content. */
+.redesignHero::before,
+.redesignForm::before,
+.redesignTotal::before{display:none!important;content:none!important}
+
+/* Give the page a calmer vertical rhythm. */
+main{padding-top:14px!important;padding-bottom:52px!important}
+.topbar{margin-bottom:15px!important}
+
+/* HERO — one clear focal point, no competing layers. */
+.redesignHero{
+  min-height:190px!important;
+  padding:18px 19px 16px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  grid-template-rows:auto 1fr auto!important;
+  border-radius:26px!important;
+  box-shadow:0 16px 36px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.20)!important;
+}
+.redesignHero .eyebrow{
+  grid-column:1/-1!important;
+  font-size:9px!important;
+  letter-spacing:.18em!important;
+  line-height:1.2!important;
+  margin:0!important;
+}
+.redesignHero .heroNumber{
+  grid-column:1/-1!important;
+  align-self:center!important;
+  margin:3px 0 0!important;
+  font-size:clamp(66px,18vw,86px)!important;
+  line-height:.82!important;
+  letter-spacing:-.065em!important;
+}
+.redesignHero .heroSub{
+  grid-column:1/2!important;
+  align-self:end!important;
+  margin:10px 0 0!important;
+  font-size:11px!important;
+  line-height:1.25!important;
+  max-width:150px!important;
+}
+.redesignHero .heroRate{
+  grid-column:2!important;
+  grid-row:3!important;
+  align-self:end!important;
+  justify-self:end!important;
+  margin:0!important;
+  min-width:105px!important;
+  padding:8px 10px!important;
+  border-radius:15px!important;
+  background:rgba(0,0,0,.16)!important;
+}
+.redesignHero .heroRate strong{font-size:19px!important}
+.redesignHero .heroRate span{font-size:8px!important}
+
+/* REGISTRATION — clear title, compact controls, consistent spacing. */
+.redesignForm{
+  margin-top:13px!important;
+  padding:16px!important;
+  border-radius:23px!important;
+  box-shadow:0 14px 32px rgba(0,0,0,.20)!important;
+}
+.redesignForm .formTitle{padding-right:0!important;margin-bottom:12px!important}
+.redesignForm .formTitle b{font-size:18px!important}
+.redesignForm .formTitle small{font-size:10px!important;margin-top:2px!important}
+.redesignForm .formline{padding:8px 10px!important;min-height:54px!important}
+.redesignForm .formline label{font-size:12px!important}
+.redesignForm .dateField{height:42px!important;width:154px!important;font-size:15px!important}
+.redesignForm .dateText{font-size:10px!important;margin:6px 2px 0!important}
+.redesignForm .mt{margin-top:13px!important;font-size:13px!important}
+.quickQty{margin:8px 0 9px!important;gap:6px!important}
+.quickQtyBtn{min-height:44px!important;border-radius:13px!important;font-size:12px!important}
+.redesignForm .entry{margin-top:0!important;gap:8px!important}
+.redesignForm .entry input,
+.redesignForm .entry button{height:48px!important;min-height:48px!important}
+.redesignForm .entry input{font-size:19px!important}
+.redesignForm .entry button{min-width:112px!important}
+
+/* BALANCE — reduce the oversized empty area. */
+.redesignTotal{
+  margin-top:13px!important;
+  min-height:132px!important;
+  padding:17px!important;
+  border-radius:24px!important;
+  grid-template-columns:1fr auto!important;
+  grid-template-rows:auto 1fr!important;
+  box-shadow:0 16px 36px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.18)!important;
+}
+.redesignTotal>div>small{font-size:9px!important;letter-spacing:.16em!important}
+.redesignTotal>div>strong{font-size:40px!important;margin:4px 0 1px!important}
+.redesignTotal>div>span{font-size:9px!important}
+.redesignTotal .shareCut{
+  grid-column:1/-1!important;
+  margin-top:7px!important;
+  height:40px!important;
+  min-height:40px!important;
+  border-radius:14px!important;
+}
+
+/* TWO FINANCIAL METRICS — readable without feeling like two giant cards. */
+.redesignMetrics{margin-top:13px!important;gap:8px!important}
+.redesignMetrics .metricCard{
+  min-height:100px!important;
+  padding:12px!important;
+  border-radius:19px!important;
+  gap:8px!important;
+}
+.redesignMetrics .metricIcon{flex-basis:38px!important;width:38px!important;height:38px!important}
+.redesignMetrics .metricCopy small{font-size:7px!important;letter-spacing:.05em!important}
+.redesignMetrics .metricCopy strong{font-size:19px!important;margin:5px 0 1px!important}
+.redesignMetrics .metricCopy span{font-size:8px!important}
+
+.redesignAdvance{
+  margin-top:9px!important;
+  min-height:48px!important;
+  border-radius:16px!important;
+}
+.redesignAdvance .actionIcon{width:34px!important;height:34px!important}
+
+/* DAILY — let the section breathe before the 7-day grid. */
+.sectionTitle{margin-top:18px!important;margin-bottom:8px!important}
+.sectionTitle h2{font-size:20px!important}
+.sectionTitle>span{font-size:9px!important;letter-spacing:.08em!important}
+.redesignDaily{
+  margin-top:0!important;
+  padding:10px!important;
+  border-radius:21px!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.18)!important;
+}
+.redesignDaily .dailyGrid{gap:4px!important}
+.redesignDaily .dayCell{
+  min-height:88px!important;
+  padding:7px 2px!important;
+  border-radius:14px!important;
+}
+.redesignDaily .dayCell .qty{font-size:18px!important}
+
+.historySectionTitle{margin-top:18px!important}
+.historyWrap{border-radius:20px!important}
+.redesignFooter{margin-top:10px!important}
+
+@media(max-width:520px){
+  main{padding-left:10px!important;padding-right:10px!important}
+  .redesignHero{min-height:184px!important}
+  .redesignHero .heroNumber{font-size:clamp(64px,18vw,80px)!important}
+  .redesignTotal{min-height:128px!important}
+}
+@media(max-width:390px){
+  .redesignHero{min-height:178px!important;padding:16px!important}
+  .redesignHero .heroNumber{font-size:64px!important}
+  .redesignHero .heroRate{min-width:98px!important;padding:7px 9px!important}
+  .redesignForm{padding:14px!important}
+  .redesignForm .dateField{width:142px!important}
+  .quickQty{gap:4px!important}
+  .quickQtyBtn{min-height:41px!important;font-size:11px!important}
+  .redesignMetrics .metricCard{min-height:96px!important;padding:10px!important}
+  .redesignMetrics .metricCopy strong{font-size:17px!important}
+  .redesignDaily .dayCell{min-height:82px!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .card,.box,.panel,.section,.stat-card,.summary-card,.daily-card,.earnings-card,.advance-card,.total-card,
+  .quickQtyBtn{transition:none!important}
+}
