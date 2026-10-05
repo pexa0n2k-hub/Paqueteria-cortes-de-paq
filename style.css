@@ -1181,3 +1181,21 @@ body.theme-luxury .quickQtyBtn{border-radius:13px!important;border-color:rgba(21
  .redesignMetrics .metricCard{min-height:124px!important;padding:13px!important}
  .redesignMetrics .metricCopy strong{font-size:21px!important}
 }
+
+/* v1.36.1 mobile stability polish */
+.historySlidePanel .panelHead{position:sticky!important;top:-1px!important;z-index:5!important;padding-bottom:12px!important;background:linear-gradient(180deg,rgba(8,10,20,.97) 0%,rgba(8,10,20,.90) 78%,transparent 100%)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
+@media(max-width:520px){
+  .redesignHero{min-height:238px!important;padding:21px 18px 18px!important;border-radius:29px!important}
+  .redesignHero .heroNumber{font-size:82px!important;line-height:.9!important}
+  .redesignHero .heroRate{bottom:17px!important;min-width:132px!important;padding:8px 11px!important}
+  .redesignHero .heroRate strong{font-size:20px!important}
+  .redesignHero .packageIcon{width:54px!important;height:54px!important;right:18px!important;bottom:18px!important}
+  .redesignForm{border-radius:25px!important}
+  .redesignTotal>div>strong{font-size:43px!important}
+}
+@media(max-width:390px){
+  .redesignHero{min-height:220px!important}
+  .redesignHero .heroNumber{font-size:72px!important}
+  .redesignHero .heroRate{min-width:116px!important}
+  .redesignHero .packageIcon{width:50px!important;height:50px!important}
+}

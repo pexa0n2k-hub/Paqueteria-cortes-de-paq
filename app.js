@@ -254,6 +254,7 @@ function formatCutRange(c){
 function openCutHistory(){
   const modal=$("cutHistoryModal");if(!modal)return;
   modal.classList.remove("hidden");renderCutHistoryList();
+  requestAnimationFrame(()=>{ modal.scrollTop=0; const panel=modal.querySelector(".historySlidePanel"); if(panel) panel.scrollTop=0; });
 }
 function closeCutHistory(){const m=$("cutHistoryModal");if(m)m.classList.add("hidden")}
 function renderCutHistoryList(){
@@ -883,7 +884,7 @@ $("shareTop").onclick=()=>shareCut();$("closeShare").onclick=()=>$("sharePanel")
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./sw.js?v=1.34.8").then(r=>r.update()).catch(()=>{});
+  navigator.serviceWorker.register("./sw.js?v=1.36.1").then(r=>r.update()).catch(()=>{});
 }
 archiveCompletedWeeks();
 render();
