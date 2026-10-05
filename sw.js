@@ -1,5 +1,5 @@
-const C="corte-paquetes-v1-34";
-const A=["./","./index.html","./style.css?v=1.34","./app.js?v=1.34","./manifest.webmanifest"];
+const C="corte-paquetes-v1-34-2";
+const A=["./","./index.html","./style.css?v=1.34.2","./app.js?v=1.34.2","./manifest.webmanifest"];
 self.addEventListener("install",e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(A)))});
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==C).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener("fetch",e=>{

@@ -727,3 +727,50 @@ body.theme-glass .metricIcon.cyan{
   box-shadow:inset 0 1px 1px #fff6,0 0 22px var(--accent-glow)!important;
 }
 body.theme-glass .panel input[type=range]{accent-color:var(--accent)!important}
+
+/* ===== v1.34.2 — MultiTheme wallpaper + dynamic daily glow FIX ===== */
+/* Keep the user's wallpaper crisp in every visual theme. */
+body.theme-glass #backdrop,
+body.theme-cyberpunk #backdrop,
+body.theme-luxury #backdrop{
+  filter:none!important;
+  transform:scale(1.012)!important;
+}
+body.theme-glass #shade{background:linear-gradient(180deg,rgba(2,5,16,.10),rgba(2,5,16,.27))!important}
+body.theme-cyberpunk #shade{background:linear-gradient(135deg,rgba(1,3,12,.26),rgba(20,0,26,.38))!important}
+body.theme-luxury #shade{background:linear-gradient(135deg,rgba(0,0,0,.30),rgba(18,12,3,.42))!important}
+
+/* Daily summary always follows the detected/custom accent, regardless of theme. */
+body.theme-glass .dailySummary .dayCell .dash,
+body.theme-cyberpunk .dailySummary .dayCell .dash,
+body.theme-luxury .dailySummary .dayCell .dash{
+  background:var(--accent)!important;
+  box-shadow:0 0 8px rgba(var(--accent-rgb),.28),0 0 16px rgba(var(--accent-rgb),.14)!important;
+}
+body.theme-glass .dailySummary .dayCell .qty,
+body.theme-cyberpunk .dailySummary .dayCell .qty,
+body.theme-luxury .dailySummary .dayCell .qty{
+  color:var(--accent)!important;
+  text-shadow:0 0 12px rgba(var(--accent-rgb),.28)!important;
+}
+body.theme-glass .dailySummary .dayCell,
+body.theme-cyberpunk .dailySummary .dayCell,
+body.theme-luxury .dailySummary .dayCell{
+  border-color:rgba(var(--accent-rgb),.12)!important;
+}
+
+/* Accent-powered progress/glow elements inside the daily summary. */
+body.theme-glass .dailySummary .progress i,
+body.theme-cyberpunk .dailySummary .progress i,
+body.theme-luxury .dailySummary .progress i,
+body.theme-glass .dailySummary .dayCell .progress,
+body.theme-cyberpunk .dailySummary .dayCell .progress,
+body.theme-luxury .dailySummary .dayCell .progress{
+  background:var(--accent)!important;
+  box-shadow:0 0 12px rgba(var(--accent-rgb),.28)!important;
+}
+
+/* Keep the visual personality while allowing accent color to lead the neon. */
+body.theme-cyberpunk .dailySummary .dayCell .dash,
+body.theme-cyberpunk .dailySummary .dayCell .qty{filter:saturate(1.08)}
+body.theme-luxury .dailySummary .dayCell .dash{height:2px}
