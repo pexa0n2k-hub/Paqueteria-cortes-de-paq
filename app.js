@@ -773,8 +773,8 @@ async function shareCut(cut=null){
   if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({title:"Corte de Paquetes",text:`Corte semanal ${dateKey(cut.start)} – ${dateKey(cut.end)}.`,files:[file]});return}catch(e){if(e.name==="AbortError")return}}
   $("sharePanel").classList.remove("hidden");
 }
-$("shareCut").onclick=shareCut;
-$("shareTop").onclick=shareCut;$("closeShare").onclick=()=>$("sharePanel").classList.add("hidden");$("nativeShare").onclick=shareCut;
+$("shareCut").onclick=()=>shareCut();
+$("shareTop").onclick=()=>shareCut();$("closeShare").onclick=()=>$("sharePanel").classList.add("hidden");$("nativeShare").onclick=()=>shareCut();
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
