@@ -1,4 +1,4 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css?v=1.34.8"><title>Corte de Paquetes</title></head><body>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css?v=1.35.0"><title>Corte de Paquetes</title></head><body>
 <div id="backdrop"></div><div id="shade"></div><main>
 <header class="topbar">
   <div class="brand">
@@ -23,7 +23,7 @@
   </div>
 </header>
 
-<section class="glass jelly hero heroMain">
+<section class="glass jelly hero heroMain redesignHero">
   <div class="eyebrow">PAQUETES ENTREGADOS</div>
   <div class="heroNumber" id="total">0</div>
   <div class="heroSub" id="daysText">Sin registros</div>
@@ -34,7 +34,30 @@
   </div>
 </section>
 
-<section class="grid2">
+<section class="glass jelly form redesignForm">
+  <div class="formTitle"><span>📅</span><div><b>Registrar paquetes</b><small>Semana actual: lunes a domingo</small></div></div>
+  <div class="formline"><label>Fecha del registro</label><input id="date" class="field dateField" type="date"></div>
+  <div id="dateText" class="dateText"></div>
+  <label class="mt">📦 Paquetes entregados</label>
+  <div class="quickQty" aria-label="Cantidades rápidas">
+    <button type="button" class="quickQtyBtn" data-qty="1">+1</button>
+    <button type="button" class="quickQtyBtn" data-qty="5">+5</button>
+    <button type="button" class="quickQtyBtn" data-qty="10">+10</button>
+    <button type="button" class="quickQtyBtn" data-qty="20">+20</button>
+    <button type="button" class="quickQtyBtn" data-qty="50">+50</button>
+  </div>
+  <div class="entry"><input id="qty" type="number" min="0" inputmode="numeric" placeholder="0"><button id="save" class="neonBtn">Guardar</button></div>
+</section>
+
+<section class="glass jelly net totalCard redesignTotal">
+  <div><small>TOTAL A RECIBIR</small><strong id="net">$0.00</strong><span id="netDetail">$0.00 − $0.00 de adelantos</span></div>
+  <button id="shareCut" class="glass shareCut">
+    <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0-4 4m4-4 4 4M5 13v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Compartir corte</span>
+  </button>
+</section>
+
+<section class="grid2 redesignMetrics">
   <div class="glass jelly card metricCard">
     <div class="metricIcon cyan"><svg viewBox="0 0 24 24"><path d="M4 19V9m5 10V5m5 14v-7m5 7V3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m3 15 5-5 4 2 8-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <div class="metricCopy"><small>GANANCIA BRUTA</small><strong id="gross">$0.00</strong><span id="grossDetail">0 × $0.00</span></div>
@@ -45,37 +68,21 @@
   </div>
 </section>
 
-<section class="glass jelly net totalCard">
-  <div><small>TOTAL A RECIBIR</small><strong id="net">$0.00</strong><span id="netDetail">$0.00 − $0.00 de adelantos</span></div>
-  <button id="shareCut" class="glass shareCut">
-    <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0-4 4m4-4 4 4M5 13v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>Compartir corte</span>
-  </button>
-</section>
-
-<section class="glass jelly form">
-  <div class="formTitle"><span>📅</span><div><b>Registrar paquetes</b><small>Semana actual: lunes a domingo</small></div></div>
-  <div class="formline"><label>Fecha del registro</label><input id="date" class="field dateField" type="date"></div>
-  <div id="dateText" class="dateText"></div>
-  <label class="mt">📦 Paquetes entregados</label>
-  <div class="entry"><input id="qty" type="number" min="0" inputmode="numeric" placeholder="0"><button id="save" class="neonBtn">Guardar</button></div>
-</section>
-
-<button id="addAdv" class="glass jelly action actionLarge">
+<button id="addAdv" class="glass jelly action actionLarge redesignAdvance">
   <span class="actionIcon pink"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
   <span>Agregar adelanto / préstamo</span><b>＋</b>
 </button>
 
 <div class="sectionTitle"><h2>📊 Resumen diario</h2><span>Esta semana</span></div>
-<section id="dailySummary" class="glass jelly dailySummary">
+<section id="dailySummary" class="glass jelly dailySummary redesignDaily">
   <div class="dailyEmpty">Aún no hay registros.</div>
 </section>
 
-<div class="sectionTitle"><h2>📚 Historial</h2><button id="historyToggle" class="neonCircle" aria-label="Abrir historial">⌄</button></div>
+<div class="sectionTitle historySectionTitle"><h2>📚 Historial</h2><button id="historyToggle" class="neonCircle" aria-label="Abrir historial">⌄</button></div>
 <section id="historyWrap" class="glass jelly historyCollapsed"><div class="historyHint">Toca la flecha para ver tus cortes anteriores.</div><div id="history" class="historyList"></div></section>
 
-<button id="reset" class="glass action danger">Borrar semana actual</button>
-<div class="weekFooter glass">
+<button id="reset" class="glass action danger redesignReset">Borrar semana actual</button>
+<div class="weekFooter glass redesignFooter">
   <div>📅 Corte semanal: lunes a domingo</div>
   <b id="footerRange"></b>
 </div>
@@ -144,7 +151,7 @@
     </div>
   </div>
 </div>
-<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.34.8"></script><script>
+<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.35.0"></script><script>
 window.openDashboard=function(){
   var p=document.getElementById("dashboardPanel");
   if(!p)return;

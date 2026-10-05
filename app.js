@@ -483,6 +483,18 @@ $("save").onclick=()=>{
 
 $("date").onchange=updateDateText;
 
+/* v1.35 — quick quantity visual controls */
+document.querySelectorAll(".quickQtyBtn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const add=Math.max(0,Math.floor(Number(btn.dataset.qty)||0));
+    const input=$("qty"); if(!input)return;
+    const current=Math.max(0,Math.floor(Number(input.value)||0));
+    input.value=String(current+add);
+    input.focus();
+    btn.animate?.([{transform:"scale(.92)"},{transform:"scale(1)"}],{duration:180,easing:"cubic-bezier(.2,.8,.2,1)"});
+  });
+});
+
 $("saveRate").onclick=()=>{
   const n=Number($("rate").value);
   if(!Number.isFinite(n)||n<0){alert("Escribe una tarifa válida.");return;}

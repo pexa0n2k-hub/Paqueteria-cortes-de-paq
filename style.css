@@ -786,3 +786,291 @@ body.theme-luxury .dailySummary .dayCell .dash{height:2px}
 @keyframes historyItemIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
 @media(max-width:520px){.historySlidePanel{width:94vw!important;border-radius:0 26px 26px 0!important}}
 @media(prefers-reduced-motion:reduce){.historySlidePanel,.historySlidePanel .cutHistoryItem{animation:none!important;transition:none!important}}
+
+
+/* ===== v1.35 — CORTEPAQUETES VISUAL REDESIGN =====
+   Reordenamiento y rediseño visual de tarjetas.
+   No modifica la lógica de datos ni los IDs funcionales. */
+:root{
+  --redesign-radius:26px;
+  --redesign-gap:14px;
+  --redesign-soft:rgba(255,255,255,.075);
+}
+main{max-width:650px!important;padding:16px 14px 48px!important}
+.topbar{margin-bottom:16px!important}
+
+/* HERO — tarjeta protagonista */
+.redesignHero{
+  min-height:238px!important;
+  padding:25px 22px 20px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  grid-template-rows:auto 1fr auto!important;
+  text-align:left!important;
+  border-radius:32px!important;
+  overflow:hidden!important;
+}
+.redesignHero .eyebrow{grid-column:1/-1;align-self:start;font-size:10px;letter-spacing:.14em;opacity:.78}
+.redesignHero .heroNumber{
+  grid-column:1/-1;
+  align-self:center;
+  margin-top:2px;
+  font-size:94px!important;
+  line-height:.9!important;
+  letter-spacing:-.075em!important;
+  font-weight:700!important;
+}
+.redesignHero .heroSub{
+  grid-column:1/2;
+  align-self:end;
+  font-size:12px!important;
+  color:#aebdd0!important;
+}
+.redesignHero .heroGlow{
+  opacity:.75;
+}
+.redesignHero .heroRate{
+  position:static!important;
+  grid-column:2/3;
+  grid-row:3;
+  align-self:end;
+  justify-self:end;
+  min-width:124px;
+  padding:9px 12px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:17px;
+  background:rgba(0,0,0,.14);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+.redesignHero .heroRate strong{font-size:22px!important}
+.redesignHero .heroRate span{font-size:9px!important}
+
+/* REGISTRO — panel de control */
+.redesignForm{
+  margin-top:14px!important;
+  padding:18px!important;
+  border-radius:26px!important;
+}
+.redesignForm .formTitle{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:13px;
+}
+.redesignForm .formTitle>span{
+  width:40px;height:40px;display:grid;place-items:center;
+  border-radius:14px;
+  background:rgba(var(--accent-rgb),.11);
+  border:1px solid rgba(var(--accent-rgb),.20);
+  box-shadow:0 0 20px rgba(var(--accent-rgb),.10);
+}
+.redesignForm .formTitle b{font-size:16px}
+.redesignForm .formTitle small{margin-top:2px!important}
+.redesignForm .formline{
+  padding:9px 11px;
+  border-radius:15px;
+  background:rgba(0,0,0,.10);
+  border:1px solid rgba(255,255,255,.10);
+}
+.redesignForm .dateField{height:42px!important;width:154px!important;font-size:14px!important}
+.quickQty{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
+  margin:9px 0 10px;
+}
+.quickQtyBtn{
+  min-height:39px;
+  border-radius:13px;
+  border:1px solid rgba(var(--accent-rgb),.18);
+  color:#fff;
+  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(var(--accent-rgb),.045));
+  box-shadow:inset 0 1px rgba(255,255,255,.16),0 8px 18px rgba(0,0,0,.12);
+  font-weight:900;
+  font-size:12px;
+}
+.quickQtyBtn:active{transform:scale(.95);background:rgba(var(--accent-rgb),.18)}
+.redesignForm .entry{margin-top:8px!important}
+.redesignForm .entry input{
+  height:50px!important;
+  font-size:19px!important;
+  font-weight:800;
+}
+.redesignForm .neonBtn{height:50px!important;min-width:108px}
+
+/* TOTAL — principal financiero */
+.redesignTotal{
+  margin-top:14px!important;
+  min-height:166px!important;
+  padding:21px!important;
+  border-radius:28px!important;
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  grid-template-rows:auto 1fr!important;
+  align-items:center;
+  text-align:left!important;
+}
+.redesignTotal>div{min-width:0}
+.redesignTotal>div>small{
+  display:block;
+  font-size:10px;
+  letter-spacing:.13em;
+  font-weight:900;
+  opacity:.72;
+}
+.redesignTotal>div>strong{
+  margin:6px 0 2px!important;
+  font-size:48px!important;
+  line-height:1!important;
+  letter-spacing:-.06em;
+  text-align:left!important;
+}
+.redesignTotal>div>span{
+  display:block;
+  font-size:10px;
+  color:#a8b7c9;
+}
+.redesignTotal .shareCut{
+  grid-column:1/-1;
+  margin-top:10px!important;
+  height:46px!important;
+  border-radius:15px!important;
+}
+
+/* MÉTRICAS — dos cápsulas premium */
+.redesignMetrics{
+  margin-top:14px!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:12px!important;
+}
+.redesignMetrics .metricCard{
+  min-height:128px!important;
+  padding:16px!important;
+  border-radius:23px!important;
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.redesignMetrics .metricIcon{
+  flex:0 0 46px;
+  width:46px!important;height:46px!important;
+  border-radius:15px!important;
+}
+.redesignMetrics .metricCopy small{
+  font-size:8px!important;
+  line-height:1.25;
+  letter-spacing:.05em;
+}
+.redesignMetrics .metricCopy strong{
+  font-size:22px!important;
+  margin:5px 0 2px!important;
+}
+.redesignMetrics .metricCopy span{font-size:9px!important}
+
+/* ADELANTO — botón convertido en módulo */
+.redesignAdvance{
+  margin-top:12px!important;
+  min-height:58px!important;
+  border-radius:19px!important;
+  display:flex!important;
+  align-items:center;
+  gap:10px;
+  text-align:left!important;
+  padding:8px 13px!important;
+}
+.redesignAdvance .actionIcon{
+  width:38px!important;height:38px!important;
+  display:grid;place-items:center;
+  border-radius:12px!important;
+  flex:0 0 38px;
+}
+.redesignAdvance b{margin-left:auto!important}
+
+/* DAILY — más aire y tarjetas de día */
+.redesignDaily{
+  margin-top:0!important;
+  padding:13px!important;
+  border-radius:25px!important;
+}
+.redesignDaily .dailyGrid{gap:6px!important}
+.redesignDaily .dayCell{
+  min-height:108px!important;
+  border-radius:16px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025))!important;
+  border-color:rgba(var(--accent-rgb),.12)!important;
+}
+.redesignDaily .dayCell .qty{font-size:20px!important}
+.redesignDaily .dayCell .dash{margin:8px 0!important}
+
+/* HISTORIAL / FOOTER */
+.historySectionTitle{margin-top:19px!important}
+.historySectionTitle h2{font-size:16px!important}
+.redesignReset{margin-top:14px!important;border-radius:17px!important;opacity:.75}
+.redesignFooter{
+  margin-top:12px!important;
+  border-radius:19px!important;
+  padding:13px 16px!important;
+}
+
+/* Small accent rails make each module visually distinct without changing content. */
+.redesignHero,.redesignForm,.redesignTotal,.redesignMetrics .metricCard,.redesignAdvance,.redesignDaily{
+  position:relative;
+}
+.redesignHero:before,.redesignForm:before,.redesignTotal:before,.redesignMetrics .metricCard:before,.redesignAdvance:before,.redesignDaily:before{
+  content:"";
+  position:absolute;
+  left:14px;right:14px;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(var(--accent-rgb),.58),transparent);
+  opacity:.7;
+  pointer-events:none;
+}
+
+/* Glass */
+body.theme-glass .redesignHero{
+  box-shadow:0 28px 70px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.58),0 0 34px rgba(var(--accent-rgb),.07)!important;
+}
+body.theme-glass .redesignTotal>div>strong{color:#fff!important;text-shadow:0 0 25px rgba(var(--accent-rgb),.32)!important}
+
+/* Cyberpunk */
+body.theme-cyberpunk .redesignHero{
+  border-radius:20px!important;
+  box-shadow:0 25px 65px rgba(0,0,0,.68),0 0 35px rgba(32,239,255,.08)!important;
+}
+body.theme-cyberpunk .quickQtyBtn{border-color:rgba(32,239,255,.25);background:linear-gradient(90deg,rgba(255,40,110,.10),rgba(32,239,255,.07))}
+body.theme-cyberpunk .redesignAdvance{border-color:rgba(255,40,110,.22)!important}
+
+/* Luxury */
+body.theme-luxury .redesignHero{
+  border-radius:25px!important;
+  box-shadow:0 30px 75px rgba(0,0,0,.72),inset 0 1px rgba(255,244,205,.20)!important;
+}
+body.theme-luxury .quickQtyBtn{border-color:rgba(218,181,100,.18);background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(218,181,100,.035))}
+body.theme-luxury .redesignHero .heroRate{border-color:rgba(218,181,100,.20);background:rgba(0,0,0,.24)}
+
+/* Mobile */
+@media(max-width:500px){
+  main{padding-left:11px!important;padding-right:11px!important}
+  .redesignHero{min-height:224px!important;padding:22px 18px 18px!important}
+  .redesignHero .heroNumber{font-size:78px!important}
+  .redesignHero .heroRate{min-width:112px;padding:8px 10px}
+  .redesignHero .heroRate strong{font-size:20px!important}
+  .redesignTotal{min-height:154px!important;padding:18px!important}
+  .redesignTotal>div>strong{font-size:41px!important}
+  .redesignMetrics .metricCard{min-height:118px!important;padding:13px!important;gap:8px}
+  .redesignMetrics .metricIcon{flex-basis:42px;width:42px!important;height:42px!important}
+  .redesignMetrics .metricCopy strong{font-size:20px!important}
+}
+@media(max-width:390px){
+  .quickQty{gap:5px}
+  .quickQtyBtn{min-height:36px;font-size:11px}
+  .redesignHero{min-height:215px!important}
+  .redesignHero .heroNumber{font-size:69px!important}
+  .redesignHero .heroRate{min-width:100px}
+  .redesignHero .heroRate strong{font-size:18px!important}
+  .redesignMetrics{gap:8px!important}
+  .redesignMetrics .metricCard{display:flex!important;min-height:112px!important}
+  .redesignMetrics .metricIcon{margin:0!important}
+  .redesignMetrics .metricCopy strong{font-size:18px!important}
+  .redesignTotal>div>strong{font-size:37px!important}
+}
