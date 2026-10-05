@@ -334,6 +334,8 @@ function applyAccentDerived(hex){
       box-shadow:0 0 18px rgba(${r},${g},${b},.30)!important
     }
     .accentDot[data-accent="${safeHex}"]{outline:3px solid rgba(255,255,255,.9);outline-offset:3px}
+    .dailySummary .dayCell .dash,.dailySummary .dayCell .progress,.dailySummary .dayCell .progress i{background:${safeHex}!important;box-shadow:0 0 12px rgba(${r},${g},${b},.34)!important}
+    .dailySummary .dayCell .qty{color:${safeHex}!important;text-shadow:0 0 14px rgba(${r},${g},${b},.34)!important}
   `;
 }
 function detectAccentFromImage(dataUrl){

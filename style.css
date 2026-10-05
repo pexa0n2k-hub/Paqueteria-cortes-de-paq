@@ -693,3 +693,37 @@ body.theme-glass .dashboardV32Badge{border-radius:15px!important}
 }
 @keyframes iosHeroIn{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:none}}
 @keyframes iosCardIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ===== v1.34.1 — Wallpaper clarity + true dynamic daily accent ===== */
+body.theme-glass #backdrop{
+  filter:none!important;
+  transform:scale(1.018)!important;
+  background-position:center!important;
+  background-size:cover!important;
+}
+body.theme-glass #shade{
+  background:
+    radial-gradient(circle at 50% -10%,rgba(var(--accent-rgb),.08),transparent 34%),
+    linear-gradient(180deg,rgba(2,5,16,.08),rgba(2,5,16,.20))!important;
+}
+body.theme-glass .dailySummary .dayCell .dash,
+body.theme-glass .dailySummary .dayCell .progress,
+body.theme-glass .dailySummary .dayCell .progress i{
+  background:var(--accent)!important;
+  box-shadow:0 0 12px var(--accent-glow)!important;
+}
+body.theme-glass .dailySummary .dayCell .qty{
+  color:var(--accent)!important;
+  text-shadow:0 0 14px var(--accent-glow)!important;
+}
+body.theme-glass .cube{
+  text-shadow:0 0 18px var(--accent-glow)!important;
+}
+body.theme-glass .hero b{
+  text-shadow:0 0 28px var(--accent-glow)!important;
+}
+body.theme-glass .metricIcon.cyan{
+  color:var(--accent)!important;
+  box-shadow:inset 0 1px 1px #fff6,0 0 22px var(--accent-glow)!important;
+}
+body.theme-glass .panel input[type=range]{accent-color:var(--accent)!important}
