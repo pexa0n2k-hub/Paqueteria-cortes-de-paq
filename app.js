@@ -871,7 +871,7 @@ $("shareTop").onclick=()=>shareCut();$("closeShare").onclick=()=>$("sharePanel")
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./sw.js?v=1.34.7").then(r=>r.update()).catch(()=>{});
+  navigator.serviceWorker.register("./sw.js?v=1.34.8").then(r=>r.update()).catch(()=>{});
 }
 archiveCompletedWeeks();
 render();
@@ -1098,7 +1098,7 @@ render();
 
   document.addEventListener("DOMContentLoaded",()=>{
     const btn=$v27("dashboardBtn"), closeBtn=$v27("dashboardV27Close"), modal=$v27("dashboardModalV27"), goal=$v27("dashboardV27GoalEdit");
-    if(btn)btn.addEventListener("click",openCutHistory);
+    if(btn)btn.addEventListener("click",open);
     if(closeBtn)closeBtn.addEventListener("click",close);
     const weeklyDashboardBtn=$v27("openDashboardFromHistory"); if(weeklyDashboardBtn)weeklyDashboardBtn.addEventListener("click",()=>{closeCutHistory();open();});
     if(modal)modal.addEventListener("click",e=>{if(e.target===modal)close()});
