@@ -797,3 +797,126 @@ main{max-width:650px!important;padding:12px 12px 44px!important}.topbar{margin-b
 .overlay .panel,.historySlidePanel,.sharePanel{box-shadow:0 25px 60px rgba(0,0,0,.55)!important;background:rgba(10,13,24,.96)!important}.historySlideOverlay{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(2,5,16,.55)!important}.historySlidePanel .panelHead{position:sticky!important;top:0!important;background:rgba(10,13,24,.98)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 body.theme-glass .redesignHero{background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.045))!important}body.theme-cyberpunk .redesignHero{border-radius:20px!important;background:linear-gradient(135deg,rgba(255,20,95,.10),rgba(32,239,255,.07),rgba(255,255,255,.025))!important}body.theme-luxury .redesignHero{background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(218,181,100,.025))!important;border-color:rgba(218,181,100,.18)!important}body.theme-luxury .quickQtyBtn{border-color:rgba(218,181,100,.18)!important}
 @media(max-width:520px){main{padding-left:9px!important;padding-right:9px!important}.redesignHero{min-height:205px!important}.redesignHero .heroNumber{font-size:74px!important}.redesignTotal>div>strong{font-size:40px!important}.redesignMetrics .metricCard{min-height:112px!important}}@media(max-width:390px){.redesignHero{min-height:195px!important;padding:18px 15px!important}.redesignHero .heroNumber{font-size:68px!important}.quickQty{gap:4px!important}.quickQtyBtn{min-height:40px!important;font-size:10px!important}.redesignMetrics .metricCard{min-height:108px!important;padding:11px!important}.redesignMetrics .metricCopy strong{font-size:18px!important}}
+
+
+/* =========================================================
+   v1.37.0 — COMMAND CENTER EVOLUTION
+   Visual-only layer: lightweight, mobile-safe.
+   ========================================================= */
+
+:root{
+  --cc-radius-xl: 28px;
+  --cc-radius-lg: 22px;
+  --cc-radius-md: 18px;
+  --cc-line: color-mix(in srgb, var(--accent, #7c5cff) 28%, transparent);
+  --cc-glow: color-mix(in srgb, var(--accent, #7c5cff) 20%, transparent);
+}
+
+/* Main content gets a stronger app-like rhythm */
+main, .main, .app-content, .content{
+  position:relative;
+}
+
+/* Give existing cards a more intentional hierarchy */
+.card, .box, .panel, .section, .stat-card, .summary-card, .daily-card,
+.earnings-card, .advance-card, .total-card{
+  border-radius:var(--cc-radius-lg);
+  border:1px solid var(--cc-line);
+  box-shadow:0 10px 30px rgba(0,0,0,.16);
+  transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.card:hover, .box:hover, .panel:hover, .stat-card:hover, .summary-card:hover,
+.daily-card:hover, .earnings-card:hover, .advance-card:hover, .total-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 34px rgba(0,0,0,.22);
+}
+
+/* Hero / package counter: make it read as the primary command surface */
+.hero, .hero-card, .packages-card, .packages-hero, #packagesCard{
+  border-radius:var(--cc-radius-xl);
+  position:relative;
+  overflow:hidden;
+  min-height:190px;
+}
+
+.hero::after, .hero-card::after, .packages-card::after, .packages-hero::after,
+#packagesCard::after{
+  content:"";
+  position:absolute;
+  inset:auto -20% -55% 35%;
+  height:150px;
+  background:radial-gradient(circle, var(--cc-glow), transparent 68%);
+  pointer-events:none;
+}
+
+/* Financial total gets visual priority without huge height */
+.total-card, .total-receive, #totalReceive, #totalCard{
+  border-radius:var(--cc-radius-xl);
+  min-height:145px;
+}
+
+/* Quick package actions */
+.quick-actions, .package-actions, .quick-buttons, .counter-actions{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+}
+
+.quick-actions button, .package-actions button, .quick-buttons button,
+.counter-actions button{
+  min-height:46px;
+  border-radius:16px;
+  font-weight:800;
+  border:1px solid var(--cc-line);
+}
+
+/* Daily summary becomes a compact activity module */
+.daily-summary, .resumen-diario, #dailySummary{
+  border-radius:var(--cc-radius-lg);
+}
+
+.daily-summary .day, .resumen-diario .day{
+  border-radius:14px;
+}
+
+/* Compact mobile-first spacing */
+@media (max-width: 640px){
+  .hero, .hero-card, .packages-card, .packages-hero, #packagesCard{
+    min-height:170px;
+    border-radius:24px;
+  }
+
+  .total-card, .total-receive, #totalReceive, #totalCard{
+    min-height:128px;
+    border-radius:22px;
+  }
+
+  .card, .box, .panel, .section, .stat-card, .summary-card,
+  .daily-card, .earnings-card, .advance-card{
+    border-radius:19px;
+  }
+
+  .quick-actions, .package-actions, .quick-buttons, .counter-actions{
+    gap:6px;
+  }
+
+  .quick-actions button, .package-actions button, .quick-buttons button,
+  .counter-actions button{
+    min-height:44px;
+    border-radius:14px;
+    padding-inline:4px;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .card, .box, .panel, .section, .stat-card, .summary-card,
+  .daily-card, .earnings-card, .advance-card, .total-card{
+    transition:none;
+  }
+  .card:hover, .box:hover, .panel:hover, .stat-card:hover, .summary-card:hover,
+  .daily-card:hover, .earnings-card:hover, .advance-card:hover, .total-card:hover{
+    transform:none;
+  }
+}
