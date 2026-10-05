@@ -1,1 +1,1 @@
-v1.29: Custom Accent + Persistence fix. The custom mode exposes a native color picker and hex value. Accent mode/color are persisted independently in localStorage keys corte_accent_mode and corte_accent_color, then restored on startup, preventing refresh from reverting to Auto.
+v1.31: Custom Accent + Persistence fix. The custom mode exposes a native color picker and hex value. Accent mode/color are persisted independently in localStorage keys corte_accent_mode and corte_accent_color, then restored on startup, preventing refresh from reverting to Auto.

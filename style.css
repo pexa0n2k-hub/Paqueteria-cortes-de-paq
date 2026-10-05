@@ -236,6 +236,16 @@ main{max-width:650px;padding-left:18px;padding-right:18px}
 .dashboardV27Card p{margin:8px 0 0;font-size:11px;color:#9eb0c4}.dashboardV27Bottom{margin-top:12px}.dashboardV27Bottom strong{display:block;font-size:26px;margin:7px 0 2px}.dashboardV27Bottom span{font-size:10px;color:#879bb2}
 @media(max-width:430px){.dashboardV27{padding:16px;border-radius:25px}.dashboardV27Chart{height:185px}.dashboardV27BarWrap{height:125px}}
 
+
+/* ===== v1.31 Dashboard Premium ===== */
+.dashboardV27Stat em{display:block;margin-top:5px;font-style:normal;font-size:9px;color:#8ea5bc}.dashboardV27Stat em.positive{color:#73ffd7}.dashboardV27Stat em.negative{color:#ff9caa}
+.dashboardV31Pulse{margin-top:12px;padding:15px 16px;border-radius:23px;display:flex;align-items:center;gap:13px;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(var(--accent-rgb),.11),rgba(255,255,255,.055))}.dashboardV31Pulse:after{content:"";position:absolute;inset:-80%;background:radial-gradient(circle at 78% 50%,rgba(var(--accent-rgb),.16),transparent 35%);pointer-events:none}.dashboardV31PulseOrb{width:43px;height:43px;flex:0 0 43px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(var(--accent-rgb),.45);box-shadow:0 0 22px var(--accent-glow),inset 0 0 16px rgba(var(--accent-rgb),.10);position:relative;z-index:1}.dashboardV31PulseOrb:before,.dashboardV31PulseOrb:after{content:"";position:absolute;border:1px solid rgba(var(--accent-rgb),.22);border-radius:50%;inset:5px;animation:v31pulse 2.4s ease-out infinite}.dashboardV31PulseOrb:after{inset:-4px;animation-delay:1.2s}.dashboardV31PulseOrb i{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent);z-index:2}.dashboardV31PulseCopy{position:relative;z-index:1;min-width:0}.dashboardV31PulseCopy small{display:block;color:var(--accent);font-size:9px;font-weight:950;letter-spacing:1px}.dashboardV31PulseCopy strong{display:block;font-size:15px;margin-top:3px}.dashboardV31PulseCopy span{display:block;color:#91a5bc;font-size:10px;margin-top:3px}.dashboardV31HistoryGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.dashboardV31HistoryCard{padding:15px 17px;border-radius:22px}.dashboardV31HistoryCard small{display:block;color:var(--accent);font-size:9px;font-weight:950;letter-spacing:.8px}.dashboardV31HistoryCard strong{display:block;font-size:23px;margin:6px 0 2px}.dashboardV31HistoryCard span{display:block;color:#879bb2;font-size:10px}.dashboardV31HistoryCard.wide{grid-column:1/-1}.dashboardV31HistoryCard.wide strong{font-size:21px}.dashboardV27{scrollbar-width:thin;scrollbar-color:rgba(var(--accent-rgb),.45) transparent}
+@keyframes v31pulse{0%{transform:scale(.65);opacity:.8}100%{transform:scale(1.45);opacity:0}}
+@media(max-width:430px){.dashboardV31HistoryGrid{gap:9px}.dashboardV31HistoryCard{padding:13px}.dashboardV31Pulse{padding:13px}.dashboardV31PulseCopy strong{font-size:14px}}
+
+/* v1.31 subtle wallpaper parallax */
+#backdrop{transition:transform .18s ease-out}
+
 /* ===== v1.28 Dynamic Accent ===== */
 :root{--accent:#72F4FF;--accent-rgb:114,244,255;--accent-glow:rgba(114,244,255,.30);--accent-soft:rgba(114,244,255,.12)}
 .accentSettings{margin:12px 0;padding:14px;border-radius:18px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.13)}

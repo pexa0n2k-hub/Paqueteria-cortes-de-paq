@@ -782,6 +782,19 @@ if("serviceWorker" in navigator){
 }
 archiveCompletedWeeks();
 render();
+
+// v1.31: subtle wallpaper depth effect on touch/mouse.
+(function(){
+  const bg=document.getElementById("backdrop");
+  if(!bg)return;
+  let raf=0;
+  const move=(x,y)=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{
+    const dx=(x/window.innerWidth-.5)*-7, dy=(y/window.innerHeight-.5)*-5;
+    bg.style.transform=`scale(1.035) translate3d(${dx}px,${dy}px,0)`;
+  })};
+  window.addEventListener("pointermove",e=>move(e.clientX,e.clientY),{passive:true});
+  window.addEventListener("pointerleave",()=>{bg.style.transform=""},{passive:true});
+})();
 })();
 
 /* ===== v1.27 Dashboard rebuilt: isolated controller ===== */
@@ -845,10 +858,25 @@ render();
     const total=vals.reduce((s,x)=>s+x.val,0);
     const gross=total*rate;
 
+    // v1.31: compare current week with the previous Monday-Sunday week.
+    const prevStart=new Date(weekStart); prevStart.setDate(prevStart.getDate()-7);
+    const prevEnd=new Date(weekStart); prevEnd.setDate(prevEnd.getDate()-1);
+    const previousTotal=Object.entries(records).reduce((sum,[key,value])=>{
+      const d=parseKey(key); return d&&d>=prevStart&&d<=prevEnd ? sum+Number(value||0) : sum;
+    },0);
+    const delta=previousTotal>0?((total-previousTotal)/previousTotal*100):null;
+
     $v27("dashboardV27Packages").textContent=String(total);
     $v27("dashboardV27Gross").textContent=typeof money==="function"
       ?money(gross)
       :new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(gross);
+    const deltaEl=$v27("dashboardV31WeekDelta");
+    if(deltaEl){
+      deltaEl.className=delta===null?"":(delta>=0?"positive":"negative");
+      deltaEl.textContent=delta===null?"Primera semana comparable":`${delta>=0?"↑":"↓"} ${Math.abs(delta).toFixed(0)}% vs. semana pasada`;
+    }
+    const netEl=$v27("dashboardV31WeekNet");
+    if(netEl)netEl.textContent=previousTotal?`${previousTotal} paquetes la semana pasada`:"Sin semana anterior";
     $v27("dashboardV27Range").textContent=
       `Lunes ${weekStart.getDate()} → Domingo ${weekEnd.getDate()} de ${weekEnd.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`;
 
@@ -885,6 +913,37 @@ render();
     $v27("dashboardV27GoalFill").style.width=pct+"%";
     $v27("dashboardV27GoalMsg").textContent=
       remaining?`Te faltan ${remaining} paquetes para alcanzar tu meta.`:"🔥 ¡Meta semanal alcanzada!";
+
+    // v1.31: all-time performance from the same persistent records.
+    const allEntries=Object.entries(records).filter(([k,v])=>parseKey(k)&&Number(v)>0);
+    const allPackages=allEntries.reduce((sum,[,v])=>sum+Number(v||0),0);
+    let allMoney=0;
+    const weeklyTotals={};
+    allEntries.forEach(([key,value])=>{
+      const d=parseKey(key), qty=Number(value)||0;
+      let dayRate=Number(db.rate)||0;
+      for(const r of rateHistory){if(r&&String(r.date)<=key)dayRate=Number(r.rate)||dayRate;}
+      allMoney+=qty*dayRate;
+      const ws=new Date(d); ws.setHours(0,0,0,0); ws.setDate(ws.getDate()-((ws.getDay()+6)%7));
+      const wk=keyOf(ws); weeklyTotals[wk]=(weeklyTotals[wk]||0)+qty;
+    });
+    let bestWeekKey="",bestWeekTotal=0;
+    Object.entries(weeklyTotals).forEach(([wk,q])=>{if(q>bestWeekTotal){bestWeekTotal=q;bestWeekKey=wk;}});
+    const fmtWeek=wk=>{const d=parseKey(wk);if(!d)return "—";const e=new Date(d);e.setDate(e.getDate()+6);return `${d.getDate()}–${e.getDate()} ${e.toLocaleDateString("es-MX",{month:"short"})}`;};
+    $v27("dashboardV31AllPackages").textContent=String(allPackages);
+    $v27("dashboardV31AllMoney").textContent=typeof money==="function"?money(allMoney):`$${allMoney.toFixed(2)}`;
+    $v27("dashboardV31BestWeek").textContent=bestWeekTotal?`${bestWeekTotal} paquetes`:"—";
+    $v27("dashboardV31BestWeekSub").textContent=bestWeekTotal?`Semana ${fmtWeek(bestWeekKey)}`:"Aún no hay suficientes datos";
+
+    const pulseTitle=$v27("dashboardV31PulseTitle"), pulseText=$v27("dashboardV31PulseText");
+    if(pulseTitle&&pulseText){
+      if(!total){pulseTitle.textContent="Aún no arrancamos";pulseText.textContent="Registra paquetes y verás aquí tu ritmo semanal.";}
+      else if(delta===null){pulseTitle.textContent="🔥 Buen comienzo";pulseText.textContent=`Llevas ${total} paquetes registrados esta semana.`;}
+      else if(delta>=15){pulseTitle.textContent="🚀 Semana fuerte";pulseText.textContent=`Vas ${Math.round(delta)}% arriba de la semana pasada.`;}
+      else if(delta>0){pulseTitle.textContent="📈 Vas mejorando";pulseText.textContent=`Llevas ${Math.round(delta)}% más paquetes que la semana pasada.`;}
+      else if(delta<=-15){pulseTitle.textContent="⚠️ Bajó el ritmo";pulseText.textContent=`Vas ${Math.abs(Math.round(delta))}% abajo de la semana pasada.`;}
+      else{pulseTitle.textContent="⚡ Ritmo estable";pulseText.textContent=`Tu ritmo está muy cerca del de la semana pasada.`;}
+    }
   }
 
   window.openDashboard=()=>open();

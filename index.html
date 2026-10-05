@@ -122,7 +122,7 @@
     </div>
   </div>
 </div>
-<div id="cutHistoryModal" class="overlay hidden"><div class="glass panel cutHistoryPanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.30"></script><script>
+<div id="cutHistoryModal" class="overlay hidden"><div class="glass panel cutHistoryPanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.31"></script><script>
 window.openDashboard=function(){
   var p=document.getElementById("dashboardPanel");
   if(!p)return;
@@ -143,8 +143,13 @@ window.openDashboard=function(){
     </header>
 
     <div class="dashboardV27Stats">
-      <div class="glass dashboardV27Stat"><span>📦</span><small>PAQUETES</small><strong id="dashboardV27Packages">0</strong></div>
-      <div class="glass dashboardV27Stat"><span>💰</span><small>GANANCIA BRUTA</small><strong id="dashboardV27Gross">$0.00</strong></div>
+      <div class="glass dashboardV27Stat"><span>📦</span><small>PAQUETES</small><strong id="dashboardV27Packages">0</strong><em id="dashboardV31WeekDelta">—</em></div>
+      <div class="glass dashboardV27Stat"><span>💰</span><small>GANANCIA BRUTA</small><strong id="dashboardV27Gross">$0.00</strong><em id="dashboardV31WeekNet">Esta semana</em></div>
+    </div>
+
+    <div class="glass dashboardV31Pulse">
+      <div class="dashboardV31PulseOrb"><i></i></div>
+      <div class="dashboardV31PulseCopy"><small>⚡ PULSO DE LA SEMANA</small><strong id="dashboardV31PulseTitle">Analizando tu ritmo...</strong><span id="dashboardV31PulseText">Compara tu semana actual con la anterior.</span></div>
     </div>
 
     <div class="glass dashboardV27Card">
@@ -165,6 +170,12 @@ window.openDashboard=function(){
     <div class="dashboardV27Bottom">
       <div class="glass"><small>📅 PROMEDIO DIARIO</small><strong id="dashboardV27Average">0</strong><span>paquetes / día</span></div>
       <div class="glass"><small>🏆 MEJOR DÍA</small><strong id="dashboardV27Best">—</strong><span id="dashboardV27BestSub">Sin registros</span></div>
+    </div>
+
+    <div class="dashboardV31HistoryGrid">
+      <div class="glass dashboardV31HistoryCard"><small>📦 TOTAL HISTÓRICO</small><strong id="dashboardV31AllPackages">0</strong><span>paquetes registrados</span></div>
+      <div class="glass dashboardV31HistoryCard"><small>💰 GENERADO HISTÓRICO</small><strong id="dashboardV31AllMoney">$0.00</strong><span>según tarifas registradas</span></div>
+      <div class="glass dashboardV31HistoryCard wide"><small>🏆 MEJOR SEMANA</small><strong id="dashboardV31BestWeek">—</strong><span id="dashboardV31BestWeekSub">Aún no hay suficientes datos</span></div>
     </div>
   </section>
 </div>
