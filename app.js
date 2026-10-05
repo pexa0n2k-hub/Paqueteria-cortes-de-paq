@@ -722,6 +722,12 @@ async function renderShareImage(cut=null){
   // 1) Wallpaper real de la app. Primero usa el guardado; si no está disponible,
   // recupera el mismo dataURL que está renderizado actualmente en #backdrop.
   const shareShade=Number(d.shade??state.settings.shade??62);
+  // Resolver tema/acento ANTES de construir el wallpaper compartido.
+  // v1.34.5: evita el ReferenceError que impedía abrir/compartir la imagen.
+  const theme=getTheme();
+  const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#72f4ff";
+  const accentRgb=getComputedStyle(document.documentElement).getPropertyValue("--accent-rgb").trim()||"114,244,255";
+  const isCyber=theme==="cyberpunk", isLuxury=theme==="luxury";
   const img=await loadShareWallpaper(d.bg||state.settings.bg);
   if(img){
     const sc=Math.max(W/img.width,H/img.height), iw=img.width*sc, ih=img.height*sc;
@@ -748,10 +754,6 @@ async function renderShareImage(cut=null){
   window.__shareGlassSource=glassSource;
   window.__shareGlassW=W;window.__shareGlassH=H;window.__shareGlassScale=scale;
 
-  const theme=getTheme();
-  const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#72f4ff";
-  const accentRgb=getComputedStyle(document.documentElement).getPropertyValue("--accent-rgb").trim()||"114,244,255";
-  const isCyber=theme==="cyberpunk", isLuxury=theme==="luxury";
   const white=isLuxury?"#fffaf0":"#f8fbff";
   const cyan=accent;
   const mint=isLuxury?"#f2c76b":accent;
@@ -869,7 +871,7 @@ $("shareTop").onclick=()=>shareCut();$("closeShare").onclick=()=>$("sharePanel")
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./sw.js?v=1.34.4").then(r=>r.update()).catch(()=>{});
+  navigator.serviceWorker.register("./sw.js?v=1.34.5").then(r=>r.update()).catch(()=>{});
 }
 archiveCompletedWeeks();
 render();
