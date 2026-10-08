@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.pexa0n2k.cortepaquetes",
+      "sha256_cert_fingerprints": [
+        "CF:B0:13:27:69:76:71:A2:D3:85:B5:0E:30:E7:36:FF:15:C1:C6:2A:93:A8:22:89:76:A9:B7:6E:66:67:3E:14"
+      ]
+    }
+  }
+]
