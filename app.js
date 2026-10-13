@@ -3,6 +3,8 @@
 
 const $ = id => document.getElementById(id);
 const DB_KEY = "corte_paquetes_data";
+const AUTO_DATE_KEY = "corte_paquetes_auto_date_v1";
+let dateInitialized = false;
 const OLD_KEYS = ["corte_paquetes_v1_12","corte_paquetes_v1_11","corte_paquetes_v1_10","corte_paquetes_v1_9","corte_paquetes_v1_8"];
 const DEFAULTS = {
   records: {},                 // { "YYYY-MM-DD": number }
@@ -429,8 +431,29 @@ function render(){
   $("curRate").textContent=money(currentRate);
   $("rate").value=currentRate || "";
 
-  $("date").min=dateKey(start); $("date").max=dateKey(end);
-  if(!inCurrentWeek($("date").value)) $("date").value=today;
+  const dateInput=$("date");
+  dateInput.min=dateKey(start); dateInput.max=dateKey(end);
+  // Keep the default registration date in sync with the local calendar day.
+  // If the user manually chooses another date, the marker is cleared below
+  // and their selection is preserved until they change it again.
+  let autoDate="";
+  try { autoDate=localStorage.getItem(AUTO_DATE_KEY)||""; } catch(e) {}
+  if(!dateInitialized){
+    if(!inCurrentWeek(dateInput.value) || !dateInput.value || !autoDate){
+      dateInput.value=today;
+      try { localStorage.setItem(AUTO_DATE_KEY,today); } catch(e) {}
+    } else if(dateInput.value===autoDate && autoDate!==today){
+      dateInput.value=today;
+      try { localStorage.setItem(AUTO_DATE_KEY,today); } catch(e) {}
+    }
+    dateInitialized=true;
+  } else if(autoDate && dateInput.value===autoDate && autoDate!==today){
+    dateInput.value=today;
+    try { localStorage.setItem(AUTO_DATE_KEY,today); } catch(e) {}
+  } else if(!inCurrentWeek(dateInput.value)){
+    dateInput.value=today;
+    try { localStorage.setItem(AUTO_DATE_KEY,today); } catch(e) {}
+  }
   $("advDate").min=dateKey(start); $("advDate").max=dateKey(end);
   if(!inCurrentWeek($("advDate").value)) $("advDate").value=today;
   updateDateText();
@@ -482,7 +505,30 @@ $("save").onclick=()=>{
   if(safeWrite()){ $("qty").value=""; render(); }
 };
 
-$("date").onchange=updateDateText;
+$("date").onchange=()=>{
+  try {
+    const autoDate=localStorage.getItem(AUTO_DATE_KEY)||"";
+    if($("date").value!==autoDate) localStorage.removeItem(AUTO_DATE_KEY);
+  } catch(e) {}
+  updateDateText();
+};
+
+// Refresh the displayed default day when the app resumes or crosses midnight.
+(function(){
+  let midnightTimer=null;
+  function refreshCalendarDay(){
+    try { render(); } catch(e) { console.warn("No se pudo actualizar la fecha del día",e); }
+    if(midnightTimer) clearTimeout(midnightTimer);
+    const now=new Date();
+    const next=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1,0,0,2,0);
+    midnightTimer=setTimeout(refreshCalendarDay,Math.max(1000,next-now));
+  }
+  window.addEventListener("focus",refreshCalendarDay);
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshCalendarDay();});
+  const now=new Date();
+  const next=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1,0,0,2,0);
+  midnightTimer=setTimeout(refreshCalendarDay,Math.max(1000,next-now));
+})();
 
 /* v1.35 — quick quantity visual controls */
 document.querySelectorAll(".quickQtyBtn").forEach(btn=>{
