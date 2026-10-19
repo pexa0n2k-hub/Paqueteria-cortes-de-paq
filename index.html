@@ -1,4 +1,4 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css?v=1.38.2"><title>Corte de Paquetes</title></head><body>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css?v=1.39.0"><title>Corte de Paquetes</title></head><body>
 <div id="backdrop"></div><div id="shade"></div><main>
 <header class="topbar">
   <div class="brand">
@@ -22,6 +22,7 @@
     </button>
   </div>
 </header>
+<section class="glass laborLaunch"><div class="laborLaunchIcon">🛡️</div><div class="laborLaunchCopy"><strong>Expediente laboral</strong><span>Asistencia · evidencias · incidencias</span></div><button id="openLabor" class="neonBtn" type="button">Abrir</button></section>
 
 <section class="glass jelly hero heroMain redesignHero">
   <div class="eyebrow">PAQUETES ENTREGADOS</div>
@@ -151,7 +152,7 @@
     </div>
   </div>
 </div>
-<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.38.2"></script><script>
+<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.39.0"></script><script>
 window.openDashboard=function(){
   var p=document.getElementById("dashboardPanel");
   if(!p)return;
@@ -233,4 +234,22 @@ window.openDashboard=function(){
     </div>
   </section>
 </div>
+
+<div id="laborModal" class="laborOverlay hidden" role="dialog" aria-modal="true" aria-labelledby="laborTitle">
+ <div class="glass laborPanel">
+  <div class="panelHead"><div><h2 id="laborTitle">🛡️ Expediente laboral</h2><p class="muted smallText">Tu archivo personal de asistencia y evidencias</p></div><button id="closeLabor" class="glass icon" type="button" aria-label="Cerrar">✕</button></div>
+  <div class="laborTabs"><button class="laborTab active" data-labor-tab="new">＋ Guardar evidencia</button><button class="laborTab" data-labor-tab="history">▤ Historial</button></div>
+  <div id="laborNew">
+   <label class="laborLabel">Tipo de registro</label><select id="laborType" class="field"><option value="Entrada">Entrada / asistencia</option><option value="Salida">Salida</option><option value="Incidencia">Incidencia laboral</option><option value="Entrega">Evidencia de entrega</option><option value="Otro">Otro</option></select>
+   <label class="laborLabel">Fecha y hora registradas</label><input id="laborWhen" class="field" type="datetime-local">
+   <label class="laborLabel">Foto o captura original</label><input id="laborFiles" class="field" type="file" accept="image/*" multiple>
+   <p class="muted smallText">También puedes compartir una imagen desde la galería de Android hacia CortePaquetes cuando el navegador/PWA admita esa opción.</p>
+   <label class="laborLabel">Nota (opcional)</label><textarea id="laborNote" class="field" rows="3" placeholder="Ej. Llegué a tiempo; foto enviada al grupo de trabajo."></textarea>
+   <button id="saveLabor" class="neonBtn laborSave" type="button">Guardar en mi expediente</button><div id="laborStatus" class="muted smallText" role="status"></div>
+  </div>
+  <div id="laborHistory" class="hidden"><div class="laborFilters"><input id="laborSearch" class="field" placeholder="Buscar por fecha, tipo o nota"><button id="exportLabor" class="glass action" type="button">Exportar respaldo</button></div><div id="laborRecords"></div></div>
+  <p class="laborPrivacy">🔐 Las evidencias se guardan localmente en este dispositivo. Exporta respaldos y evita borrar los datos del navegador.</p>
+ </div>
+</div>
+<script src="./labor.js?v=1.39.0"></script>
 </body></html>
