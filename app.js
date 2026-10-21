@@ -671,18 +671,28 @@ function rr(ctx,x,y,w,h,r){const q=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveT
 function dg(ctx,x,y,w,h,r=28){
   const shareTheme=getTheme();
   const shareAccent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#72f4ff";
-  const shareBorder=shareTheme==="cyberpunk"?"rgba(255,59,212,.52)":shareTheme==="luxury"?"rgba(215,166,58,.52)":"rgba(255,255,255,.42)";
+  const shareBorder=(shareTheme==="cyberpunk"||shareTheme==="angular")?"rgba(255,49,93,.82)":shareTheme==="luxury"?"rgba(215,166,58,.62)":shareTheme==="matte"?"rgba(25,55,100,.24)":shareTheme==="hex"?"rgba(67,234,255,.88)":shareTheme==="game"?"rgba(255,177,59,.82)":shareTheme==="timeline"?"rgba(18,99,232,.55)":"rgba(255,255,255,.58)";
+  const angularThemes=["angular","hex"];
   // IMPORTANTE: el blur se aplica únicamente al fondo capturado ANTES de
   // dibujar los cajones. Nunca hacemos drawImage() del canvas sobre sí mismo.
   const q=Math.min(r,w/2,h/2);
   const path=()=>{
     ctx.beginPath();
-    ctx.moveTo(x+q,y);
-    ctx.arcTo(x+w,y,x+w,y+h,q);
-    ctx.arcTo(x+w,y+h,x,y+h,q);
-    ctx.arcTo(x,y+h,x,y,q);
-    ctx.arcTo(x,y,x+w,y,q);
-    ctx.closePath();
+    if(shareTheme==="hex"){
+      ctx.moveTo(x+w*.10,y);ctx.lineTo(x+w*.90,y);ctx.lineTo(x+w,y+h*.22);ctx.lineTo(x+w,y+h*.78);ctx.lineTo(x+w*.90,y+h);ctx.lineTo(x+w*.10,y+h);ctx.lineTo(x,y+h*.78);ctx.lineTo(x,y+h*.22);ctx.closePath();
+    }else if(shareTheme==="angular"){
+      ctx.moveTo(x,y+q*.45);ctx.lineTo(x+q*.45,y);ctx.lineTo(x+w-q*.5,y);ctx.lineTo(x+w,y+q*.5);ctx.lineTo(x+w,y+h-q*.5);ctx.lineTo(x+w-q*.5,y+h);ctx.lineTo(x+q*.45,y+h);ctx.lineTo(x,y+h-q*.45);ctx.closePath();
+    }else if(shareTheme==="crystal"||shareTheme==="carousel"){
+      ctx.moveTo(x+w*.12,y);ctx.bezierCurveTo(x+w*.45,y-8,x+w*.88,y-3,x+w,y+h*.20);ctx.lineTo(x+w,y+h*.72);ctx.bezierCurveTo(x+w*.95,y+h*1.08,x+w*.15,y+h*1.04,x,y+h*.72);ctx.lineTo(x,y+h*.25);ctx.bezierCurveTo(x+w*.02,y+h*.08,x+w*.06,y+h*.03,x+w*.12,y);ctx.closePath();
+    }else if(shareTheme==="matte"){
+      ctx.rect(x,y,w,h);
+    }else if(shareTheme==="timeline"){
+      ctx.moveTo(x+8,y);ctx.lineTo(x+w,y);ctx.lineTo(x+w,y+h);ctx.lineTo(x+8,y+h);ctx.closePath();
+    }else if(shareTheme==="game"){
+      ctx.moveTo(x+q,y);ctx.lineTo(x+w-q,y);ctx.lineTo(x+w,y+q);ctx.lineTo(x+w,y+h-q);ctx.lineTo(x+w-q,y+h);ctx.lineTo(x+q,y+h);ctx.lineTo(x,y+h-q);ctx.lineTo(x,y+q);ctx.closePath();
+    }else{
+      ctx.moveTo(x+q,y);ctx.arcTo(x+w,y,x+w,y+h,q);ctx.arcTo(x+w,y+h,x,y+h,q);ctx.arcTo(x,y+h,x,y,q);ctx.arcTo(x,y,x+w,y,q);ctx.closePath();
+    }
   };
 
   ctx.save();
@@ -703,10 +713,18 @@ function dg(ctx,x,y,w,h,r=28){
 
   // Material Liquid Glass: aproximadamente 25% de transparencia.
   const g=ctx.createLinearGradient(x,y,x+w,y+h);
-  if(shareTheme==="cyberpunk"){
-    g.addColorStop(0,"rgba(255,59,212,.16)");
-    g.addColorStop(.45,"rgba(90,30,150,.10)");
-    g.addColorStop(1,"rgba(5,3,18,.72)");
+  if(shareTheme==="cyberpunk"||shareTheme==="angular"){
+    g.addColorStop(0,"rgba(255,25,72,.25)");
+    g.addColorStop(.45,"rgba(90,10,45,.20)");
+    g.addColorStop(1,"rgba(5,3,18,.82)");
+  }else if(shareTheme==="hex"||shareTheme==="map"){
+    g.addColorStop(0,"rgba(0,225,255,.22)");g.addColorStop(.5,"rgba(8,35,75,.24)");g.addColorStop(1,"rgba(3,9,25,.82)");
+  }else if(shareTheme==="matte"){
+    g.addColorStop(0,"rgba(255,255,255,.94)");g.addColorStop(.5,"rgba(239,246,255,.96)");g.addColorStop(1,"rgba(222,233,249,.98)");
+  }else if(shareTheme==="timeline"){
+    g.addColorStop(0,"rgba(255,255,255,.96)");g.addColorStop(.5,"rgba(235,244,255,.96)");g.addColorStop(1,"rgba(218,234,255,.98)");
+  }else if(shareTheme==="game"){
+    g.addColorStop(0,"rgba(255,170,40,.22)");g.addColorStop(.45,"rgba(90,25,100,.28)");g.addColorStop(1,"rgba(13,7,35,.84)");
   }else if(shareTheme==="luxury"){
     g.addColorStop(0,"rgba(215,166,58,.13)");
     g.addColorStop(.45,"rgba(255,255,255,.06)");
@@ -723,7 +741,7 @@ function dg(ctx,x,y,w,h,r=28){
   const shade=ctx.createLinearGradient(0,y,0,y+h);
   shade.addColorStop(0,"rgba(5,12,26,.08)");
   shade.addColorStop(1,"rgba(5,12,26,.20)");
-  ctx.fillStyle=shareTheme==="cyberpunk"?"rgba(8,4,20,.72)":shareTheme==="luxury"?"rgba(18,12,5,.76)":shade;
+  ctx.fillStyle=(shareTheme==="cyberpunk"||shareTheme==="angular"||shareTheme==="hex"||shareTheme==="map"||shareTheme==="game")?(shareTheme==="game"?"rgba(13,7,35,.70)":"rgba(8,4,20,.68)"):shareTheme==="luxury"?"rgba(18,12,5,.76)":(shareTheme==="matte"||shareTheme==="timeline")?"rgba(255,255,255,.05)":shade;
   ctx.fillRect(x,y,w,h);
   ctx.restore();
 
@@ -816,13 +834,14 @@ async function renderShareImage(cut=null){
   window.__shareGlassSource=glassSource;
   window.__shareGlassW=W;window.__shareGlassH=H;window.__shareGlassScale=scale;
 
-  const white=isLuxury?"#fffaf0":"#f8fbff";
-  const cyan=accent;
-  const mint=isLuxury?"#f2c76b":accent;
-  const muted=isLuxury?"#c7bda8":"#a9b8ca";
-  const secondary=isCyber?"#ff3bd4":isLuxury?"#d7a63a":accent;
-  const cardFill=isCyber?"rgba(10,5,24,.68)":isLuxury?"rgba(16,12,7,.72)":"rgba(255,255,255,.10)";
-  const cardBorder=isCyber?`rgba(255,59,212,.42)`:isLuxury?"rgba(215,166,58,.42)":"rgba(255,255,255,.42)";
+  const isLight=(theme==="matte"||theme==="timeline");
+  const white=isLight?"#10213b":isLuxury?"#fffaf0":"#f8fbff";
+  const cyan=(theme==="angular"||theme==="cyberpunk")?"#ff315d":theme==="game"?"#ffb13b":theme==="matte"?"#1554c0":accent;
+  const mint=isLuxury?"#f2c76b":theme==="matte"||theme==="timeline"?"#1263e8":accent;
+  const muted=isLight?"#61718a":isLuxury?"#c7bda8":"#a9b8ca";
+  const secondary=(theme==="cyberpunk"||theme==="angular")?"#ff315d":isLuxury?"#d7a63a":theme==="game"?"#ffb13b":theme==="matte"||theme==="timeline"?"#1554c0":accent;
+  const cardFill=isLight?"rgba(255,255,255,.86)":isCyber||theme==="angular"?"rgba(10,5,24,.68)":isLuxury?"rgba(16,12,7,.72)":"rgba(255,255,255,.10)";
+  const cardBorder=isLight?"rgba(30,65,120,.22)":isCyber||theme==="angular"?"rgba(255,49,93,.62)":isLuxury?"rgba(215,166,58,.42)":"rgba(255,255,255,.42)";
   const glow=`rgba(${accentRgb},.42)`;
   const text=(s,x,y,size,weight="700",color=white)=>{
     ctx.fillStyle=color;ctx.font=`${weight} ${size}px system-ui,-apple-system,sans-serif`;ctx.fillText(s,x,y);
@@ -833,7 +852,8 @@ async function renderShareImage(cut=null){
   text("CORTE DE PAQUETES",55,63,20,"900",cyan);
   text("Corte semanal",55,112,42,"850",white);
   text(`${d.start.getDate()} – ${d.end.getDate()} de ${d.end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`,55,148,19,"500",muted);
-  const themeLabel=isCyber?"CYBERPUNK PRO":isLuxury?"DARK LUXURY":"GLASS iOS PREMIUM";
+  const themeLabels={glass:"GLASS iOS PREMIUM",cyberpunk:"CYBERPUNK PRO",luxury:"DARK LUXURY",crystal:"CRISTAL FLUIDO",angular:"CYBERPUNK ANGULAR",matte:"MINIMALISTA MATE",map:"MAPA PROTAGONISTA",carousel:"TARJETAS DESLIZABLES",sidebar:"PANEL LATERAL",central:"TARJETA GRANDE CENTRAL",timeline:"TIMELINE VERTICAL",hex:"HEXAGONAL MODULAR",game:"TARJETA DE JUEGO"};
+  const themeLabel=themeLabels[theme]||"GLASS iOS PREMIUM";
   text(themeLabel,55,174,13,"800",secondary);
 
   // Botón compartir visual en la tarjeta exportada.
