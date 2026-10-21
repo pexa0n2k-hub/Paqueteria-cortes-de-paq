@@ -126,7 +126,12 @@ const THEMES={
   luxury:{label:"Dark Luxury"},
   crystal:{label:"Cristal Fluido"}, angular:{label:"Cyberpunk Angular"}, matte:{label:"Minimalista Mate"},
   map:{label:"Mapa Protagonista"}, carousel:{label:"Tarjetas Deslizables"}, sidebar:{label:"Panel Lateral"},
-  central:{label:"Tarjeta Grande Central"}, timeline:{label:"Timeline Vertical"}, hex:{label:"Hexagonal Modular"}, game:{label:"Tarjeta de Juego"}
+  central:{label:"Tarjeta Grande Central"}, timeline:{label:"Timeline Vertical"}, hex:{label:"Hexagonal Modular"}, game:{label:"Tarjeta de Juego"},
+  sidebarCrystal:{label:"11 · Menú Lateral Cristal"}, oval:{label:"12 · Tarjetas Ovaladas"},
+  hexPro:{label:"13 · Hexagonal Pro"}, layered:{label:"14 · Cristal en Capas"},
+  mapPro:{label:"15 · Mapa Protagonista X"}, carouselPro:{label:"16 · Carrusel Expandible"},
+  timelinePro:{label:"17 · Timeline Operativo"}, organic:{label:"18 · Orgánico Líquido"},
+  editorial:{label:"19 · Editorial"}, industrial:{label:"20 · Industrial"}
 };
 function normalizeTheme(value){return THEMES[value]?value:"glass";}
 function getTheme(){
@@ -671,8 +676,8 @@ function rr(ctx,x,y,w,h,r){const q=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveT
 function dg(ctx,x,y,w,h,r=28){
   const shareTheme=getTheme();
   const shareAccent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#72f4ff";
-  const shareBorder=(shareTheme==="cyberpunk"||shareTheme==="angular")?"rgba(255,49,93,.82)":shareTheme==="luxury"?"rgba(215,166,58,.62)":shareTheme==="matte"?"rgba(25,55,100,.24)":shareTheme==="hex"?"rgba(67,234,255,.88)":shareTheme==="game"?"rgba(255,177,59,.82)":shareTheme==="timeline"?"rgba(18,99,232,.55)":"rgba(255,255,255,.58)";
-  const angularThemes=["angular","hex"];
+  const shareBorder=(shareTheme==="cyberpunk"||shareTheme==="angular"||shareTheme==="industrial")?"rgba(255,49,93,.82)":shareTheme==="luxury"?"rgba(215,166,58,.62)":shareTheme==="editorial"||shareTheme==="timelinePro"?"rgba(25,99,232,.58)":shareTheme==="matte"?"rgba(25,55,100,.24)":shareTheme==="hex"||shareTheme==="hexPro"?"rgba(67,234,255,.88)":shareTheme==="game"?"rgba(255,177,59,.82)":shareTheme==="timeline"?"rgba(18,99,232,.55)":"rgba(255,255,255,.58)";
+  const angularThemes=["angular","hex","hexPro","industrial"];
   // IMPORTANTE: el blur se aplica únicamente al fondo capturado ANTES de
   // dibujar los cajones. Nunca hacemos drawImage() del canvas sobre sí mismo.
   const q=Math.min(r,w/2,h/2);
@@ -834,12 +839,12 @@ async function renderShareImage(cut=null){
   window.__shareGlassSource=glassSource;
   window.__shareGlassW=W;window.__shareGlassH=H;window.__shareGlassScale=scale;
 
-  const isLight=(theme==="matte"||theme==="timeline");
+  const isLight=(theme==="matte"||theme==="timeline"||theme==="timelinePro"||theme==="editorial");
   const white=isLight?"#10213b":isLuxury?"#fffaf0":"#f8fbff";
   const cyan=(theme==="angular"||theme==="cyberpunk")?"#ff315d":theme==="game"?"#ffb13b":theme==="matte"?"#1554c0":accent;
   const mint=isLuxury?"#f2c76b":theme==="matte"||theme==="timeline"?"#1263e8":accent;
   const muted=isLight?"#61718a":isLuxury?"#c7bda8":"#a9b8ca";
-  const secondary=(theme==="cyberpunk"||theme==="angular")?"#ff315d":isLuxury?"#d7a63a":theme==="game"||theme==="industrial"?"#ffad45":theme==="matte"||theme==="timeline"||theme==="timelinePro"||theme==="editorial"?"#1554c0":theme==="mapPro"?"#38f7d0":theme==="oval"||theme==="organic"||theme==="layered"||theme==="carouselPro"||theme==="sidebarCrystal"?"#b4a0ff":accent;
+  const secondary=(theme==="cyberpunk"||theme==="angular")?"#ff315d":isLuxury?"#d7a63a":theme==="game"?"#ffb13b":theme==="matte"||theme==="timeline"?"#1554c0":accent;
   const cardFill=isLight?"rgba(255,255,255,.86)":isCyber||theme==="angular"?"rgba(10,5,24,.68)":isLuxury?"rgba(16,12,7,.72)":"rgba(255,255,255,.10)";
   const cardBorder=isLight?"rgba(30,65,120,.22)":isCyber||theme==="angular"?"rgba(255,49,93,.62)":isLuxury?"rgba(215,166,58,.42)":"rgba(255,255,255,.42)";
   const glow=`rgba(${accentRgb},.42)`;
@@ -852,7 +857,7 @@ async function renderShareImage(cut=null){
   text("CORTE DE PAQUETES",55,63,20,"900",cyan);
   text("Corte semanal",55,112,42,"850",white);
   text(`${d.start.getDate()} – ${d.end.getDate()} de ${d.end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`,55,148,19,"500",muted);
-  const themeLabels={glass:"GLASS iOS PREMIUM",cyberpunk:"CYBERPUNK PRO",luxury:"DARK LUXURY",crystal:"CRISTAL FLUIDO",angular:"CYBERPUNK ANGULAR",matte:"MINIMALISTA MATE",map:"MAPA PROTAGONISTA",carousel:"TARJETAS DESLIZABLES",sidebar:"PANEL LATERAL",central:"TARJETA GRANDE CENTRAL",timeline:"TIMELINE VERTICAL",hex:"HEXAGONAL MODULAR",game:"TARJETA DE JUEGO"};
+  const themeLabels={glass:"GLASS iOS PREMIUM",cyberpunk:"CYBERPUNK PRO",luxury:"DARK LUXURY",crystal:"CRISTAL FLUIDO",angular:"CYBERPUNK ANGULAR",matte:"MINIMALISTA MATE",map:"MAPA PROTAGONISTA",carousel:"TARJETAS DESLIZABLES",sidebar:"PANEL LATERAL",central:"TARJETA GRANDE CENTRAL",timeline:"TIMELINE VERTICAL",hex:"HEXAGONAL MODULAR",game:"TARJETA DE JUEGO",sidebarCrystal:"MENÚ LATERAL CRISTAL",oval:"TARJETAS OVALADAS",hexPro:"HEXAGONAL PRO",layered:"CRISTAL EN CAPAS",mapPro:"MAPA PROTAGONISTA X",carouselPro:"CARRUSEL EXPANDIBLE",timelinePro:"TIMELINE OPERATIVO",organic:"ORGÁNICO LÍQUIDO",editorial:"EDITORIAL",industrial:"INDUSTRIAL"};
   const themeLabel=themeLabels[theme]||"GLASS iOS PREMIUM";
   text(themeLabel,55,174,13,"800",secondary);
 
