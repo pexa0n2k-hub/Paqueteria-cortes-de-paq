@@ -1521,3 +1521,91 @@ body.theme-game{--accent:#ffb13b;background:#100b27;color:#fff8ef}body.theme-gam
 /* Consistent theme transitions for slides, dashboard overlays, labor panels and controls */
 body[class*="theme-"] .panel,body[class*="theme-"] .dashboardV27,body[class*="theme-"] .laborPanel,body[class*="theme-"] .cutHistoryPanel{transition:background .28s,border-radius .28s,border-color .28s,box-shadow .28s,transform .28s}
 @media(prefers-reduced-motion:reduce){body[class*="theme-"] .glass,body[class*="theme-"] .panel{animation:none!important;transition:none!important}}
+/* v1.40.1 RADICAL THEMES — real geometry + per-theme dashboard composition */
+main{display:flex!important;flex-direction:column!important;gap:0!important}
+main>.topbar{order:0!important}
+main>.laborLaunch{order:1!important}
+main>.heroMain{order:2!important}
+main>.redesignForm{order:3!important}
+main>.redesignTotal{order:4!important}
+main>.redesignMetrics{order:5!important}
+main>.redesignAdvance{order:6!important}
+main>.sectionTitle:not(.historySectionTitle){order:7!important}
+main>.redesignDaily{order:8!important}
+main>.historySectionTitle{order:9!important}
+main>#historyWrap{order:10!important}
+main>.redesignReset{order:11!important}
+main>.redesignFooter{order:12!important}
+body[class*="theme-"] .glass,body[class*="theme-"] .neonBtn,body[class*="theme-"] .field,body[class*="theme-"] .entry input,body[class*="theme-"] .quickQtyBtn,body[class*="theme-"] .dayCell,body[class*="theme-"] .themeOption{transition:border-radius .32s cubic-bezier(.2,.8,.2,1),clip-path .32s,transform .28s,box-shadow .3s,background .3s,border-color .3s}
+body[class*="theme-"] .redesignForm,body[class*="theme-"] .redesignTotal,body[class*="theme-"] .metricCard,body[class*="theme-"] .redesignDaily,body[class*="theme-"] .laborLaunch{overflow:hidden;position:relative}
+/* Crystal: orb-like rounded cards, reordered into a floating money-first dashboard */
+body.theme-crystal main>.redesignTotal{order:2!important}body.theme-crystal main>.heroMain{order:3!important}body.theme-crystal main>.redesignMetrics{order:4!important}body.theme-crystal main>.redesignForm{order:5!important}body.theme-crystal main>.redesignAdvance{order:6!important}
+body.theme-crystal .redesignTotal,body.theme-crystal .redesignForm,body.theme-crystal .redesignDaily,body.theme-crystal .laborLaunch{border-radius:42px!important}
+body.theme-crystal .metricCard{border-radius:50px!important;min-height:130px!important;align-items:center!important}
+body.theme-crystal .heroMain{border-radius:50% / 24%!important;min-height:245px!important;padding:30px!important}
+body.theme-crystal .quickQtyBtn,body.theme-crystal .field,body.theme-crystal .entry input,body.theme-crystal .neonBtn,body.theme-crystal .action{border-radius:999px!important}
+body.theme-crystal .redesignTotal{transform:translateX(3px);box-shadow:0 22px 60px #2814a955,inset 0 2px 2px #fff9!important}
+body.theme-crystal .glass{background-image:radial-gradient(ellipse at 20% 0%,#ffffff48,transparent 48%),linear-gradient(135deg,#a8f7ff25,#7a58ff38 55%,#10172dbb)!important}
+/* Angular: cut-corner polygon boxes and compact register-first operator flow */
+body.theme-angular main>.redesignForm{order:2!important}body.theme-angular main>.heroMain{order:3!important}body.theme-angular main>.redesignMetrics{order:4!important}body.theme-angular main>.redesignTotal{order:5!important}
+body.theme-angular .heroMain,body.theme-angular .redesignForm,body.theme-angular .redesignTotal,body.theme-angular .metricCard,body.theme-angular .redesignDaily,body.theme-angular .laborLaunch{border-radius:0!important;clip-path:polygon(0 0,94% 0,100% 12%,100% 100%,6% 100%,0 88%)!important}
+body.theme-angular .quickQtyBtn,body.theme-angular .field,body.theme-angular .entry input,body.theme-angular .neonBtn,body.theme-angular .action,body.theme-angular .icon{border-radius:0!important;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%)!important}
+body.theme-angular .metricCard{border-top:2px solid #ff315d!important;border-bottom:1px solid #ff315d66!important}
+/* Matte: clean editorial stack, square white cards, timeline details */
+body.theme-matte main>.redesignTotal{order:2!important}body.theme-matte main>.heroMain{order:3!important}body.theme-matte main>.redesignMetrics{order:4!important}body.theme-matte main>.redesignForm{order:5!important}
+body.theme-matte .redesignForm,body.theme-matte .redesignTotal,body.theme-matte .metricCard,body.theme-matte .redesignDaily,body.theme-matte .laborLaunch{border-radius:12px!important;box-shadow:0 7px 18px #173b6812!important}
+body.theme-matte .heroMain{border-radius:14px!important;min-height:170px!important}
+body.theme-matte .quickQtyBtn,body.theme-matte .field,body.theme-matte .entry input,body.theme-matte .neonBtn,body.theme-matte .action{border-radius:10px!important}
+/* Map: dashboard becomes route console, hero compact, action and daily status elevated */
+body.theme-map main>.redesignDaily{order:2!important}body.theme-map main>.heroMain{order:3!important}body.theme-map main>.redesignMetrics{order:4!important}body.theme-map main>.redesignTotal{order:5!important}body.theme-map main>.redesignForm{order:6!important}
+body.theme-map .redesignDaily{border-radius:28px 28px 8px 8px!important;border:1px solid #20efbd88!important}
+body.theme-map .heroMain{border-radius:28px 8px 28px 8px!important;min-height:175px!important}
+body.theme-map .metricCard{border-radius:18px 5px 18px 5px!important}
+body.theme-map .redesignForm,body.theme-map .redesignTotal{border-radius:8px 25px 8px 25px!important}
+body.theme-map .quickQtyBtn,body.theme-map .neonBtn{border-radius:999px!important}
+/* Carousel: card deck feel, offset cards and distinct stacked order */
+body.theme-carousel main>.redesignTotal{order:2!important}body.theme-carousel main>.heroMain{order:3!important}body.theme-carousel main>.redesignMetrics{order:4!important}body.theme-carousel main>.redesignDaily{order:5!important}body.theme-carousel main>.redesignForm{order:6!important}
+body.theme-carousel .redesignTotal,body.theme-carousel .redesignDaily{border-radius:30px 30px 12px 30px!important;transform:rotate(-.4deg)!important}
+body.theme-carousel .heroMain{border-radius:34px 12px 34px 12px!important;transform:rotate(.35deg)!important}
+body.theme-carousel .metricCard:nth-child(1){transform:translateX(-3px) rotate(-1deg)!important;border-radius:25px 10px 25px 10px!important}
+body.theme-carousel .metricCard:nth-child(2){transform:translateX(3px) rotate(1deg)!important;border-radius:10px 25px 10px 25px!important}
+body.theme-carousel .redesignForm{border-radius:12px 30px 12px 30px!important}
+/* Sidebar: tight operations order with financial stats near top */
+body.theme-sidebar main>.redesignMetrics{order:2!important}body.theme-sidebar main>.redesignTotal{order:3!important}body.theme-sidebar main>.heroMain{order:4!important}body.theme-sidebar main>.redesignForm{order:5!important}
+body.theme-sidebar .redesignMetrics .metricCard{min-height:90px!important;border-radius:10px!important}
+body.theme-sidebar .heroMain{min-height:145px!important;padding:16px!important;border-radius:10px!important}
+body.theme-sidebar .redesignForm,body.theme-sidebar .redesignTotal,body.theme-sidebar .redesignDaily{border-radius:10px!important}
+/* Central: oversized hero first, balance follows, actions form a cinematic stack */
+body.theme-central main>.heroMain{order:2!important}body.theme-central main>.redesignTotal{order:3!important}body.theme-central main>.redesignMetrics{order:4!important}body.theme-central main>.redesignForm{order:5!important}
+body.theme-central .heroMain{min-height:300px!important;border-radius:42px!important;text-align:center!important;align-items:center!important}
+body.theme-central .heroMain .heroNumber{font-size:clamp(90px,26vw,140px)!important;line-height:.95!important}
+body.theme-central .heroRate{right:18px!important;bottom:14px!important}
+body.theme-central .redesignTotal{border-radius:30px!important}
+/* Timeline: history and daily rail first, entry form becomes a clean action footer */
+body.theme-timeline main>.redesignDaily{order:2!important}body.theme-timeline main>.historySectionTitle{order:3!important}body.theme-timeline main>#historyWrap{order:4!important}body.theme-timeline main>.heroMain{order:5!important}body.theme-timeline main>.redesignTotal{order:6!important}body.theme-timeline main>.redesignMetrics{order:7!important}body.theme-timeline main>.redesignForm{order:8!important}
+body.theme-timeline .redesignDaily,body.theme-timeline #historyWrap{border-radius:12px!important;border-left:4px solid #1263e8!important}
+body.theme-timeline .heroMain{min-height:155px!important;border-radius:14px!important}
+body.theme-timeline .metricCard{border-radius:12px!important}
+/* Hex: hard hexagon modules; counter and money become top status cluster */
+body.theme-hex main>.redesignMetrics{order:2!important}body.theme-hex main>.heroMain{order:3!important}body.theme-hex main>.redesignTotal{order:4!important}body.theme-hex main>.redesignForm{order:5!important}
+body.theme-hex .heroMain,body.theme-hex .redesignTotal,body.theme-hex .redesignForm,body.theme-hex .redesignDaily,body.theme-hex .laborLaunch{border-radius:0!important;clip-path:polygon(7% 0,93% 0,100% 25%,100% 75%,93% 100%,7% 100%,0 75%,0 25%)!important;padding-left:24px!important;padding-right:24px!important}
+body.theme-hex .metricCard{border-radius:0!important;clip-path:polygon(12% 0,88% 0,100% 22%,100% 78%,88% 100%,12% 100%,0 78%,0 22%)!important}
+body.theme-hex .quickQtyBtn,body.theme-hex .icon,body.theme-hex .neonBtn,body.theme-hex .action{border-radius:0!important;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)!important}
+body.theme-hex .redesignMetrics{gap:14px!important}
+/* Game: XP dashboard, achievement counters first and chunky arcade buttons */
+body.theme-game main>.redesignMetrics{order:2!important}body.theme-game main>.heroMain{order:3!important}body.theme-game main>.redesignTotal{order:4!important}body.theme-game main>.redesignForm{order:5!important}body.theme-game main>.redesignDaily{order:6!important}
+body.theme-game .metricCard{border-radius:19px 19px 8px 8px!important;box-shadow:0 7px 0 #08071b,0 13px 24px #0008!important}
+body.theme-game .heroMain{border-radius:25px 25px 9px 9px!important;border-bottom:5px solid #ffb13b!important}
+body.theme-game .redesignTotal,body.theme-game .redesignForm,body.theme-game .redesignDaily{border-radius:18px!important;box-shadow:0 7px 0 #08071b,0 14px 28px #0007!important}
+body.theme-game .quickQtyBtn,body.theme-game .neonBtn,body.theme-game .action{border-radius:12px!important;box-shadow:0 4px 0 #371a55!important}
+/* All slide sheets and theme picker also adopt each geometry instead of only recoloring */
+body.theme-crystal .panel,body.theme-crystal .dashboardV27,body.theme-crystal .laborPanel{border-radius:36px 36px 20px 20px!important}
+body.theme-angular .panel,body.theme-angular .dashboardV27,body.theme-angular .laborPanel{border-radius:0!important;clip-path:polygon(0 0,96% 0,100% 5%,100% 100%,4% 100%,0 95%)!important}
+body.theme-matte .panel,body.theme-matte .dashboardV27,body.theme-matte .laborPanel{border-radius:14px!important}
+body.theme-map .panel,body.theme-map .dashboardV27,body.theme-map .laborPanel{border-radius:28px 28px 6px 6px!important}
+body.theme-carousel .panel,body.theme-carousel .dashboardV27,body.theme-carousel .laborPanel{border-radius:32px 32px 12px 12px!important}
+body.theme-sidebar .panel,body.theme-sidebar .dashboardV27,body.theme-sidebar .laborPanel{border-radius:10px!important}
+body.theme-central .panel,body.theme-central .dashboardV27,body.theme-central .laborPanel{border-radius:30px!important}
+body.theme-timeline .panel,body.theme-timeline .dashboardV27,body.theme-timeline .laborPanel{border-radius:12px!important;border-top:4px solid #1263e8!important}
+body.theme-hex .panel,body.theme-hex .dashboardV27,body.theme-hex .laborPanel{border-radius:0!important;clip-path:polygon(5% 0,95% 0,100% 7%,100% 93%,95% 100%,5% 100%,0 93%,0 7%)!important}
+body.theme-game .panel,body.theme-game .dashboardV27,body.theme-game .laborPanel{border-radius:22px!important;border-bottom:5px solid #ffb13b!important}
