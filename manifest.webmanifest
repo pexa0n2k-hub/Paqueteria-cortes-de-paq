@@ -1,7 +1,7 @@
 {
   "name": "Corte de Paquetes",
   "short_name": "Corte Paquetes",
-  "start_url": "./?v=1.39.1",
+  "start_url": "./?v=1.39.4",
   "display": "standalone",
   "background_color": "#03050d",
   "theme_color": "#050814",
@@ -23,5 +23,26 @@
         }
       ]
     }
-  }
+  },
+  "scope": "./",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }
