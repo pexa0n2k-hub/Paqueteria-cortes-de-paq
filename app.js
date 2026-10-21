@@ -123,7 +123,10 @@ const THEME_KEY="corte_paquetes_theme";
 const THEMES={
   glass:{label:"Glass iOS Premium"},
   cyberpunk:{label:"Cyberpunk Pro"},
-  luxury:{label:"Dark Luxury"}
+  luxury:{label:"Dark Luxury"},
+  crystal:{label:"Cristal Fluido"}, angular:{label:"Cyberpunk Angular"}, matte:{label:"Minimalista Mate"},
+  map:{label:"Mapa Protagonista"}, carousel:{label:"Tarjetas Deslizables"}, sidebar:{label:"Panel Lateral"},
+  central:{label:"Tarjeta Grande Central"}, timeline:{label:"Timeline Vertical"}, hex:{label:"Hexagonal Modular"}, game:{label:"Tarjeta de Juego"}
 };
 function normalizeTheme(value){return THEMES[value]?value:"glass";}
 function getTheme(){
@@ -136,7 +139,7 @@ function applyTheme(theme=getTheme(),persist=true){
   if(state?.settings) state.settings.theme=theme;
   document.body.dataset.theme=theme;
   document.documentElement.dataset.theme=theme;
-  document.body.classList.remove("theme-glass","theme-cyberpunk","theme-luxury");
+  document.body.classList.remove(...Object.keys(THEMES).map(t=>"theme-"+t));
   document.body.classList.add("theme-"+theme);
   if(persist){try{localStorage.setItem(THEME_KEY,theme)}catch(e){}}
   const label=$("themeCurrentLabel");

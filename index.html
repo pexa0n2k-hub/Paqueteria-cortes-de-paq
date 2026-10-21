@@ -1,4 +1,4 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest?v=1.39.4"><link rel="icon" type="image/png" sizes="32x32" href="./icon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=1.39.4"><title>Corte de Paquetes</title></head><body>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest?v=1.40.0"><link rel="icon" type="image/png" sizes="32x32" href="./icon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=1.40.0"><title>Corte de Paquetes</title></head><body>
 <div id="backdrop"></div><div id="shade"></div><main>
 <header class="topbar">
   <div class="brand">
@@ -111,6 +111,16 @@
       <span><strong>Dark Luxury</strong><small>Oscuro · sofisticado</small></span>
       <span class="themeCheck">✓</span>
     </button>
+    <button type="button" class="themeOption" data-theme="crystal" role="radio" aria-checked="false"><span class="themePreview themePreviewCrystal"><i></i><b></b><em></em></span><span><strong>01 · Cristal Fluido</strong><small>Orbes · vidrio líquido</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="angular" role="radio" aria-checked="false"><span class="themePreview themePreviewAngular"><i></i><b></b><em></em></span><span><strong>02 · Cyberpunk Angular</strong><small>Marcos · neón rojo</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="matte" role="radio" aria-checked="false"><span class="themePreview themePreviewMatte"><i></i><b></b><em></em></span><span><strong>03 · Minimalista Mate</strong><small>Claro · limpio</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="map" role="radio" aria-checked="false"><span class="themePreview themePreviewMap"><i></i><b></b><em></em></span><span><strong>04 · Mapa Protagonista</strong><small>Rutas · navegación</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="carousel" role="radio" aria-checked="false"><span class="themePreview themePreviewCarousel"><i></i><b></b><em></em></span><span><strong>05 · Tarjetas Deslizables</strong><small>Deck · paneles móviles</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="sidebar" role="radio" aria-checked="false"><span class="themePreview themePreviewSidebar"><i></i><b></b><em></em></span><span><strong>06 · Panel Lateral</strong><small>Compacto · operativo</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="central" role="radio" aria-checked="false"><span class="themePreview themePreviewCentral"><i></i><b></b><em></em></span><span><strong>07 · Tarjeta Central</strong><small>Hero · fondo escénico</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="timeline" role="radio" aria-checked="false"><span class="themePreview themePreviewTimeline"><i></i><b></b><em></em></span><span><strong>08 · Timeline Vertical</strong><small>Registro · línea de tiempo</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="hex" role="radio" aria-checked="false"><span class="themePreview themePreviewHex"><i></i><b></b><em></em></span><span><strong>09 · Hexagonal Modular</strong><small>Geometría · módulos</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="game" role="radio" aria-checked="false"><span class="themePreview themePreviewGame"><i></i><b></b><em></em></span><span><strong>10 · Estilo Tarjeta de Juego</strong><small>Arcade · misiones y progreso</small></span><span class="themeCheck">✓</span></button>
   </div>
 </div>
 <div class="accentSettings">
@@ -152,7 +162,7 @@
     </div>
   </div>
 </div>
-<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.39.4"></script><script>
+<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.40.0"></script><script>
 window.openDashboard=function(){
   var p=document.getElementById("dashboardPanel");
   if(!p)return;
@@ -251,5 +261,5 @@ window.openDashboard=function(){
   <p class="laborPrivacy">🔐 Las evidencias se guardan localmente en este dispositivo. Exporta respaldos y evita borrar los datos del navegador.</p>
  </div>
 </div>
-<script src="./labor.js?v=1.39.4"></script>
+<script src="./labor.js?v=1.40.0"></script>
 </body></html>
