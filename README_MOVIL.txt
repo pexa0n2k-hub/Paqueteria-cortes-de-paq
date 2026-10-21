@@ -1,15 +1,8 @@
-CORTEPAQUETES v1.40.1 — 10 TEMAS REDISEÑO COMPLETO
-
-IMPORTANTE: ZIP preparado para subir desde GitHub en Android SIN subir carpetas.
-1. Descomprime el ZIP en Mis archivos.
-2. En GitHub abre el repositorio y Add file > Upload files.
-3. Selecciona todos los archivos de esta carpeta (index.html, style.css, app.js, labor.js, sw.js, manifest.webmanifest, README y los icon-*.png). Selecciona archivos, no carpeta.
-4. Haz commit a main. Reemplaza los archivos que ya existan.
-5. Abre la PWA con ?v=1.40.1 y si el navegador conserva estilos antiguos recarga una vez.
-
-Incluye 10 temas que cambian composición visual, tarjetas, botones, paneles deslizables y animaciones:
-Cristal Fluido, Cyberpunk Angular, Minimalista Mate, Mapa Protagonista, Tarjetas Deslizables,
-Panel Lateral, Tarjeta Grande Central, Timeline Vertical, Hexagonal Modular y Tarjeta de Juego.
-
-Se conserva la lógica de paquetes, cortes, tarifas, adelantos, historial y Expediente Laboral.
-No borres los datos del sitio ni el almacenamiento del navegador.
+CORTEPAQUETES v1.40.3 — TEMAS RADICALES X
+Actualización desde v1.40.2. Incluye 10 temas adicionales basados en las referencias visuales:
+11 Menú Lateral Cristal, 12 Tarjetas Ovaladas, 13 Hexagonal Pro, 14 Cristal en Capas,
+15 Mapa Protagonista X, 16 Carrusel Expandible, 17 Timeline Operativo, 18 Orgánico Líquido,
+19 Editorial y 20 Industrial.
+Conserva las funciones existentes, el Expediente Laboral, datos locales, iconos y compatibilidad con compartir.
+Para GitHub móvil: descomprime y sube archivos individuales a la raíz del repositorio. No subas una carpeta.
+Después del commit abre la app con ?v=1.40.3. No borres los datos del navegador.

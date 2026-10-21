@@ -839,7 +839,7 @@ async function renderShareImage(cut=null){
   const cyan=(theme==="angular"||theme==="cyberpunk")?"#ff315d":theme==="game"?"#ffb13b":theme==="matte"?"#1554c0":accent;
   const mint=isLuxury?"#f2c76b":theme==="matte"||theme==="timeline"?"#1263e8":accent;
   const muted=isLight?"#61718a":isLuxury?"#c7bda8":"#a9b8ca";
-  const secondary=(theme==="cyberpunk"||theme==="angular")?"#ff315d":isLuxury?"#d7a63a":theme==="game"?"#ffb13b":theme==="matte"||theme==="timeline"?"#1554c0":accent;
+  const secondary=(theme==="cyberpunk"||theme==="angular")?"#ff315d":isLuxury?"#d7a63a":theme==="game"||theme==="industrial"?"#ffad45":theme==="matte"||theme==="timeline"||theme==="timelinePro"||theme==="editorial"?"#1554c0":theme==="mapPro"?"#38f7d0":theme==="oval"||theme==="organic"||theme==="layered"||theme==="carouselPro"||theme==="sidebarCrystal"?"#b4a0ff":accent;
   const cardFill=isLight?"rgba(255,255,255,.86)":isCyber||theme==="angular"?"rgba(10,5,24,.68)":isLuxury?"rgba(16,12,7,.72)":"rgba(255,255,255,.10)";
   const cardBorder=isLight?"rgba(30,65,120,.22)":isCyber||theme==="angular"?"rgba(255,49,93,.62)":isLuxury?"rgba(215,166,58,.42)":"rgba(255,255,255,.42)";
   const glow=`rgba(${accentRgb},.42)`;
