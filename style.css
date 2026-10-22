@@ -1945,3 +1945,35 @@ body.theme-crystalTech .quickQtyBtn{clip-path:polygon(18% 0,82% 0,100% 50%,82% 1
 body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .field,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) input[type=number]{border-radius:0!important}
 body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignHero,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignForm,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignTotal,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignDaily{margin-block:10px!important}
 body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .quickQtyBtn{min-height:62px!important;font-weight:900!important}
+
+
+/* v1.42.2 — formas radicalmente distintas: no solo color o radio */
+/* Cyber HUD: panel con orejas en esquina superior izquierda y gran bisel inferior */
+body.theme-cyberHud .redesignHero{clip-path:polygon(0 10%,8% 10%,8% 0,78% 0,84% 7%,100% 7%,100% 76%,88% 100%,0 100%)!important;border:0!important;outline:1px solid rgba(37,235,255,.72);box-shadow:inset 0 0 0 2px rgba(37,235,255,.12),0 0 22px rgba(37,235,255,.12)!important}
+body.theme-cyberHud .redesignForm{clip-path:polygon(0 0,76% 0,82% 7%,100% 7%,100% 100%,6% 100%,0 91%)!important;border:0!important;box-shadow:inset 4px 0 #20e8ff,inset 0 3px rgba(32,232,255,.65)!important}
+body.theme-cyberHud .redesignTotal{clip-path:polygon(0 0,70% 0,76% 9%,100% 9%,100% 90%,92% 100%,0 100%)!important;border:0!important;box-shadow:inset 0 3px #20e8ff,inset 4px 0 rgba(32,232,255,.6)!important}
+body.theme-cyberHud .redesignDaily{clip-path:polygon(0 0,100% 0,100% 82%,88% 100%,0 100%)!important;border:0!important;box-shadow:inset 0 3px rgba(32,232,255,.75),inset 4px 0 rgba(32,232,255,.4)!important}
+body.theme-cyberHud .redesignMetrics .metricCard{clip-path:polygon(0 0,82% 0,100% 24%,100% 100%,0 100%)!important}
+body.theme-cyberHud .redesignMetrics .metricCard:nth-child(even){clip-path:polygon(0 20%,18% 0,100% 0,100% 100%,0 100%)!important}
+/* Mecha Red: placas con pestañas externas visibles */
+body.theme-mechaRed .redesignHero{clip-path:polygon(7% 0,36% 0,40% 5%,60% 5%,64% 0,93% 0,100% 11%,100% 36%,95% 43%,100% 50%,95% 57%,100% 64%,100% 89%,93% 100%,7% 100%,0 89%,0 64%,5% 57%,0 50%,5% 43%,0 36%,0 11%)!important;border:0!important;box-shadow:inset 0 0 0 2px rgba(255,48,69,.25),inset 7px 0 #ff3045!important}
+body.theme-mechaRed .redesignForm{clip-path:polygon(0 7%,7% 0,28% 0,32% 5%,68% 5%,72% 0,93% 0,100% 7%,100% 93%,93% 100%,7% 100%,0 93%)!important;border:0!important;box-shadow:inset 0 4px #ff3045,inset 7px 0 rgba(255,48,69,.65)!important}
+body.theme-mechaRed .redesignTotal{clip-path:polygon(0 12%,8% 12%,8% 0,92% 0,92% 12%,100% 12%,100% 88%,92% 88%,92% 100%,8% 100%,8% 88%,0 88%)!important;border:0!important;box-shadow:inset 0 4px #ff3045,inset 0 -4px #ff3045!important}
+body.theme-mechaRed .redesignDaily{clip-path:polygon(0 0,92% 0,100% 10%,100% 90%,92% 100%,0 100%,0 70%,4% 64%,0 58%)!important;border:0!important;box-shadow:inset 6px 0 #ff3045!important}
+body.theme-mechaRed .redesignMetrics .metricCard{clip-path:polygon(0 0,72% 0,84% 12%,100% 12%,100% 100%,0 100%)!important}
+body.theme-mechaRed .redesignMetrics .metricCard:nth-child(even){clip-path:polygon(0 12%,16% 12%,28% 0,100% 0,100% 100%,0 100%)!important}
+/* Neon Stream: marcos de transmisión con orejas y extremos largos */
+body.theme-neonStream .redesignHero{clip-path:polygon(0 16%,7% 16%,7% 0,19% 0,23% 7%,77% 7%,81% 0,93% 0,93% 16%,100% 16%,100% 84%,93% 84%,93% 100%,81% 100%,77% 93%,23% 93%,19% 100%,7% 100%,7% 84%,0 84%)!important;border:0!important;box-shadow:inset 0 0 0 2px rgba(205,70,255,.25),0 0 20px rgba(205,70,255,.12)!important}
+body.theme-neonStream .redesignForm{clip-path:polygon(0 10%,10% 10%,10% 0,90% 0,90% 10%,100% 10%,100% 90%,90% 90%,90% 100%,10% 100%,10% 90%,0 90%)!important;border:0!important;box-shadow:inset 0 3px #d34cff,inset 0 -3px rgba(45,237,255,.8)!important}
+body.theme-neonStream .redesignTotal{clip-path:polygon(0 18%,6% 18%,6% 0,94% 0,94% 18%,100% 18%,100% 82%,94% 82%,94% 100%,6% 100%,6% 82%,0 82%)!important;border:0!important;box-shadow:inset 0 3px #d34cff,inset 0 -3px #2defff!important}
+body.theme-neonStream .redesignDaily{clip-path:polygon(0 0,84% 0,84% 8%,100% 8%,100% 100%,16% 100%,16% 92%,0 92%)!important;border:0!important;box-shadow:inset 0 3px #d34cff!important}
+body.theme-neonStream .redesignMetrics .metricCard{clip-path:polygon(0 0,100% 0,100% 78%,84% 78%,84% 100%,0 100%)!important}
+body.theme-neonStream .redesignMetrics .metricCard:nth-child(even){clip-path:polygon(0 22%,16% 22%,16% 0,100% 0,100% 100%,0 100%)!important}
+/* Crystal Tech: cristal tallado, asimétrico y con punta de diamante */
+body.theme-crystalTech .redesignHero{clip-path:polygon(0 18%,13% 0,75% 0,100% 22%,100% 76%,78% 100%,13% 100%,0 82%)!important;border:0!important;box-shadow:inset 0 0 0 2px rgba(101,246,255,.18),inset 0 4px rgba(101,246,255,.8)!important}
+body.theme-crystalTech .redesignForm{clip-path:polygon(0 0,88% 0,100% 14%,100% 100%,12% 100%,0 86%)!important;border:0!important;box-shadow:inset 0 0 0 1px rgba(101,246,255,.55)!important}
+body.theme-crystalTech .redesignTotal{clip-path:polygon(0 18%,18% 0,82% 0,100% 18%,100% 82%,82% 100%,18% 100%,0 82%)!important;border:0!important;box-shadow:inset 0 0 0 2px rgba(101,246,255,.45)!important}
+body.theme-crystalTech .redesignDaily{clip-path:polygon(0 12%,12% 0,88% 0,100% 12%,88% 100%,12% 100%,0 88%)!important;border:0!important;box-shadow:inset 0 0 0 1px rgba(101,246,255,.65)!important}
+body.theme-crystalTech .redesignMetrics .metricCard{clip-path:polygon(0 18%,18% 0,100% 0,100% 82%,82% 100%,0 100%)!important}
+body.theme-crystalTech .redesignMetrics .metricCard:nth-child(even){clip-path:polygon(0 0,82% 0,100% 18%,100% 100%,18% 100%,0 82%)!important}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignHero,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignForm,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignTotal,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignDaily{overflow:hidden!important;border-radius:0!important}
