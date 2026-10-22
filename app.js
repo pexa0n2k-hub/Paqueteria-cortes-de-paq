@@ -136,7 +136,8 @@ const THEMES={
   overlayMagenta:{label:"23 · Overlay Magenta"}, overlayMinimal:{label:"24 · Overlay Minimal Pink"},
   overlayRed:{label:"25 · Overlay Tactical Red"}, overlaySilver:{label:"26 · Overlay Silver"},
   overlayPurpleWhite:{label:"27 · Overlay Purple White"}, overlayCyberWave:{label:"28 · Overlay Cyber Wave"},
-  overlayInferno:{label:"29 · Overlay Inferno"}, overlayFrame:{label:"30 · Overlay Frame Pro"}
+  overlayInferno:{label:"29 · Overlay Inferno"}, overlayFrame:{label:"30 · Overlay Frame Pro"},
+  cyberHud:{label:"31 · Cyber HUD Neon"}, mechaRed:{label:"32 · Mecha Red Armor"}, neonStream:{label:"33 · Neon Stream"}, crystalTech:{label:"34 · Crystal Tech"}
 };
 function normalizeTheme(value){return THEMES[value]?value:"glass";}
 function getTheme(){

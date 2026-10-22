@@ -1821,3 +1821,88 @@ body.theme-overlayFrame .redesignHero,body.theme-overlayFrame .redesignTotal,bod
 body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignMetrics .metricCard{min-height:122px!important}
 body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .metricIcon{border-radius:5px!important;border:1px solid var(--ov-accent)!important;background:rgba(0,0,0,.35)!important}
 @media(max-width:520px){body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignHero{min-height:205px!important}}
+
+
+/* v1.42.0 — Four new structural themes inspired by the Cyber HUD concept.
+   Each theme changes card silhouettes, controls, and panel framing—not only color. */
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech){
+ --shape-accent:#20e8ff;--shape-secondary:#a34bff;--shape-glow:rgba(20,220,255,.3);
+ background-color:#040914!important;color:#eef8ff!important;
+}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) #shade{background:linear-gradient(135deg,rgba(2,8,18,.64),rgba(8,4,23,.82))!important}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignHero,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignForm,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignTotal,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignDaily,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignMetrics .metricCard,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignAdvance,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .laborLaunch{
+ position:relative!important;isolation:isolate;overflow:hidden!important;color:#f4faff!important;
+ background:linear-gradient(145deg,rgba(8,19,36,.98),rgba(5,7,18,.98) 68%,rgba(19,9,35,.96))!important;
+ border:1px solid color-mix(in srgb,var(--shape-accent) 78%,transparent)!important;
+ box-shadow:0 0 0 2px #03050b,0 0 0 4px color-mix(in srgb,var(--shape-secondary) 30%,transparent),0 12px 28px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.12)!important;
+}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignHero::before,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignForm::before,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignTotal::before,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignDaily::before,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignMetrics .metricCard::before,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignAdvance::before,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .laborLaunch::before{
+ content:"";position:absolute;inset:6px;z-index:-1;pointer-events:none;border:1px solid color-mix(in srgb,var(--shape-secondary) 48%,transparent);opacity:.9;
+}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .heroNumber{color:var(--shape-accent)!important;text-shadow:0 0 22px var(--shape-glow)!important}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .sectionTitle h2{color:var(--shape-accent)!important;text-shadow:0 0 12px var(--shape-glow)!important}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .quickQtyBtn,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .neonBtn,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .shareCut,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .topIcon{
+ border:1px solid var(--shape-accent)!important;border-radius:4px!important;background:linear-gradient(135deg,color-mix(in srgb,var(--shape-accent) 17%,#080b18),rgba(4,7,15,.98))!important;box-shadow:0 0 12px var(--shape-glow),inset 0 1px rgba(255,255,255,.14)!important;color:var(--shape-accent)!important
+}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .field,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) input[type="number"]{border-radius:5px!important;border:1px solid color-mix(in srgb,var(--shape-accent) 60%,#34445d)!important;background:rgba(3,8,17,.88)!important;color:#f4faff!important}
+/* 31 — HUD: angular bevels and alternating cyan/purple corners. */
+body.theme-cyberHud{--shape-accent:#20e8ff;--shape-secondary:#9c3dff;--shape-glow:rgba(20,220,255,.34)}
+body.theme-cyberHud .redesignHero{clip-path:polygon(5% 0,90% 0,94% 4%,98% 4%,100% 12%,100% 88%,96% 100%,7% 100%,0 91%,0 13%)!important;border-radius:0!important}
+body.theme-cyberHud .redesignForm{clip-path:polygon(4% 0,96% 0,100% 7%,100% 93%,96% 100%,4% 100%,0 93%,0 7%)!important;border-radius:0!important}
+body.theme-cyberHud .redesignTotal{clip-path:polygon(7% 0,40% 0,44% 5%,56% 5%,60% 0,93% 0,100% 10%,100% 90%,93% 100%,7% 100%,0 90%,0 10%)!important;border-radius:0!important}
+body.theme-cyberHud .redesignMetrics .metricCard:nth-child(odd){clip-path:polygon(0 10%,10% 0,100% 0,100% 90%,90% 100%,0 100%)!important;border-radius:0!important}
+body.theme-cyberHud .redesignMetrics .metricCard:nth-child(even){clip-path:polygon(0 0,90% 0,100% 10%,100% 100%,10% 100%,0 90%)!important;border-radius:0!important}
+body.theme-cyberHud .laborLaunch{clip-path:polygon(3% 0,95% 0,100% 18%,100% 82%,95% 100%,3% 100%,0 82%,0 18%)!important;border-radius:0!important}
+/* 32 — Mecha: armored chassis, red blades, dark metal inset. */
+body.theme-mechaRed{--shape-accent:#ff3045;--shape-secondary:#aeb8c8;--shape-glow:rgba(255,38,55,.3);background-color:#070a10!important}
+body.theme-mechaRed .redesignHero{clip-path:polygon(9% 0,35% 0,38% 3%,62% 3%,65% 0,91% 0,100% 11%,100% 88%,94% 100%,6% 100%,0 88%,0 12%)!important;border-radius:0!important;background:linear-gradient(145deg,#252b35,#080a0f 32%,#151922 70%,#05070c)!important;border-color:#9aa6b7!important}
+body.theme-mechaRed .redesignForm{clip-path:polygon(8% 0,30% 0,34% 3%,66% 3%,70% 0,92% 0,100% 8%,100% 92%,92% 100%,8% 100%,0 92%,0 8%)!important;border-radius:0!important;background:linear-gradient(145deg,#202630,#080a0e 40%,#151a22)!important;border-color:#8995a6!important}
+body.theme-mechaRed .redesignTotal{clip-path:polygon(4% 0,96% 0,100% 9%,100% 91%,96% 100%,4% 100%,0 91%,0 9%)!important;border-radius:0!important;background:linear-gradient(120deg,#090d14,#202631 48%,#080a10)!important;border-color:#aab5c4!important}
+body.theme-mechaRed .redesignHero::after,body.theme-mechaRed .redesignForm::after{content:"";position:absolute;top:7px;left:14%;right:14%;height:5px;background:linear-gradient(90deg,transparent 0 8%,#ff3045 8% 25%,transparent 25% 75%,#ff3045 75% 92%,transparent 92%);pointer-events:none;z-index:2}
+body.theme-mechaRed .redesignMetrics .metricCard{border-radius:3px!important;background:linear-gradient(145deg,#252a33,#0a0c11)!important;border-left:4px solid #ff3045!important;border-right:1px solid #5d6572!important}
+body.theme-mechaRed .quickQtyBtn:nth-child(odd){clip-path:polygon(12% 0,100% 0,100% 82%,88% 100%,0 100%,0 18%)!important}
+body.theme-mechaRed .quickQtyBtn:nth-child(even){clip-path:polygon(0 0,88% 0,100% 18%,100% 100%,12% 100%,0 82%)!important}
+body.theme-mechaRed .neonBtn{background:linear-gradient(135deg,#f3293e,#7c0718)!important;color:white!important;border:1px solid #ff6674!important;box-shadow:inset 0 1px #ff9ba4,0 0 15px rgba(255,20,40,.3)!important}
+/* 33 — Stream: offset ears, long tabs, layered neon rails. */
+body.theme-neonStream{--shape-accent:#c54bff;--shape-secondary:#39f4ff;--shape-glow:rgba(192,50,255,.32);background-color:#0b0518!important}
+body.theme-neonStream .redesignHero,body.theme-neonStream .redesignTotal{clip-path:polygon(0 8%,4% 8%,4% 3%,12% 3%,16% 0,84% 0,88% 3%,96% 3%,96% 8%,100% 8%,100% 92%,96% 92%,96% 97%,88% 97%,84% 100%,16% 100%,12% 97%,4% 97%,4% 92%,0 92%)!important;border-radius:0!important}
+body.theme-neonStream .redesignForm{clip-path:polygon(0 7%,5% 7%,5% 0,95% 0,95% 7%,100% 7%,100% 93%,95% 93%,95% 100%,5% 100%,5% 93%,0 93%)!important;border-radius:0!important}
+body.theme-neonStream .redesignDaily{clip-path:polygon(0 0,94% 0,100% 12%,100% 100%,6% 100%,0 88%)!important;border-radius:0!important}
+body.theme-neonStream .redesignMetrics .metricCard:first-child{clip-path:polygon(0 0,90% 0,100% 14%,100% 100%,0 100%)!important;border-radius:0!important}
+body.theme-neonStream .redesignMetrics .metricCard:last-child{clip-path:polygon(0 14%,10% 0,100% 0,100% 100%,0 100%)!important;border-radius:0!important}
+body.theme-neonStream .redesignHero::after,body.theme-neonStream .redesignTotal::after{content:"";position:absolute;top:0;right:10%;width:24%;height:7px;background:repeating-linear-gradient(110deg,var(--shape-accent) 0 5px,transparent 5px 10px);box-shadow:0 0 12px var(--shape-glow);pointer-events:none}
+body.theme-neonStream .laborLaunch{border-radius:24px 5px 24px 5px!important;box-shadow:0 0 0 2px #070511,0 0 0 4px var(--shape-accent),0 0 20px var(--shape-glow)!important}
+/* 34 — Crystal Tech: faceted glass, asymmetrical cuts, luminous cyan edges. */
+body.theme-crystalTech{--shape-accent:#65f6ff;--shape-secondary:#7c8dff;--shape-glow:rgba(70,220,255,.3);background-color:#06121e!important}
+body.theme-crystalTech .redesignHero{clip-path:polygon(6% 0,89% 0,100% 11%,100% 83%,91% 100%,9% 100%,0 87%,0 13%)!important;border-radius:0!important;background:linear-gradient(135deg,rgba(15,67,90,.88),rgba(7,14,31,.98) 55%,rgba(37,25,76,.88))!important;backdrop-filter:blur(12px)}
+body.theme-crystalTech .redesignForm{clip-path:polygon(0 5%,5% 0,95% 0,100% 5%,100% 95%,95% 100%,5% 100%,0 95%)!important;border-radius:0!important;background:linear-gradient(145deg,rgba(12,46,65,.91),rgba(7,13,29,.97))!important}
+body.theme-crystalTech .redesignTotal{clip-path:polygon(8% 0,92% 0,100% 14%,100% 86%,92% 100%,8% 100%,0 86%,0 14%)!important;border-radius:0!important;background:linear-gradient(115deg,rgba(12,58,74,.9),rgba(8,17,37,.97),rgba(42,28,79,.85))!important}
+body.theme-crystalTech .redesignMetrics .metricCard{clip-path:polygon(0 9%,9% 0,91% 0,100% 9%,100% 91%,91% 100%,9% 100%,0 91%)!important;border-radius:0!important;background:linear-gradient(145deg,rgba(28,83,109,.64),rgba(9,17,39,.92))!important;border-color:rgba(101,246,255,.6)!important}
+body.theme-crystalTech .redesignAdvance{clip-path:polygon(3% 0,97% 0,100% 50%,97% 100%,3% 100%,0 50%)!important;border-radius:0!important}
+body.theme-crystalTech .quickQtyBtn{clip-path:polygon(10% 0,90% 0,100% 50%,90% 100%,10% 100%,0 50%)!important;border-radius:0!important}
+/* The theme previews echo each frame silhouette in Settings. */
+.themeOption[data-theme="cyberHud"] .themePreview{clip-path:polygon(12% 0,86% 0,100% 22%,100% 78%,88% 100%,0 100%,0 20%);background:linear-gradient(135deg,#07172a,#30105c);border-color:#20e8ff}
+.themeOption[data-theme="mechaRed"] .themePreview{clip-path:polygon(12% 0,38% 0,43% 8%,57% 8%,62% 0,88% 0,100% 18%,100% 82%,88% 100%,12% 100%,0 82%,0 18%);background:linear-gradient(135deg,#303640,#080a0f);border-color:#ff3045}
+.themeOption[data-theme="neonStream"] .themePreview{clip-path:polygon(0 18%,8% 18%,8% 0,92% 0,92% 18%,100% 18%,100% 82%,92% 82%,92% 100%,8% 100%,8% 82%,0 82%);background:linear-gradient(135deg,#1a082b,#070815);border-color:#c54bff}
+.themeOption[data-theme="crystalTech"] .themePreview{clip-path:polygon(15% 0,85% 0,100% 30%,100% 70%,85% 100%,15% 100%,0 70%,0 30%);background:linear-gradient(135deg,#0e526a,#17133b);border-color:#65f6ff}
+@media(max-width:520px){
+ body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignHero{min-height:210px!important}
+ body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignMetrics .metricCard{min-height:118px!important}
+}
+@media(prefers-reduced-motion:no-preference){body:is(.theme-cyberHud,.theme-neonStream) .redesignHero{animation:shapeHudIn .38s ease-out both}@keyframes shapeHudIn{from{opacity:.75;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}}

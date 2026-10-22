@@ -1,4 +1,4 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest?v=1.41.0"><link rel="icon" type="image/png" sizes="32x32" href="./icon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=1.41.0"><title>Corte de Paquetes</title></head><body>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest?v=1.42.0"><link rel="icon" type="image/png" sizes="32x32" href="./icon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=1.42.0"><title>Corte de Paquetes</title></head><body>
 <div id="backdrop"></div><div id="shade"></div><main>
 <header class="topbar">
   <div class="brand">
@@ -141,6 +141,10 @@
     <button type="button" class="themeOption" data-theme="overlayCyberWave" role="radio" aria-checked="false"><span class="themePreview themePreviewCyber"><i></i><b></b><em></em></span><span><strong>28 · Overlay Cyber Wave</strong><small>Esquinas dobles · cian/magenta</small></span><span class="themeCheck">✓</span></button>
     <button type="button" class="themeOption" data-theme="overlayInferno" role="radio" aria-checked="false"><span class="themePreview themePreviewAngular"><i></i><b></b><em></em></span><span><strong>29 · Overlay Inferno</strong><small>Facetas agresivas · naranja y fucsia</small></span><span class="themeCheck">✓</span></button>
     <button type="button" class="themeOption" data-theme="overlayFrame" role="radio" aria-checked="false"><span class="themePreview themePreviewGlass"><i></i><b></b><em></em></span><span><strong>30 · Overlay Frame Pro</strong><small>Marcos anchos · relieve de doble capa</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="cyberHud" role="radio" aria-checked="false"><span class="themePreview themePreviewCyberHud"><i></i><b></b><em></em></span><span><strong>31 · Cyber HUD Neon</strong><small>Paneles tácticos · cyan y violeta</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="mechaRed" role="radio" aria-checked="false"><span class="themePreview themePreviewMecha"><i></i><b></b><em></em></span><span><strong>32 · Mecha Red Armor</strong><small>Blindaje mecánico · cortes rojo y negro</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="neonStream" role="radio" aria-checked="false"><span class="themePreview themePreviewStream"><i></i><b></b><em></em></span><span><strong>33 · Neon Stream</strong><small>Marcos extendidos · orejas y pestañas</small></span><span class="themeCheck">✓</span></button>
+    <button type="button" class="themeOption" data-theme="crystalTech" role="radio" aria-checked="false"><span class="themePreview themePreviewCrystalTech"><i></i><b></b><em></em></span><span><strong>34 · Crystal Tech</strong><small>Cristal facetado · bordes geométricos</small></span><span class="themeCheck">✓</span></button>
   </div>
 </div>
 <div class="accentSettings">
@@ -182,7 +186,7 @@
     </div>
   </div>
 </div>
-<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.41.0"></script><script>
+<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.42.0"></script><script>
 window.openDashboard=function(){
   var p=document.getElementById("dashboardPanel");
   if(!p)return;
@@ -281,5 +285,5 @@ window.openDashboard=function(){
   <p class="laborPrivacy">🔐 Las evidencias se guardan localmente en este dispositivo. Exporta respaldos y evita borrar los datos del navegador.</p>
  </div>
 </div>
-<script src="./labor.js?v=1.41.0"></script>
+<script src="./labor.js?v=1.42.0"></script>
 </body></html>
