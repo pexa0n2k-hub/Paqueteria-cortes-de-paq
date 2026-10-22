@@ -131,7 +131,12 @@ const THEMES={
   hexPro:{label:"13 · Hexagonal Pro"}, layered:{label:"14 · Cristal en Capas"},
   mapPro:{label:"15 · Mapa Protagonista X"}, carouselPro:{label:"16 · Carrusel Expandible"},
   timelinePro:{label:"17 · Timeline Operativo"}, organic:{label:"18 · Orgánico Líquido"},
-  editorial:{label:"19 · Editorial"}, industrial:{label:"20 · Industrial"}
+  editorial:{label:"19 · Editorial"}, industrial:{label:"20 · Industrial"},
+  overlayRose:{label:"21 · Overlay Neon Rose"}, overlayViolet:{label:"22 · Overlay Violet Cyan"},
+  overlayMagenta:{label:"23 · Overlay Magenta"}, overlayMinimal:{label:"24 · Overlay Minimal Pink"},
+  overlayRed:{label:"25 · Overlay Tactical Red"}, overlaySilver:{label:"26 · Overlay Silver"},
+  overlayPurpleWhite:{label:"27 · Overlay Purple White"}, overlayCyberWave:{label:"28 · Overlay Cyber Wave"},
+  overlayInferno:{label:"29 · Overlay Inferno"}, overlayFrame:{label:"30 · Overlay Frame Pro"}
 };
 function normalizeTheme(value){return THEMES[value]?value:"glass";}
 function getTheme(){
@@ -676,7 +681,8 @@ function rr(ctx,x,y,w,h,r){const q=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveT
 function dg(ctx,x,y,w,h,r=28){
   const shareTheme=getTheme();
   const shareAccent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#72f4ff";
-  const shareBorder=(shareTheme==="cyberpunk"||shareTheme==="angular"||shareTheme==="industrial")?"rgba(255,49,93,.82)":shareTheme==="luxury"?"rgba(215,166,58,.62)":shareTheme==="editorial"||shareTheme==="timelinePro"?"rgba(25,99,232,.58)":shareTheme==="matte"?"rgba(25,55,100,.24)":shareTheme==="hex"||shareTheme==="hexPro"?"rgba(67,234,255,.88)":shareTheme==="game"?"rgba(255,177,59,.82)":shareTheme==="timeline"?"rgba(18,99,232,.55)":"rgba(255,255,255,.58)";
+  const overlayBorderThemes=["overlayRose","overlayViolet","overlayMagenta","overlayMinimal","overlayRed","overlaySilver","overlayPurpleWhite","overlayCyberWave","overlayInferno","overlayFrame"];
+  const shareBorder=overlayBorderThemes.includes(shareTheme)?({overlayRose:"rgba(255,54,183,.85)",overlayViolet:"rgba(187,85,255,.85)",overlayMagenta:"rgba(255,54,206,.85)",overlayMinimal:"rgba(255,112,201,.85)",overlayRed:"rgba(255,52,75,.85)",overlaySilver:"rgba(196,204,216,.75)",overlayPurpleWhite:"rgba(142,44,255,.85)",overlayCyberWave:"rgba(32,223,255,.85)",overlayInferno:"rgba(255,139,39,.85)",overlayFrame:"rgba(255,69,181,.85)"})[shareTheme]:(shareTheme==="cyberpunk"||shareTheme==="angular"||shareTheme==="industrial")?"rgba(255,49,93,.82)":shareTheme==="luxury"?"rgba(215,166,58,.62)":shareTheme==="editorial"||shareTheme==="timelinePro"?"rgba(25,99,232,.58)":shareTheme==="matte"?"rgba(25,55,100,.24)":shareTheme==="hex"||shareTheme==="hexPro"?"rgba(67,234,255,.88)":shareTheme==="game"?"rgba(255,177,59,.82)":shareTheme==="timeline"?"rgba(18,99,232,.55)":"rgba(255,255,255,.58)";
   const angularThemes=["angular","hex","hexPro","industrial"];
   // IMPORTANTE: el blur se aplica únicamente al fondo capturado ANTES de
   // dibujar los cajones. Nunca hacemos drawImage() del canvas sobre sí mismo.

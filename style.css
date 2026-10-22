@@ -1611,7 +1611,7 @@ body.theme-hex .panel,body.theme-hex .dashboardV27,body.theme-hex .laborPanel{bo
 body.theme-game .panel,body.theme-game .dashboardV27,body.theme-game .laborPanel{border-radius:22px!important;border-bottom:5px solid #ffb13b!important}
 
 
-/* ===== v1.40.4 Radical Theme Systems: distinct geometry + composition ===== */
+/* ===== v1.41.0 Radical Theme Systems: distinct geometry + composition ===== */
 :root{--radical-radius:24px;--radical-card-bg:rgba(255,255,255,.10);--radical-card-border:rgba(255,255,255,.35);--radical-shadow:0 16px 42px rgba(0,0,0,.24)}
 body[class*="theme-"] .themeOption{transition:transform .22s ease,background .22s ease,border-color .22s ease}
 body[class*="theme-"] .themeOption:active{transform:scale(.985)}
@@ -1696,7 +1696,7 @@ body.theme-industrial .metricIcon,body.theme-industrial .softIcon{border-radius:
 @media(prefers-reduced-motion:reduce){body.theme-layered *,body.theme-carouselPro *,body.theme-organic *{animation:none!important;transition:none!important}}
 
 
-/* v1.40.4: actual per-theme dashboard composition overrides */
+/* v1.41.0: actual per-theme dashboard composition overrides */
 body.theme-sidebarCrystal main>.topbar{order:0!important}
 body.theme-sidebarCrystal main>.laborLaunch{order:2!important}
 body.theme-sidebarCrystal main>.heroMain{order:1!important}
@@ -1761,3 +1761,63 @@ body.theme-industrial main>.redesignAdvance{order:6!important}
 .themeOption[data-theme="organic"] .themePreview{border-radius:48% 25% 45% 22%;background:linear-gradient(135deg,#0b887f,#7a5ed6)}
 .themeOption[data-theme="editorial"] .themePreview{border-radius:4px;background:linear-gradient(135deg,#fff,#c9dcff);border-color:#9db7dd}
 .themeOption[data-theme="industrial"] .themePreview{border-radius:3px;background:linear-gradient(135deg,#151b21,#573719);border:2px solid #ff9f43}
+
+
+/* v1.41.0 — Overlay Frame Themes. Preserve every previous theme; each new theme has its own frame silhouette. */
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame){
+ --ov-accent:#ff4bbd; --ov-secondary:#ff9cce; --ov-glow:rgba(255,50,180,.28); --ov-bg:#10091e;
+ background-color:var(--ov-bg)!important;
+}
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) #shade{background:linear-gradient(135deg,rgba(10,5,22,.78),rgba(11,7,25,.91))!important}
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .cube,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .sectionTitle h2{color:var(--ov-accent)!important;text-shadow:0 0 12px var(--ov-glow)}
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignHero,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignTotal,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignForm,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignDaily,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignMetrics .metricCard,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignAdvance,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .laborLaunch{
+ position:relative!important;isolation:isolate;overflow:hidden!important;color:#fff!important;
+ background:linear-gradient(145deg,rgba(24,12,38,.98),rgba(7,7,18,.97))!important;
+ border:1px solid color-mix(in srgb,var(--ov-accent) 75%,transparent)!important;
+ box-shadow:0 0 0 2px rgba(0,0,0,.7),0 0 0 4px color-mix(in srgb,var(--ov-accent) 25%,transparent),0 12px 28px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.15),inset 0 -4px 0 rgba(0,0,0,.22)!important;
+}
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignHero::before,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignTotal::before,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignForm::before,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignDaily::before,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignMetrics .metricCard::before,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignAdvance::before,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .laborLaunch::before{
+ content:"";position:absolute;inset:5px;z-index:-1;pointer-events:none;border:1px solid color-mix(in srgb,var(--ov-secondary) 45%,transparent);opacity:.8;
+}
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignHero .eyebrow,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignTotal small{color:var(--ov-secondary)!important;letter-spacing:.18em!important}
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .quickQtyBtn,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .neonBtn,
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .shareCut{border:1px solid var(--ov-accent)!important;border-radius:7px!important;background:linear-gradient(135deg,color-mix(in srgb,var(--ov-accent) 23%,#090914),rgba(8,7,17,.96))!important;box-shadow:0 0 15px var(--ov-glow),inset 0 1px rgba(255,255,255,.14)!important}
+/* Individual frame profiles: not just palette swaps */
+body.theme-overlayRose{--ov-accent:#ff36b7;--ov-secondary:#ffb0df;--ov-glow:rgba(255,35,185,.32);--ov-bg:#180c2d}
+body.theme-overlayRose .redesignHero,body.theme-overlayRose .redesignTotal{clip-path:polygon(3% 0,93% 0,97% 5%,100% 5%,100% 94%,96% 100%,4% 100%,0 94%,0 7%)!important;border-radius:0!important}
+body.theme-overlayViolet{--ov-accent:#bb55ff;--ov-secondary:#63f5ff;--ov-glow:rgba(168,65,255,.35);--ov-bg:#100a29}
+body.theme-overlayViolet .redesignHero,body.theme-overlayViolet .redesignTotal,body.theme-overlayViolet .redesignForm{clip-path:polygon(5% 0,95% 0,100% 12%,100% 88%,95% 100%,5% 100%,0 88%,0 12%)!important;border-radius:0!important}
+body.theme-overlayMagenta{--ov-accent:#ff36ce;--ov-secondary:#ff9cdd;--ov-glow:rgba(255,25,205,.32);--ov-bg:#160821}
+body.theme-overlayMagenta .redesignHero,body.theme-overlayMagenta .redesignTotal{clip-path:polygon(0 7%,7% 7%,10% 0,90% 0,93% 7%,100% 7%,100% 93%,90% 93%,87% 100%,13% 100%,10% 93%,0 93%)!important;border-radius:0!important}
+body.theme-overlayMinimal{--ov-accent:#ff70c9;--ov-secondary:#fff;--ov-glow:rgba(255,75,190,.18);--ov-bg:#09070d}
+body.theme-overlayMinimal .redesignHero,body.theme-overlayMinimal .redesignTotal,body.theme-overlayMinimal .redesignForm{clip-path:polygon(4% 0,96% 0,100% 8%,100% 92%,96% 100%,4% 100%,0 92%,0 8%)!important;border-radius:0!important;box-shadow:0 0 0 1px #fff,0 0 0 3px var(--ov-accent),0 12px 25px #000!important}
+body.theme-overlayRed{--ov-accent:#ff344b;--ov-secondary:#f0f3f8;--ov-glow:rgba(255,35,55,.22);--ov-bg:#080c16}
+body.theme-overlayRed .redesignHero,body.theme-overlayRed .redesignTotal,body.theme-overlayRed .redesignForm{clip-path:polygon(2% 0,98% 0,100% 5%,100% 95%,98% 100%,2% 100%,0 95%,0 5%)!important;border-radius:2px!important}
+body.theme-overlaySilver{--ov-accent:#c4ccd8;--ov-secondary:#fff;--ov-glow:rgba(190,205,225,.18);--ov-bg:#090b10}
+body.theme-overlaySilver .redesignHero,body.theme-overlaySilver .redesignTotal,body.theme-overlaySilver .redesignForm{background:linear-gradient(145deg,#252932,#08090d 55%,#191d25)!important;border-color:#aeb7c5!important;border-radius:3px!important;box-shadow:inset 0 2px 0 #dce1e8,inset 0 -3px 0 #363b44,0 14px 28px #000!important}
+body.theme-overlayPurpleWhite{--ov-accent:#8e2cff;--ov-secondary:#ff6ce5;--ov-glow:rgba(125,35,255,.32);--ov-bg:#15082d}
+body.theme-overlayPurpleWhite .redesignHero,body.theme-overlayPurpleWhite .redesignTotal{clip-path:polygon(7% 0,93% 0,100% 12%,100% 82%,93% 100%,7% 100%,0 82%,0 12%)!important;border-radius:0!important}
+body.theme-overlayCyberWave{--ov-accent:#20dfff;--ov-secondary:#ff36d7;--ov-glow:rgba(25,210,255,.27);--ov-bg:#0c0822}
+body.theme-overlayCyberWave .redesignHero,body.theme-overlayCyberWave .redesignTotal,body.theme-overlayCyberWave .redesignForm{clip-path:polygon(0 8%,5% 8%,5% 0,95% 0,95% 8%,100% 8%,100% 92%,95% 92%,95% 100%,5% 100%,5% 92%,0 92%)!important;border-radius:0!important}
+body.theme-overlayInferno{--ov-accent:#ff8b27;--ov-secondary:#ff36a8;--ov-glow:rgba(255,110,25,.3);--ov-bg:#1b082b}
+body.theme-overlayInferno .redesignHero,body.theme-overlayInferno .redesignTotal,body.theme-overlayInferno .redesignForm{clip-path:polygon(8% 0,100% 0,100% 85%,92% 100%,0 100%,0 15%)!important;border-radius:0!important}
+body.theme-overlayFrame{--ov-accent:#ff45b5;--ov-secondary:#ffc3e7;--ov-glow:rgba(255,55,180,.28);--ov-bg:#110a21}
+body.theme-overlayFrame .redesignHero,body.theme-overlayFrame .redesignTotal,body.theme-overlayFrame .redesignForm,body.theme-overlayFrame .redesignDaily{clip-path:polygon(4% 0,96% 0,100% 8%,100% 92%,96% 100%,4% 100%,0 92%,0 8%)!important;border-radius:0!important;box-shadow:0 0 0 2px #090610,0 0 0 4px var(--ov-accent),inset 0 0 0 5px rgba(255,255,255,.035),0 12px 30px #000!important}
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignMetrics .metricCard{min-height:122px!important}
+body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .metricIcon{border-radius:5px!important;border:1px solid var(--ov-accent)!important;background:rgba(0,0,0,.35)!important}
+@media(max-width:520px){body:is(.theme-overlayRose,.theme-overlayViolet,.theme-overlayMagenta,.theme-overlayMinimal,.theme-overlayRed,.theme-overlaySilver,.theme-overlayPurpleWhite,.theme-overlayCyberWave,.theme-overlayInferno,.theme-overlayFrame) .redesignHero{min-height:205px!important}}
