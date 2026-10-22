@@ -1977,3 +1977,56 @@ body.theme-crystalTech .redesignDaily{clip-path:polygon(0 12%,12% 0,88% 0,100% 1
 body.theme-crystalTech .redesignMetrics .metricCard{clip-path:polygon(0 18%,18% 0,100% 0,100% 82%,82% 100%,0 100%)!important}
 body.theme-crystalTech .redesignMetrics .metricCard:nth-child(even){clip-path:polygon(0 0,82% 0,100% 18%,100% 100%,18% 100%,0 82%)!important}
 body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignHero,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignForm,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignTotal,body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignDaily{overflow:hidden!important;border-radius:0!important}
+
+/* v1.42.3 — geometría integral: también controles, mini tarjetas e indicadores */
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignForm,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignHero,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignTotal,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignDaily,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignMetrics .metricCard{position:relative;isolation:isolate}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .formTitle{position:relative;padding:9px 12px;margin:-2px 0 15px;border-radius:0!important}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .heroRate{border-radius:0!important;position:relative}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .packageIcon,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .metricIcon{border-radius:0!important}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .entry input,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .field{border-radius:0!important}
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignAdvance,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .redesignReset,
+body:is(.theme-cyberHud,.theme-mechaRed,.theme-neonStream,.theme-crystalTech) .sectionTitle .neonCircle{border-radius:0!important}
+
+/* Cyber HUD: tech brackets and offset header tabs */
+body.theme-cyberHud .formTitle{background:linear-gradient(100deg,rgba(17,220,255,.15),rgba(105,58,255,.08));border-left:4px solid #25eaff;border-bottom:1px solid #7b5cff;clip-path:polygon(0 0,88% 0,100% 100%,0 100%)}
+body.theme-cyberHud .heroRate{clip-path:polygon(0 0,88% 0,100% 22%,100% 100%,12% 100%,0 78%);border:1px solid #29eaff;background:linear-gradient(135deg,rgba(12,72,100,.6),rgba(7,10,28,.9))}
+body.theme-cyberHud .packageIcon,body.theme-cyberHud .metricIcon{clip-path:polygon(18% 0,82% 0,100% 18%,100% 82%,82% 100%,18% 100%,0 82%,0 18%);background:linear-gradient(145deg,#103a55,#171033)!important}
+body.theme-cyberHud .entry input,body.theme-cyberHud .field{border:1px solid #28eaff!important;box-shadow:inset 4px 0 rgba(40,234,255,.45)!important;background:linear-gradient(90deg,rgba(15,67,89,.5),rgba(4,8,20,.9))!important}
+body.theme-cyberHud .redesignAdvance{clip-path:polygon(0 0,91% 0,100% 50%,91% 100%,0 100%,5% 50%)!important;border:1px solid #8b62ff!important}
+body.theme-cyberHud .sectionTitle h2{border-left:4px solid #28eaff;padding-left:10px;text-shadow:0 0 12px #28eaff55}
+body.theme-cyberHud .dailyItem{border-radius:0!important;clip-path:polygon(0 0,96% 0,100% 18%,100% 100%,4% 100%,0 82%)!important}
+
+/* Mecha Red: heavy armor plates, chamfered input wells and red warning tabs */
+body.theme-mechaRed .formTitle{background:linear-gradient(90deg,#3b1018,#101117 72%);border-top:3px solid #ff3045;border-bottom:3px solid #5c111e;clip-path:polygon(0 0,78% 0,84% 22%,100% 22%,100% 100%,0 100%)}
+body.theme-mechaRed .heroRate{clip-path:polygon(0 0,82% 0,100% 18%,100% 100%,12% 100%,0 82%);background:linear-gradient(135deg,#272a31,#08090e)!important;border-left:5px solid #ff3045!important}
+body.theme-mechaRed .packageIcon,body.theme-mechaRed .metricIcon{clip-path:polygon(0 12%,18% 0,82% 0,100% 18%,100% 88%,88% 100%,12% 100%,0 82%);background:linear-gradient(145deg,#414650,#111217)!important;box-shadow:inset 0 0 0 2px #ff3045!important}
+body.theme-mechaRed .entry input,body.theme-mechaRed .field{border:1px solid #ff3045!important;box-shadow:inset 6px 0 #4b101a!important;background:linear-gradient(90deg,#241015,#090a0f)!important}
+body.theme-mechaRed .redesignAdvance{clip-path:polygon(0 0,94% 0,100% 16%,96% 50%,100% 84%,94% 100%,0 100%,4% 50%)!important;border-left:5px solid #ff3045!important;background:linear-gradient(90deg,#39101a,#101116)!important}
+body.theme-mechaRed .sectionTitle{border-bottom:2px solid #ff3045;padding-bottom:8px}
+body.theme-mechaRed .sectionTitle h2:before{content:"";display:inline-block;width:15px;height:10px;margin-right:8px;background:#ff3045;transform:skewX(-28deg)}
+body.theme-mechaRed .dailyItem{border-radius:0!important;border-left:5px solid #ff3045!important;background:linear-gradient(90deg,#271015,#101116)!important;clip-path:polygon(0 0,96% 0,100% 18%,100% 100%,0 100%)!important}
+
+/* Neon Stream: protruding ears, ribbon headings and staggered capsules */
+body.theme-neonStream .formTitle{background:linear-gradient(90deg,rgba(197,75,255,.25),rgba(57,244,255,.08));border-top:2px solid #c54bff;border-bottom:2px solid #39f4ff;clip-path:polygon(0 0,18% 0,22% 14%,78% 14%,82% 0,100% 0,100% 100%,0 100%)}
+body.theme-neonStream .heroRate{clip-path:polygon(8% 0,92% 0,100% 20%,100% 80%,92% 100%,8% 100%,0 80%,0 20%);border:1px solid #c54bff!important;background:linear-gradient(120deg,rgba(83,23,113,.45),rgba(5,9,24,.88))!important}
+body.theme-neonStream .packageIcon,body.theme-neonStream .metricIcon{clip-path:polygon(0 18%,14% 18%,14% 0,86% 0,86% 18%,100% 18%,100% 82%,86% 82%,86% 100%,14% 100%,14% 82%,0 82%);background:linear-gradient(135deg,#351247,#091a2b)!important}
+body.theme-neonStream .entry input,body.theme-neonStream .field{border:1px solid #c54bff!important;box-shadow:inset 0 -3px #39f4ff!important;background:linear-gradient(145deg,rgba(58,20,79,.55),rgba(6,8,21,.95))!important}
+body.theme-neonStream .redesignAdvance{clip-path:polygon(0 16%,8% 16%,8% 0,92% 0,92% 16%,100% 16%,100% 84%,92% 84%,92% 100%,8% 100%,8% 84%,0 84%)!important;border-top:2px solid #c54bff!important;border-bottom:2px solid #39f4ff!important}
+body.theme-neonStream .sectionTitle h2{display:inline-block;padding:5px 18px;background:linear-gradient(90deg,#37134b,#0a1d2d);clip-path:polygon(0 0,90% 0,100% 50%,90% 100%,0 100%,6% 50%)}
+body.theme-neonStream .dailyItem{border-radius:0!important;clip-path:polygon(0 0,88% 0,100% 14%,100% 100%,12% 100%,0 86%)!important;border-top:1px solid #c54bff!important;border-bottom:1px solid #39f4ff!important}
+
+/* Crystal Tech: diamond corners and faceted crystal inset details */
+body.theme-crystalTech .formTitle{background:linear-gradient(110deg,rgba(38,200,222,.18),rgba(112,104,255,.14));border:1px solid #65f6ff;clip-path:polygon(0 0,92% 0,100% 50%,92% 100%,0 100%,5% 50%)}
+body.theme-crystalTech .heroRate{clip-path:polygon(12% 0,88% 0,100% 50%,88% 100%,12% 100%,0 50%);border:1px solid #65f6ff!important;background:linear-gradient(120deg,rgba(17,85,103,.55),rgba(25,22,67,.78))!important}
+body.theme-crystalTech .packageIcon,body.theme-crystalTech .metricIcon{clip-path:polygon(50% 0,100% 28%,88% 82%,50% 100%,12% 82%,0 28%);background:linear-gradient(145deg,#14556a,#20204e)!important}
+body.theme-crystalTech .entry input,body.theme-crystalTech .field{border:1px solid #65f6ff!important;clip-path:polygon(0 0,96% 0,100% 22%,100% 100%,4% 100%,0 78%);background:linear-gradient(110deg,rgba(16,69,86,.55),rgba(9,12,33,.94))!important}
+body.theme-crystalTech .redesignAdvance{clip-path:polygon(7% 0,93% 0,100% 50%,93% 100%,7% 100%,0 50%)!important;border:1px solid #65f6ff!important;background:linear-gradient(110deg,rgba(17,85,103,.65),rgba(28,25,70,.8))!important}
+body.theme-crystalTech .sectionTitle h2{border-bottom:2px solid #65f6ff;padding:0 14px 7px;clip-path:polygon(0 0,100% 0,94% 100%,6% 100%)}
+body.theme-crystalTech .dailyItem{border-radius:0!important;clip-path:polygon(5% 0,95% 0,100% 50%,95% 100%,5% 100%,0 50%)!important;border:1px solid rgba(101,246,255,.6)!important}
