@@ -2030,3 +2030,16 @@ body.theme-crystalTech .entry input,body.theme-crystalTech .field{border:1px sol
 body.theme-crystalTech .redesignAdvance{clip-path:polygon(7% 0,93% 0,100% 50%,93% 100%,7% 100%,0 50%)!important;border:1px solid #65f6ff!important;background:linear-gradient(110deg,rgba(17,85,103,.65),rgba(28,25,70,.8))!important}
 body.theme-crystalTech .sectionTitle h2{border-bottom:2px solid #65f6ff;padding:0 14px 7px;clip-path:polygon(0 0,100% 0,94% 100%,6% 100%)}
 body.theme-crystalTech .dailyItem{border-radius:0!important;clip-path:polygon(5% 0,95% 0,100% 50%,95% 100%,5% 100%,0 50%)!important;border:1px solid rgba(101,246,255,.6)!important}
+
+
+/* ===== v1.42.4 · Avatar de perfil personalizable sin perder acceso a cortes ===== */
+.profileMenuWrap{position:relative;flex:0 0 auto;width:62px;height:62px;display:grid;place-items:center;margin-right:1px}
+.brandMark.profileAvatar{width:58px;height:58px;min-width:58px;padding:0;overflow:hidden;border-radius:50%!important;position:relative;display:grid;place-items:center;border:2px solid rgba(116,238,255,.7);background:linear-gradient(145deg,rgba(255,255,255,.24),rgba(13,24,48,.76));box-shadow:0 0 0 3px rgba(70,221,255,.10),inset 0 1px 3px rgba(255,255,255,.48),0 5px 20px rgba(0,0,0,.35)}
+.brandMark.profileAvatar svg{width:26px;height:26px;flex:0 0 auto}
+.profileAvatar img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.profileAvatarEdit{position:absolute;right:-1px;bottom:-1px;width:23px;height:23px;padding:3px;display:grid;place-items:center;border-radius:50%;z-index:2;color:#06101c;background:linear-gradient(145deg,#a8fbff,#49d7f5);border:2px solid #07101d;box-shadow:0 2px 8px #0008;cursor:pointer}
+.profileAvatarEdit svg{width:100%;height:100%}
+.profileAvatarEdit:active{transform:scale(.92)}
+body.theme-cyberpunk .brandMark.profileAvatar,body.theme-angular .brandMark.profileAvatar,body.theme-mechaRed .brandMark.profileAvatar{border-color:#ff477e;box-shadow:0 0 0 3px rgba(255,55,113,.12),0 0 18px rgba(255,45,105,.2)}
+body.theme-luxury .brandMark.profileAvatar{border-color:rgba(222,190,116,.8)}
+@media(max-width:390px){.profileMenuWrap{width:55px;height:55px}.brandMark.profileAvatar{width:51px;height:51px;min-width:51px}.profileAvatarEdit{width:21px;height:21px}}

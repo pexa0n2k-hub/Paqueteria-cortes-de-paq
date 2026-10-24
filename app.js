@@ -645,6 +645,34 @@ $("historyToggle").onclick=()=>{
   $("historyToggle").textContent=x.classList.contains("open")?"⌃":"⌄";
 };
 $("savedCutsBtn") && $("savedCutsBtn").addEventListener("click",openCutHistory);
+// Perfil personalizable: el avatar conserva la función original de abrir cortes.
+(function initProfileAvatar(){
+  const KEY="corte_paquetes_profile_avatar_v1";
+  const image=$("profileAvatarImage"), fallback=$("profileAvatarFallback"), file=$("profileAvatarFile");
+  const edit=$("editProfileAvatar"), trigger=$("savedCutsBtn");
+  if(!image||!fallback||!file||!edit||!trigger)return;
+  const showImage=src=>{image.src=src;image.hidden=false;fallback.hidden=true;trigger.classList.add("hasProfileImage");};
+  try{const saved=localStorage.getItem(KEY);if(saved)showImage(saved);}catch(e){}
+  edit.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();file.click();});
+  file.addEventListener("change",()=>{
+    const f=file.files&&file.files[0];if(!f)return;
+    if(!f.type.startsWith("image/")){alert("Selecciona una imagen válida.");file.value="";return;}
+    const reader=new FileReader();
+    reader.onload=()=>{
+      const img=new Image();
+      img.onload=()=>{
+        const canvas=document.createElement("canvas"),max=420,scale=Math.min(1,max/Math.max(img.width,img.height));
+        canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));
+        const ctx=canvas.getContext("2d");ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        const data=canvas.toDataURL("image/jpeg",.84);
+        try{localStorage.setItem(KEY,data);showImage(data);}catch(err){alert("No se pudo guardar la foto. Prueba con una imagen más pequeña.");}
+        file.value="";
+      };
+      img.onerror=()=>{alert("No se pudo abrir esa imagen.");file.value="";};img.src=reader.result;
+    };
+    reader.onerror=()=>{alert("No se pudo leer la imagen.");file.value="";};reader.readAsDataURL(f);
+  });
+})();
 $("closeCutHistory").onclick=closeCutHistory;
 
 bindThemes();
@@ -965,7 +993,7 @@ $("shareTop").onclick=()=>shareCut();$("closeShare").onclick=()=>$("sharePanel")
 $("downloadShare").onclick=async()=>{const blob=await renderShareImage();if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="corte-de-paquetes.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./sw.js?v=1.39.0").then(r=>r.update()).catch(()=>{});
+  navigator.serviceWorker.register("./sw.js?v=1.42.4").then(r=>r.update()).catch(()=>{});
 }
 archiveCompletedWeeks();
 render();
