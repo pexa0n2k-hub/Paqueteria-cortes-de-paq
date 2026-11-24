@@ -246,7 +246,7 @@ function snapshotFromCut(cut){
     advances:(cut.advances||[]).map(x=>({date:x.date,amount:Number(x.amount)||0,concept:String(x.concept||"Préstamo")})),
     bg:cut.bg||null,shade:Number(cut.shade??62),
     accentMode:cut.accentMode||"auto",accent:cut.accent||"#72F4FF",
-    savedAt:Date.now(),version:"1.42.5"
+    savedAt:Date.now(),version:"1.42.6"
   };
 }
 function saveWeeklyCut(cut){
@@ -868,7 +868,7 @@ async function loadShareWallpaper(preferred){
 }
 
 async function renderShareImage(cut=null){
-  const d=cut||currentCutData(), canvas=$("shareCanvas"), W=1080, H=1350;
+  const d=cut||currentCutData(), canvas=$("shareCanvas"), W=1080, H=1510;
   const scale=Math.min(3,Math.max(2,devicePixelRatio||2));
   canvas.width=W*scale; canvas.height=H*scale;
   const ctx=canvas.getContext("2d"); ctx.scale(scale,scale);
@@ -986,11 +986,35 @@ async function renderShareImage(cut=null){
   ctx.beginPath();ctx.moveTo(752,817);ctx.lineTo(752,786);ctx.moveTo(752,786);ctx.lineTo(741,797);ctx.moveTo(752,786);ctx.lineTo(763,797);ctx.moveTo(737,801);ctx.lineTo(737,824);ctx.quadraticCurveTo(737,830,743,830);ctx.lineTo(775,830);ctx.quadraticCurveTo(781,830,781,824);ctx.lineTo(781,801);ctx.stroke();ctx.restore();
   text("Compartir corte",798,815,17,"800",cyan);
 
+  // Servicios extra: detalle destacado para que se identifique cada pago y su nota.
+  const serviceRows=(d.serviceEntries||d.services||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));
+  dg(ctx,42,925,996,190,25);
+  text(`SERVICIOS ADICIONALES${serviceRows.length?` · ${serviceRows.length}`:""}`,76,968,18,"900",cyan);
+  text(`TOTAL SERVICIOS  +${money(d.serviceTotal||0)}`,690,968,18,"900",mint);
+  if(serviceRows.length){
+    const shown=serviceRows.slice(0,3);
+    shown.forEach((svc,i)=>{
+      const yy=1007+i*36;
+      const dt=parseDate(svc.date);
+      const dayLabel=dt.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"short"}).toUpperCase();
+      dg(ctx,70,yy-22,940,30,10);
+      text(dayLabel,88,yy,15,"850",white);
+      text(money(svc.amount),790,yy,17,"900",mint);
+      if(svc.note){
+        const note=String(svc.note).length>58?String(svc.note).slice(0,55)+"…":String(svc.note);
+        text(note,310,yy,14,"500",muted);
+      }
+    });
+    if(serviceRows.length>3) text(`Se muestran los 3 primeros · ${serviceRows.length-3} más`,88,1100,13,"600",muted);
+  }else{
+    text("Sin servicios adicionales registrados esta semana",88,1030,17,"500",muted);
+  }
+
   // Resumen diario — siempre 7 días lunes a domingo.
-  dg(ctx,42,932,996,278,25);
-  text("RESUMEN DIARIO",76,977,17,"900",cyan);
+  dg(ctx,42,1130,996,278,25);
+  text("RESUMEN DIARIO",76,1175,17,"900",cyan);
   const labels=["LUN","MAR","MIÉ","JUE","VIE","SÁB","DOM"];
-  const gap=13, cellW=116, cellH=185, x0=72, y0=1002;
+  const gap=13, cellW=116, cellH=185, x0=72, y0=1200;
   for(let i=0;i<7;i++){
     const dt=new Date(d.start);dt.setDate(d.start.getDate()+i);
     const dayData=d.days?.[i];
@@ -1004,13 +1028,13 @@ async function renderShareImage(cut=null){
   }
 
   // Footer.
-  dg(ctx,42,1230,996,75,18);
-  text("▣",76,1276,23,"500","#dce8f5");
-  text("Corte semanal: lunes a domingo",112,1273,16,"600",white);
-  text("◷",645,1276,22,"500","#dce8f5");
+  dg(ctx,42,1428,996,75,18);
+  text("▣",76,1474,23,"500","#dce8f5");
+  text("Corte semanal: lunes a domingo",112,1471,16,"600",white);
+  text("◷",645,1474,22,"500","#dce8f5");
   const now=new Date();
-  text(`Generado: ${now.toLocaleDateString("es-MX",{day:"numeric",month:"long"})}, ${now.toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit"})}`,680,1273,14,"500",white);
-  text(`Corte de Paquetes • ${themeLabel}`,55,1330,13,"500","rgba(255,255,255,.50)");
+  text(`Generado: ${now.toLocaleDateString("es-MX",{day:"numeric",month:"long"})}, ${now.toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit"})}`,680,1471,14,"500",white);
+  text(`Corte de Paquetes • ${themeLabel}`,55,1500,13,"500","rgba(255,255,255,.50)");
 
   return new Promise(resolve=>canvas.toBlob(resolve,"image/png",1));
 }
