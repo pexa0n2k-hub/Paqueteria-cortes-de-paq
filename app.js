@@ -3,6 +3,10 @@
 
 const $ = id => document.getElementById(id);
 const DB_KEY = "corte_paquetes_data";
+const SERVICES_KEY = "corte_paquetes_services_v1";
+let services = readServices();
+function readServices(){ try{ const v=JSON.parse(localStorage.getItem(SERVICES_KEY)||"[]"); return Array.isArray(v)?v:[]; }catch(e){ return []; } }
+function saveServices(){ try{localStorage.setItem(SERVICES_KEY,JSON.stringify(services));return true;}catch(e){alert("No se pudo guardar el servicio. El almacenamiento está lleno.");return false;} }
 const AUTO_DATE_KEY = "corte_paquetes_auto_date_v1";
 let dateInitialized = false;
 const OLD_KEYS = ["corte_paquetes_v1_12","corte_paquetes_v1_11","corte_paquetes_v1_10","corte_paquetes_v1_9","corte_paquetes_v1_8"];
@@ -211,6 +215,8 @@ function cutDataForRange(start,end,forcedRate=null){
     }
   }
   const adv=advances.reduce((sum,x)=>sum+Number(x.amount||0),0);
+  const serviceEntries=services.filter(x=>x.date>=startKey&&x.date<=endKey).map(x=>({...x}));
+  const serviceTotal=serviceEntries.reduce((sum,x)=>sum+(Number(x.amount)||0),0);
   const days=[];
   for(let i=0;i<7;i++){
     const dt=new Date(startDate);dt.setDate(startDate.getDate()+i);
@@ -218,8 +224,8 @@ function cutDataForRange(start,end,forcedRate=null){
     days.push({date:key,value:Number(state.records[key]||0),has:Object.prototype.hasOwnProperty.call(state.records,key)});
   }
   return {
-    start:startDate,end:endDate,startKey,endKey,total,rate,gross:total*rate,adv,net:total*rate-adv,
-    entries,advances,days,
+    start:startDate,end:endDate,startKey,endKey,total,rate,gross:total*rate,adv,serviceTotal,net:total*rate+serviceTotal-adv,
+    entries,advances,serviceEntries,serviceTotal,days,
     bg:state.settings.bg||null,shade:Number(state.settings.shade??62),
     accentMode:state.settings.accentMode||"auto",accent:state.settings.accent||"#72F4FF"
   };
@@ -233,12 +239,14 @@ function snapshotFromCut(cut){
     rate:Number(cut.rate)||0,
     gross:Number(cut.gross)||0,
     adv:Number(cut.adv)||0,
+    serviceTotal:Number(cut.serviceTotal)||0,
+    services:(cut.serviceEntries||[]).map(x=>({...x})),
     net:Number(cut.net)||0,
     days:(cut.days||[]).map(x=>({date:x.date,value:Number(x.value)||0,has:!!x.has})),
     advances:(cut.advances||[]).map(x=>({date:x.date,amount:Number(x.amount)||0,concept:String(x.concept||"Préstamo")})),
     bg:cut.bg||null,shade:Number(cut.shade??62),
     accentMode:cut.accentMode||"auto",accent:cut.accent||"#72F4FF",
-    savedAt:Date.now(),version:"1.29"
+    savedAt:Date.now(),version:"1.42.5"
   };
 }
 function saveWeeklyCut(cut){
@@ -251,7 +259,7 @@ function saveWeeklyCut(cut){
 }
 function archiveCompletedWeeks(){
   const currentStart=dateKey(monday(new Date()));
-  const keys=new Set([...Object.keys(state.records),...Object.keys(state.advances)]);
+  const keys=new Set([...Object.keys(state.records),...Object.keys(state.advances),...services.map(x=>x.date)]);
   const weeks=[...keys].filter(Boolean).map(weekKey).filter(w=>w&&w<currentStart);
   for(const w of new Set(weeks)){
     const st=parseDate(w), en=new Date(st);en.setDate(st.getDate()+6);
@@ -261,7 +269,7 @@ function archiveCompletedWeeks(){
 function snapshotToCut(s){
   const st=parseDate(s.weekStart),en=parseDate(s.weekEnd);
   const entries=(s.days||[]).filter(x=>x.has||Number(x.value)>0).map(x=>[x.date,Number(x.value)||0]);
-  return {start:st,end:en,startKey:s.weekStart,endKey:s.weekEnd,total:Number(s.total)||0,rate:Number(s.rate)||0,gross:Number(s.gross)||0,adv:Number(s.adv)||0,net:Number(s.net)||0,entries,advances:s.advances||[],days:s.days||[],bg:s.bg||null,shade:Number(s.shade??62),accentMode:s.accentMode||"auto",accent:s.accent||"#72F4FF",historical:true,id:s.id};
+  return {start:st,end:en,startKey:s.weekStart,endKey:s.weekEnd,total:Number(s.total)||0,rate:Number(s.rate)||0,gross:Number(s.gross)||0,adv:Number(s.adv)||0,serviceTotal:Number(s.serviceTotal)||0,services:s.services||[],net:Number(s.net)||0,entries,advances:s.advances||[],serviceEntries:s.services||[],days:s.days||[],bg:s.bg||null,shade:Number(s.shade??62),accentMode:s.accentMode||"auto",accent:s.accent||"#72F4FF",historical:true,id:s.id};
 }
 function formatCutRange(c){
   const a=parseDate(c.weekStart),b=parseDate(c.weekEnd);
@@ -428,6 +436,8 @@ function render(){
     if(inCurrentWeek(d)) for(const item of (Array.isArray(list)?list:[])) adv.push({date:d,...item});
   }
   const advTotal=adv.reduce((sum,x)=>sum+Number(x.amount||0),0);
+  const weeklyServices=services.filter(x=>inCurrentWeek(x.date));
+  const serviceTotal=weeklyServices.reduce((sum,x)=>sum+Number(x.amount||0),0);
   const currentRate=rateFor(today);
 
   $("week").textContent="Semana actual";
@@ -436,11 +446,11 @@ function render(){
   $("gross").textContent=money(total*currentRate);
   $("rateText").textContent=money(currentRate);
   $("grossDetail").textContent=`${total} × ${money(currentRate)}`;
-  $("netDetail").textContent=`${money(total*currentRate)} − ${money(advTotal)} de adelantos`;
+  $("netDetail").textContent=`${money(total*currentRate)} + ${money(serviceTotal)} servicios − ${money(advTotal)} adelantos`;
   $("footerRange").textContent=`${start.getDate()} – ${end.getDate()} de ${end.toLocaleDateString("es-MX",{month:"long",year:"numeric"})}`;
   $("adv").textContent="-"+money(advTotal);
   $("advCount").textContent=adv.length;
-  $("net").textContent=money(total*currentRate-advTotal);
+  $("net").textContent=money(total*currentRate+serviceTotal-advTotal);
   $("daysText").textContent=entries.length ? entries.length+" días registrados" : "Sin registros";
   $("curRate").textContent=money(currentRate);
   $("rate").value=currentRate || "";
@@ -490,15 +500,17 @@ function render(){
     return `<div class="row"><div class="dateLabel">${esc(x.concept||"Préstamo")}<small>${dt.toLocaleDateString("es-MX",{day:"numeric",month:"long"})}</small></div><div class="rowRight"><b>-${money(x.amount)}</b></div><button class="mini" onclick="delAdv(${i})">🗑️</button></div>`;
   }).join("") : "No hay adelantos.";
 
-  const weeks=[...new Set(Object.keys(state.records).map(weekKey))].sort().reverse();
+  const weeks=[...new Set([...Object.keys(state.records),...Object.keys(state.advances),...services.map(x=>x.date)].map(weekKey))].sort().reverse();
   $("history").innerHTML=weeks.length ? weeks.map(w=>{
     const en=Object.entries(state.records).filter(([d])=>weekKey(d)===w);
     const t=en.reduce((sum,[,v])=>sum+Number(v||0),0);
     const dates=en.map(([d])=>d).sort();
-    const r=dates.length?rateFor(dates.at(-1)):0;
+    const serviceDates=services.filter(x=>weekKey(x.date)===w).map(x=>x.date).sort();
+    const r=dates.length?rateFor(dates.at(-1)):serviceDates.length?rateFor(serviceDates.at(-1)):0;
     const a=Object.entries(state.advances).filter(([d])=>weekKey(d)===w).reduce((sum,[,list])=>sum+(Array.isArray(list)?list.reduce((z,x)=>z+Number(x.amount||0),0):0),0);
+    const sv=services.filter(x=>weekKey(x.date)===w).reduce((z,x)=>z+Number(x.amount||0),0);
     const wd=parseDate(w);
-    return `<div class="row"><div class="dateLabel">Semana ${wd.getDate()} – ${new Date(wd.getFullYear(),wd.getMonth(),wd.getDate()+6).getDate()}<small>${money(r)} / paquete · adelantos ${money(a)}</small></div><div class="rowRight"><b>${t} paquetes</b><small>${money(t*r-a)} a recibir</small></div></div>`;
+    return `<div class="row"><div class="dateLabel">Semana ${wd.getDate()} – ${new Date(wd.getFullYear(),wd.getMonth(),wd.getDate()+6).getDate()}<small>${money(r)} / paquete · servicios ${money(sv)} · adelantos ${money(a)}</small></div><div class="rowRight"><b>${t} paquetes</b><small>${money(t*r+sv-a)} a recibir</small></div></div>`;
   }).join("") : "Todavía no hay semanas anteriores.";
 
   applySettings();
@@ -702,6 +714,28 @@ $("shadeRange").oninput=e=>{state.settings.shade=Number(e.target.value);safeWrit
 $("blurRange").oninput=e=>{state.settings.blur=Number(e.target.value);safeWrite();applySettings();};
 $("transRange").oninput=e=>{state.settings.transparency=Number(e.target.value);safeWrite();applySettings();};
 
+
+// ===== Servicios adicionales pagados por servicio =====
+function renderServices(){
+ const list=$("servicesList"); if(!list)return;
+ const week=monday(new Date()), start=dateKey(week), end=dateKey(sunday(new Date()));
+ const items=[...services].sort((a,b)=>b.date.localeCompare(a.date));
+ const total=items.reduce((a,x)=>a+(Number(x.amount)||0),0);
+ $("servicesWeekTotal").textContent=money(total); $("servicesWeekCount").textContent=`${items.length} servicio${items.length===1?"":"s"} esta semana`;
+ const monthStart=dateKey(new Date(new Date().getFullYear(),new Date().getMonth(),1)); const monthTotal=services.filter(x=>x.date>=monthStart&&x.date<=dateKey(new Date())).reduce((a,x)=>a+(Number(x.amount)||0),0); $("servicesMonthTotal").textContent=money(monthTotal);
+ list.innerHTML=items.length?items.map(x=>`<article class="serviceItem"><div><strong>${esc(x.type||"Otro servicio")}</strong><small>${parseDate(x.date).toLocaleDateString("es-MX",{weekday:"short",day:"numeric",month:"short"})}${x.note?` · ${esc(x.note)}`:""}</small></div><b>${money(x.amount)}</b><div class="serviceActions"><button class="glass mini" onclick="editService('${esc(x.id)}')">✏️</button><button class="glass mini" onclick="deleteService('${esc(x.id)}')">🗑️</button></div></article>`).join(""):"<p class='muted'>Aún no registras servicios esta semana.</p>";
+}
+function openServices(){ $("servicesPanel").classList.remove("hidden"); renderServices(); $("serviceDate").value=dateKey(new Date()); }
+function closeServices(){ $("servicesPanel").classList.add("hidden"); }
+function saveService(){
+ const date=$("serviceDate").value, type=$("serviceType").value, amount=Number($("serviceAmount").value), note=$("serviceNote").value.trim();
+ if(!date||!inCurrentWeek(date)||!Number.isFinite(amount)||amount<=0){alert("Selecciona una fecha de esta semana y escribe un pago válido mayor a cero.");return;}
+ services.push({id:`svc_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,date,type,amount,note});
+ if(saveServices()){ $("serviceAmount").value="";$("serviceNote").value="";renderServices();render(); }
+}
+window.editService=id=>{const x=services.find(s=>s.id===id);if(!x)return;const a=prompt("Monto del servicio (MXN):",x.amount);if(a===null)return;const n=Number(a);if(!Number.isFinite(n)||n<=0){alert("Monto inválido.");return;}const note=prompt("Nota del servicio:",x.note||"");if(note===null)return;x.amount=n;x.note=note.trim();if(saveServices()){renderServices();render();}};
+window.deleteService=id=>{if(!confirm("¿Eliminar este servicio registrado?"))return;services=services.filter(x=>x.id!==id);if(saveServices()){renderServices();render();}};
+$("openServices").onclick=openServices;$("closeServices").onclick=closeServices;$("saveService").onclick=saveService;
 
 function currentCutData(){
   return cutDataForRange(monday(new Date()),sunday(new Date()),rateFor(dateKey(new Date())));
@@ -943,7 +977,8 @@ async function renderShareImage(cut=null){
   dg(ctx,42,678,996,220,27);
   text("TOTAL A RECIBIR",76,727,18,"900",cyan);
   text(money(d.net),76,814,moneyFit(money(d.net),600,66),"900",mint);
-  text(`${money(d.gross)} − ${money(d.adv)} de adelantos`,76,852,18,"500",muted);
+  text(`${money(d.gross)} + ${money(d.serviceTotal||0)} servicios − ${money(d.adv)} adelantos`,76,852,18,"500",muted);
+  text(`SERVICIOS EXTRA  +${money(d.serviceTotal||0)}`,76,875,16,"800",secondary);
 
   // Share button inside the total card.
   dg(ctx,716,770,280,72,18);
@@ -1146,6 +1181,7 @@ render();
     Object.entries(weeklyTotals).forEach(([wk,q])=>{if(q>bestWeekTotal){bestWeekTotal=q;bestWeekKey=wk;}});
     const fmtWeek=wk=>{const d=parseKey(wk);if(!d)return "—";const e=new Date(d);e.setDate(e.getDate()+6);return `${d.getDate()}–${e.getDate()} ${e.toLocaleDateString("es-MX",{month:"short"})}`;};
     $v27("dashboardV31AllPackages").textContent=String(allPackages);
+    allMoney+=services.reduce((sum,x)=>sum+Number(x.amount||0),0);
     $v27("dashboardV31AllMoney").textContent=typeof money==="function"?money(allMoney):`$${allMoney.toFixed(2)}`;
     $v27("dashboardV31BestWeek").textContent=bestWeekTotal?`${bestWeekTotal} paquetes`:"—";
     $v27("dashboardV31BestWeekSub").textContent=bestWeekTotal?`Semana ${fmtWeek(bestWeekKey)}`:"Aún no hay suficientes datos";

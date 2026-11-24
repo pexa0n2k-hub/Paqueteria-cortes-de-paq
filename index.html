@@ -1,4 +1,4 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest?v=1.42.4"><link rel="icon" type="image/png" sizes="32x32" href="./icon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=1.42.4"><title>Corte de Paquetes</title></head><body>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050814"><link rel="manifest" href="./manifest.webmanifest?v=1.42.5"><link rel="icon" type="image/png" sizes="32x32" href="./icon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png"><link rel="stylesheet" href="./style.css?v=1.42.5"><title>Corte de Paquetes</title></head><body>
 <div id="backdrop"></div><div id="shade"></div><main>
 <header class="topbar">
   <div class="brand">
@@ -73,6 +73,9 @@
     <div class="metricCopy"><small>ADELANTOS / PRÉSTAMOS</small><strong id="adv">-$0.00</strong><span><b id="advCount">0</b> registro(s)</span></div>
   </div>
 </section>
+
+
+<button id="openServices" class="glass jelly action actionLarge serviceLaunch"><span class="actionIcon serviceIcon">🚚</span><span>Registrar servicios adicionales<small>Recolecciones · otros trabajos · pagos variables</small></span><b>＋</b></button>
 
 <button id="addAdv" class="glass jelly action actionLarge redesignAdvance">
   <span class="actionIcon pink"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
@@ -175,6 +178,9 @@
 </div>
 <div class="entry"><input id="rate" type="number" min="0" step=".01" inputmode="decimal" placeholder="8.00"><button id="saveRate" class="neonBtn">Guardar</button></div><p>Se conserva hasta que tú la cambies.</p><label>Fondo personalizado</label><input id="bg" type="file" accept="image/*"><button id="removeBg" class="glass action">Quitar fondo</button><label>Oscurecimiento del fondo <output id="shadeOut">62%</output></label><input id="shadeRange" type="range" min="20" max="90" value="62"><label>Transparencia de los cajones <output id="transOut">78%</output></label><input id="transRange" type="range" min="35" max="95" value="78"><label>Desenfoque del fondo <output id="blurOut">8px</output></label><input id="blurRange" type="range" min="0" max="20" value="8"></div></div>
 
+
+<div id="servicesPanel" class="overlay hidden"><div class="glass panel servicesPanel"><div class="panelHead"><h2>🚚 Servicios adicionales</h2><button id="closeServices" class="glass icon">✕</button></div><div class="servicesWeekHero"><small>INGRESOS EXTRA · ESTA SEMANA</small><strong id="servicesWeekTotal">$0.00</strong><span id="servicesWeekCount">0 servicios esta semana</span><div class="servicesMonth"><small>ACUMULADO DEL MES</small><b id="servicesMonthTotal">$0.00</b></div></div><label>Fecha del servicio</label><input id="serviceDate" class="field" type="date"><label>Tipo de servicio</label><select id="serviceType" class="field"><option>Recolección</option><option>Otro servicio</option></select><label>Pago recibido / acordado (MXN)</label><input id="serviceAmount" class="field" type="number" min="0.01" step=".01" inputmode="decimal" placeholder="300"><label>Nota opcional</label><input id="serviceNote" class="field" placeholder="Ej. Recolección en zona X"><button id="saveService" class="neonBtn action">＋ Registrar servicio</button><h3>Servicios de esta semana</h3><div id="servicesList" class="servicesList"></div><p class="muted smallText">Los servicios se suman a tu corte semanal y mensual, separados del pago por paquete.</p></div></div>
+
 <div id="advPanel" class="overlay hidden"><div class="glass panel small"><h2>💸 Adelanto / préstamo</h2><label>Fecha</label><input id="advDate" class="field" type="date"><label>Concepto</label><input id="concept" class="field" placeholder="Préstamo"><label>Monto</label><input id="amount" class="field" type="number" min="0" step=".01" inputmode="decimal" placeholder="200"><div class="actions"><button id="cancelAdv" class="glass action">Cancelar</button><button id="saveAdv" class="neonBtn action">Guardar</button></div><div id="advList" class="list miniList"></div></div></div>
 
 <div id="editPanel" class="overlay hidden"><div class="glass panel small"><h2>Editar registro</h2><input id="editQty" class="field" type="number" min="0" inputmode="numeric"><div class="actions"><button id="cancelEdit" class="glass action">Cancelar</button><button id="saveEdit" class="neonBtn action">Guardar</button></div></div></div>
@@ -191,7 +197,7 @@
     </div>
   </div>
 </div>
-<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.42.4"></script><script>
+<div id="cutHistoryModal" class="overlay hidden historySlideOverlay"><div class="glass panel cutHistoryPanel historySlidePanel"><div class="panelHead"><h2>🗂️ Cortes guardados</h2><button id="closeCutHistory" class="glass icon">✕</button></div><button id="openDashboardFromHistory" class="glass action historyDashboardBtn">📊 Ver rendimiento</button><p class="muted smallText">Tus cortes quedan guardados por semana para poder verlos o compartirlos nuevamente aunque ya haya terminado la semana.</p><div id="cutHistoryBody"></div></div></div><div id="sharePanel" class="overlay hidden"><div class="glass panel sharePanel"><div class="panelHead"><h2>📤 Compartir corte</h2><button id="closeShare" class="glass icon">✕</button></div><p>La imagen conserva el estilo Liquid Glass de tu aplicación.</p><canvas id="shareCanvas"></canvas><div class="actions"><button id="downloadShare" class="glass action">💾 Guardar imagen</button><button id="nativeShare" class="neonBtn action">📲 Compartir</button></div></div></div><script src="./app.js?v=1.42.5"></script><script>
 window.openDashboard=function(){
   var p=document.getElementById("dashboardPanel");
   if(!p)return;
@@ -290,5 +296,5 @@ window.openDashboard=function(){
   <p class="laborPrivacy">🔐 Las evidencias se guardan localmente en este dispositivo. Exporta respaldos y evita borrar los datos del navegador.</p>
  </div>
 </div>
-<script src="./labor.js?v=1.42.4"></script>
+<script src="./labor.js?v=1.42.5"></script>
 </body></html>

@@ -2043,3 +2043,23 @@ body.theme-crystalTech .dailyItem{border-radius:0!important;clip-path:polygon(5%
 body.theme-cyberpunk .brandMark.profileAvatar,body.theme-angular .brandMark.profileAvatar,body.theme-mechaRed .brandMark.profileAvatar{border-color:#ff477e;box-shadow:0 0 0 3px rgba(255,55,113,.12),0 0 18px rgba(255,45,105,.2)}
 body.theme-luxury .brandMark.profileAvatar{border-color:rgba(222,190,116,.8)}
 @media(max-width:390px){.profileMenuWrap{width:55px;height:55px}.brandMark.profileAvatar{width:51px;height:51px;min-width:51px}.profileAvatarEdit{width:21px;height:21px}}
+
+/* v1.42.5 Servicios adicionales */
+.serviceLaunch{margin:12px 0 16px;border-color:rgba(72,206,255,.25)}
+.serviceLaunch .actionIcon{font-size:20px;background:rgba(47,174,255,.12);border:1px solid rgba(80,210,255,.22);display:grid;place-items:center}
+.serviceLaunch>span:nth-child(2){display:flex;flex-direction:column;gap:3px}
+.serviceLaunch small{font-size:11px;color:var(--muted,#a8b8cc);font-weight:500}
+.servicesPanel{max-height:min(88vh,850px);overflow:auto}
+.servicesWeekHero{display:flex;flex-direction:column;gap:5px;padding:16px;border:1px solid rgba(75,220,255,.22);border-radius:18px;background:linear-gradient(135deg,rgba(36,190,255,.12),rgba(120,60,255,.10));margin:6px 0 14px}
+.servicesWeekHero small{letter-spacing:.1em;font-size:10px;font-weight:800;color:var(--accent)}
+.servicesWeekHero strong{font-size:30px;font-weight:900}
+.servicesWeekHero span{font-size:12px;opacity:.7}
+.servicesPanel label{display:block;margin:10px 0 5px;font-size:13px;font-weight:700}
+.servicesPanel h3{margin:20px 0 8px}
+.servicesList{display:flex;flex-direction:column;gap:8px}
+.serviceItem{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center;padding:12px;border-radius:15px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.serviceItem>div:first-child{display:flex;flex-direction:column;gap:4px;min-width:0}
+.serviceItem small{font-size:11px;opacity:.7;overflow-wrap:anywhere}
+.serviceItem>b{font-size:15px;color:#73f4b4}
+.serviceActions{grid-column:1/-1;display:flex;justify-content:flex-end;gap:6px}
+.serviceActions .mini{padding:5px 9px}
